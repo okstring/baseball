@@ -163,3 +163,5 @@ gradle-app.setting
 .idea/misc.xml
 .idea/vcs.xml
 .idea/modules/BE.iml
+
+BE/src/main/resources/oauth.properties
