@@ -59,4 +59,18 @@ public class GameService {
         GameScoresDTO awayTeam = new GameScoresDTO("Captin", awayTeamScores);
         return new GameScoresResponseDTO(homeTeam, awayTeam);
     }
+
+    public List<MemberScoreDTO> getGameScoresByTeam(String teamName) {
+        List<MemberScoreDTO> memberScoreDTOList = new ArrayList<>();
+        memberScoreDTOList.add(new MemberScoreDTO(1L, "김광진", 1, 1, 0));
+        memberScoreDTOList.add(new MemberScoreDTO(2L, "이동규", 1, 0, 1));
+        memberScoreDTOList.add(new MemberScoreDTO(3L, "김진수", 1, 0, 1));
+        memberScoreDTOList.add(new MemberScoreDTO(4L, "박영권", 1, 1, 0));
+        memberScoreDTOList.add(new MemberScoreDTO(5L, "추신수", 1, 1, 0));
+        memberScoreDTOList.add(new MemberScoreDTO(6L, "이용대", 1, 0, 1));
+        memberScoreDTOList.add(new MemberScoreDTO(7L, "류현진", 1, 0, 1));
+        memberScoreDTOList.add(new MemberScoreDTO(8L, "최동수", 1, 0, 1));
+        memberScoreDTOList.add(new MemberScoreDTO(9L, "한양범", 1, 1, 0));
+        return memberScoreDTOList;
+    }
 }

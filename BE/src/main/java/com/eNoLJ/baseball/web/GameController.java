@@ -1,10 +1,7 @@
 package com.eNoLJ.baseball.web;
 
 import com.eNoLJ.baseball.service.GameService;
-import com.eNoLJ.baseball.web.dto.GameEntryDTO;
-import com.eNoLJ.baseball.web.dto.GameInfoResponseDTO;
-import com.eNoLJ.baseball.web.dto.GameScoresResponseDTO;
-import com.eNoLJ.baseball.web.dto.MemberDTO;
+import com.eNoLJ.baseball.web.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,5 +42,11 @@ public class GameController {
     public GameScoresResponseDTO viewGameScores() {
         logger.info("게임 상세 스코어 요청");
         return gameService.getGameScores();
+    }
+
+    @GetMapping("/games/scores/{teamName}")
+    public List<MemberScoreDTO> viewGameScoreByTeam(@PathVariable String teamName) {
+        logger.info("{}팀의 멤버 스코어 정보 요청", teamName);
+        return gameService.getGameScoresByTeam(teamName);
     }
 }
