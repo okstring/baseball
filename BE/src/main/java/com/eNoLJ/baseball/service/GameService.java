@@ -44,4 +44,19 @@ public class GameService {
         story.add("스트라이크");
         return new GameInfoResponseDTO("Captin", roundInfoDTO, offenceTeamDTO, defenseTeamDTO, story);
     }
+
+    public GameScoresResponseDTO getGameScores() {
+        List<Integer> homeTeamScores = new ArrayList<>();
+        homeTeamScores.add(1);
+        homeTeamScores.add(2);
+        homeTeamScores.add(2);
+        List<Integer> awayTeamScores = new ArrayList<>();
+        awayTeamScores.add(1);
+        awayTeamScores.add(0);
+        awayTeamScores.add(0);
+        awayTeamScores.add(0);
+        GameScoresDTO homeTeam = new GameScoresDTO("Marvel", homeTeamScores);
+        GameScoresDTO awayTeam = new GameScoresDTO("Captin", awayTeamScores);
+        return new GameScoresResponseDTO(homeTeam, awayTeam);
+    }
 }
