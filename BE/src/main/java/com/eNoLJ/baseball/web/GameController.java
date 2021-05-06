@@ -2,6 +2,7 @@ package com.eNoLJ.baseball.web;
 
 import com.eNoLJ.baseball.service.GameService;
 import com.eNoLJ.baseball.web.dto.GameEntryDTO;
+import com.eNoLJ.baseball.web.dto.GameInfoResponseDTO;
 import com.eNoLJ.baseball.web.dto.MemberDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,5 +34,9 @@ public class GameController {
         return gameService.getMembersByTeamName(teamName);
     }
 
-
+    @GetMapping("/games/{teamName}")
+    public GameInfoResponseDTO startGame(@PathVariable String teamName) {
+        logger.info("{}팀으로 게임 시작 요청", teamName);
+        return gameService.startGameByTeamName(teamName);
+    }
 }
