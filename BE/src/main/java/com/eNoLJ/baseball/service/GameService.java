@@ -73,4 +73,8 @@ public class GameService {
         memberScoreDTOList.add(new MemberScoreDTO(9L, "한양범", 1, 1, 0));
         return memberScoreDTOList;
     }
+
+    public GameInfoResponseDTO pitchGame(GameInfoRequestDTO requestDTO) {
+        return new GameInfoResponseDTO(requestDTO.getPlayTeam(), requestDTO.getRoundInfo(), requestDTO.getOffenceTeam(), requestDTO.getDefenseTeam(), requestDTO.getStory());
+    }
 }

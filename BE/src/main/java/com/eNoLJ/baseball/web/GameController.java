@@ -4,9 +4,7 @@ import com.eNoLJ.baseball.service.GameService;
 import com.eNoLJ.baseball.web.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,6 +34,12 @@ public class GameController {
     public GameInfoResponseDTO startGame(@PathVariable String teamName) {
         logger.info("{}팀으로 게임 시작 요청", teamName);
         return gameService.startGameByTeamName(teamName);
+    }
+
+    @PatchMapping("/games")
+    public GameInfoResponseDTO pitchGame(@RequestBody GameInfoRequestDTO requestDTO) {
+        logger.info("피치 요청");
+        return gameService.pitchGame(requestDTO);
     }
 
     @GetMapping("/games/scores")
