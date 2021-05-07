@@ -36,7 +36,7 @@ public class GitHubOAuth implements OAuth{
     private final Environment environment;
 
     public GitHubOAuth(Environment environment, RestTemplateBuilder restTemplateBuilder) {
-        this.restTemplate = restTemplateBuilder.build();
+        this.restTemplate = restTemplateBuilder.errorHandler(new RestTemplateResponseErrorHandler()).build();
         this.environment = environment;
     }
 
