@@ -6,11 +6,16 @@ import com.eNoLJ.baseball.domain.user.User;
 import com.eNoLJ.baseball.domain.user.UserRepository;
 import com.eNoLJ.baseball.exception.EntityNotFoundException;
 import com.eNoLJ.baseball.exception.ErrorMessage;
+import com.eNoLJ.baseball.exception.TokenException;
 import com.eNoLJ.baseball.web.dto.EmailDTO;
 import com.eNoLJ.baseball.web.dto.TokenDTO;
 import com.eNoLJ.baseball.web.dto.UserInfoDTO;
 import com.eNoLJ.baseball.web.dto.UserResponseDTO;
+import com.eNoLJ.baseball.web.utils.JwtUtil;
 import org.springframework.stereotype.Service;
+
+import static com.eNoLJ.baseball.domain.user.User.createUser;
+import static com.eNoLJ.baseball.web.dto.UserResponseDTO.createUserResponseDTO;
 
 @Service
 public class UserService {
@@ -27,20 +32,29 @@ public class UserService {
         TokenDTO tokenDTO = tokenRequestApi(code);
         UserInfoDTO userInfoDTO = userInfoRequestApi(tokenDTO.getAccess_token());
         EmailDTO emailDTO = emailRequestApi(tokenDTO.getAccess_token());
-
-        if (verifyUser(emailDTO)) {
-            User user = findByEmail(emailDTO);
+        if (verifyUser(userInfoDTO.getLogin())) {
+            User user = findByUserId(userInfoDTO.getLogin());
             user.update(userInfoDTO, emailDTO, tokenDTO);
-            return new UserResponseDTO(userRepository.save(user));
+            return createUserResponseDTO(userRepository.save(user), JwtUtil.createToken(user.getUserId()));
         }
-        User user = new User(userInfoDTO, emailDTO, tokenDTO);
-        return new UserResponseDTO(userRepository.save(user));
+        User user = createUser(userInfoDTO, emailDTO, tokenDTO);
+        return createUserResponseDTO(userRepository.save(user), JwtUtil.createToken(user.getUserId()));
     }
 
-    public void logout(String token) {
-        User user = findByToken(token);
+    public void logout(String authorization) {
+        String userId = JwtUtil.getUserIdFromToken(getTokenFromAuthorization(authorization));
+        User user = findByUserId(userId);
         user.removeToken();
         userRepository.save(user);
+    }
+
+    private String getTokenFromAuthorization(String authorization) {
+        String[] authArray = authorization.split(" ");
+        if (authArray.length < 2 || !authArray[0].equals("Beare")) {
+            throw new TokenException(ErrorMessage.INVALID_TOKEN);
+        }
+        System.out.println(authArray[1]);
+        return authArray[1];
     }
 
     private TokenDTO tokenRequestApi(String code) {
@@ -55,18 +69,12 @@ public class UserService {
        return gitHubOAuth.getEmailAPI(token);
     }
 
-    private boolean verifyUser(EmailDTO emailDTO) {
-        return userRepository.findByEmail(emailDTO.getEmail()).isPresent();
+    private boolean verifyUser(String userId) {
+        return userRepository.findByUserId(userId).isPresent();
     }
 
-    private User findByEmail(EmailDTO emailDTO) {
-        return userRepository.findByEmail(emailDTO.getEmail()).orElseThrow(
-                () -> new EntityNotFoundException(ErrorMessage.ENTITY_NOT_FOUND)
-        );
-    }
-
-    private User findByToken(String token) {
-        return userRepository.findByToken(token).orElseThrow(
+    private User findByUserId(String userId) {
+        return userRepository.findByUserId(userId).orElseThrow(
                 () -> new EntityNotFoundException(ErrorMessage.ENTITY_NOT_FOUND)
         );
     }

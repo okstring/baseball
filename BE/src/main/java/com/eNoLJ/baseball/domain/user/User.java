@@ -16,11 +16,15 @@ public class User {
 
     public User() {}
 
-    public User(UserInfoDTO userInfoDTO, EmailDTO emailDTO, TokenDTO tokenDTO) {
-        this.name = userInfoDTO.getName();
-        this.email = emailDTO.getEmail();
-        this.userId = userInfoDTO.getLogin();
-        this.token = tokenDTO.getAccess_token();
+    public static User createUser(UserInfoDTO userInfoDTO, EmailDTO emailDTO, TokenDTO tokenDTO) {
+        return new User(userInfoDTO.getName(), emailDTO.getEmail(), userInfoDTO.getLogin(), tokenDTO.getAccess_token());
+    }
+
+    public User(String name, String email, String userId, String token) {
+        this.name = name;
+        this.email = email;
+        this.userId = userId;
+        this.token = token;
     }
 
     public void update(UserInfoDTO userInfoDTO, EmailDTO emailDTO, TokenDTO tokenDTO) {
