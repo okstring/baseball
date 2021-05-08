@@ -23,8 +23,8 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public void logout(@RequestHeader String token) {
+    public void logout(@RequestHeader String authorization) {
         logger.info("로그아웃 요청");
-        userService.logout(token);
+        userService.logout(authorization);
     }
 }
