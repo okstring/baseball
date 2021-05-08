@@ -36,7 +36,6 @@ class GameViewController: UIViewController {
         registerNib()
         applySnapshot()
         configureTableViewHeight()
-        appearPitchButton()
     }
     
     func configureTableViewHeight() {
