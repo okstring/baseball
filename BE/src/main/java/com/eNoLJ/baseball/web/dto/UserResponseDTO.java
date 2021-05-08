@@ -4,16 +4,20 @@ import com.eNoLJ.baseball.domain.user.User;
 
 public class UserResponseDTO {
 
-    private String name;
-    private String email;
-    private String userId;
-    private String token;
+    private final String name;
+    private final String email;
+    private final String userId;
+    private final String token;
 
-    public UserResponseDTO(User user) {
-        this.name = user.getName();
-        this.email = user.getEmail();
-        this.userId = user.getUserId();
-        this.token = user.getToken();
+    public static UserResponseDTO createUserResponseDTO(User user, String token) {
+        return new UserResponseDTO(user.getName(), user.getEmail(), user.getUserId(), token);
+    }
+
+    public UserResponseDTO(String name, String email, String userId, String token) {
+        this.name = name;
+        this.email = email;
+        this.userId = userId;
+        this.token = token;
     }
 
     public String getName() {
