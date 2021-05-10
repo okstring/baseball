@@ -16,5 +16,7 @@ final class GameManager {
         self.jsonProcessCenter = JSONDecodable
     }
     
-    
+    func getTeamList(token: String, completion: @escaping (GameList) -> ()) {
+        
+    }
 }

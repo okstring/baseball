@@ -10,6 +10,7 @@ import UIKit
 final class MainViewController: UIViewController {
     @IBOutlet var teams: [UIButton]!
     var user: UserDTO!
+    var gameManager: GameManager!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,4 +20,11 @@ final class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
+    
+    func receiveObject(user: UserDTO, gameManager: GameManager) {
+        self.user = user
+        self.gameManager = gameManager
+    }
+    
+    
 }

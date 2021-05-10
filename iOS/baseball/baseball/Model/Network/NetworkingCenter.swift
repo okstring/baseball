@@ -8,15 +8,16 @@
 import Foundation
 
 protocol ServerCommunicable {
-    func postLoginCode(kindOf: KindOfNetworkAction, callBackURLCode: String, complete: @escaping (Result<Data, NetworkingError>) -> ()) 
+    func postLoginCode(kindOf kind: Path, callBackURLCode: String, complete: @escaping (Result<Data, NetworkingError>) -> ())
 }
 
 final class NetworkingCenter: ServerCommunicable {
-    func postLoginCode(kindOf kind: KindOfNetworkAction, callBackURLCode: String, complete: @escaping (Result<Data, NetworkingError>) -> ()) {
-        guard let url = URL(string: "http://\(self.getHOST()):8080/login?code=\(callBackURLCode)") else { return }
+    func postLoginCode(kindOf kind: Path, callBackURLCode: String, complete: @escaping (Result<Data, NetworkingError>) -> ()) {
+        guard let url = Endpoint.url(path: .login, callBackUrlCode: callBackURLCode) else { return }
+//        guard let url = URL(string: "http://\(self.getHOST()):8080/login?code=\(callBackURLCode)") else { return }
+        print(url)
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = kind.HTTPMethod.rawValue
-
         URLSession.init(configuration: .default).dataTask(with: urlRequest) { (data, response, error) in
             if let error = error as NSError?, error.domain == NSURLErrorDomain, error.code == NSURLErrorNotConnectedToInternet {
                 complete(.failure(NetworkingError.notConnectedToInternet))
