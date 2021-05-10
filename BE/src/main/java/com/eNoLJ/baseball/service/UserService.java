@@ -53,7 +53,6 @@ public class UserService {
         if (authArray.length < 2 || !authArray[0].equals("Beare")) {
             throw new TokenException(ErrorMessage.INVALID_TOKEN);
         }
-        System.out.println(authArray[1]);
         return authArray[1];
     }
 
