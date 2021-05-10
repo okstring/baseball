@@ -41,17 +41,15 @@ public class GameService {
     }
 
     public List<MemberDTO> getMembersByTeamName(String teamName) {
-        List<MemberDTO> memberDTOList = new ArrayList<>();
-        memberDTOList.add(new MemberDTO(1L, "김광진", 0.311));
-        memberDTOList.add(new MemberDTO(2L, "이동규", 0.322));
-        memberDTOList.add(new MemberDTO(3L, "김진수", 0.333));
-        memberDTOList.add(new MemberDTO(4L, "박영권", 0.344));
-        memberDTOList.add(new MemberDTO(5L, "추신수", 0.355));
-        memberDTOList.add(new MemberDTO(6L, "이용대", 0.366));
-        memberDTOList.add(new MemberDTO(7L, "류현진", 0.377));
-        memberDTOList.add(new MemberDTO(8L, "최동수", 0.388));
-        memberDTOList.add(new MemberDTO(9L, "한양범", 0.399));
-        return memberDTOList;
+        return memberRepository.findAllByTeamId(findTeamByTeamName(teamName).getId()).stream()
+                .map(MemberDTO::createMemberDTO)
+                .collect(Collectors.toList());
+    }
+
+    private Team findTeamByTeamName(String teamName) {
+        return teamRepository.findByName(teamName).orElseThrow(
+                () -> new EntityNotFoundException(ErrorMessage.ENTITY_NOT_FOUND)
+        );
     }
 
     public GameInfoResponseDTO startGameByTeamName(String teamName) {
@@ -65,6 +63,10 @@ public class GameService {
         story.add("볼");
         story.add("스트라이크");
         return new GameInfoResponseDTO("Captin", roundInfoDTO, offenceTeamDTO, defenseTeamDTO, story);
+    }
+
+    public GameInfoResponseDTO pitchGame(GameInfoRequestDTO requestDTO) {
+        return new GameInfoResponseDTO(requestDTO.getPlayTeam(), requestDTO.getRoundInfo(), requestDTO.getOffenceTeam(), requestDTO.getDefenseTeam(), requestDTO.getStory());
     }
 
     public GameScoresResponseDTO getGameScores() {
@@ -94,9 +96,5 @@ public class GameService {
         memberScoreDTOList.add(new MemberScoreDTO(8L, "최동수", 1, 0, 1));
         memberScoreDTOList.add(new MemberScoreDTO(9L, "한양범", 1, 1, 0));
         return memberScoreDTOList;
-    }
-
-    public GameInfoResponseDTO pitchGame(GameInfoRequestDTO requestDTO) {
-        return new GameInfoResponseDTO(requestDTO.getPlayTeam(), requestDTO.getRoundInfo(), requestDTO.getOffenceTeam(), requestDTO.getDefenseTeam(), requestDTO.getStory());
     }
 }
