@@ -11,8 +11,8 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema baseball
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `baseball` DEFAULT CHARACTER SET utf8;
-     USE `baseball` ;
+CREATE SCHEMA IF NOT EXISTS `baseball` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `baseball` ;
 
 -- -----------------------------------------------------
 -- Table `baseball`.`team`
@@ -22,7 +22,9 @@ CREATE TABLE IF NOT EXISTS `baseball`.`team` (
     `id` INT AUTO_INCREMENT,
     `name` VARCHAR(45) NOT NULL,
     PRIMARY KEY (`id`))
-    ENGINE = InnoDB;
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -39,36 +41,34 @@ CREATE TABLE IF NOT EXISTS `baseball`.`game` (
     INDEX `fk_match_team2_idx` (`away_team_id` ASC) VISIBLE,
     CONSTRAINT `fk_match_team1`
     FOREIGN KEY (`home_team_id`)
-    REFERENCES `baseball`.`team` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    REFERENCES `baseball`.`team` (`id`),
     CONSTRAINT `fk_match_team2`
     FOREIGN KEY (`away_team_id`)
-    REFERENCES `baseball`.`team` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-    ENGINE = InnoDB;
+    REFERENCES `baseball`.`team` (`id`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `baseball`.`user`
+-- Table `baseball`.`inning`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `baseball`.`user`;
-CREATE TABLE IF NOT EXISTS `baseball`.`user` (
+DROP TABLE IF EXISTS `baseball`.`inning`;
+CREATE TABLE IF NOT EXISTS `baseball`.`inning` (
     `id` INT AUTO_INCREMENT,
-    `user_id` VARCHAR(45) NOT NULL,
-    `email` VARCHAR(45) NOT NULL,
-    `name` VARCHAR(45) NULL,
-    `token` VARCHAR(255) NULL,
-    `game_id` INT NULL,
+    `round` INT NOT NULL,
+    `first_base` TINYINT(1) NOT NULL DEFAULT 0,
+    `second_base` TINYINT(1) NOT NULL DEFAULT 0,
+    `third_base` TINYINT(1) NOT NULL DEFAULT 0,
+    `game_id` INT NOT NULL,
     PRIMARY KEY (`id`),
-    INDEX `fk_user_game1_idx` (`game_id` ASC) VISIBLE,
-    CONSTRAINT `fk_user_game1`
+    INDEX `fk_inning_match1_idx` (`game_id` ASC) VISIBLE,
+    CONSTRAINT `fk_inning_match1`
     FOREIGN KEY (`game_id`)
-    REFERENCES `baseball`.`game` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-    ENGINE = InnoDB;
+    REFERENCES `baseball`.`game` (`id`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -84,82 +84,10 @@ CREATE TABLE IF NOT EXISTS `baseball`.`member` (
     INDEX `fk_member_team1_idx` (`team_id` ASC) VISIBLE,
     CONSTRAINT `fk_member_team1`
     FOREIGN KEY (`team_id`)
-    REFERENCES `baseball`.`team` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-    ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `baseball`.`inning`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `baseball`.`inning`;
-CREATE TABLE IF NOT EXISTS `baseball`.`inning` (
-    `id` INT AUTO_INCREMENT,
-    `round` INT NOT NULL,
-    `first_base` BOOLEAN NOT NULL,
-    `second_base` BOOLEAN NOT NULL,
-    `third_base` BOOLEAN NOT NULL,
-    `game_id` INT NOT NULL,
-    PRIMARY KEY (`id`),
-    INDEX `fk_inning_match1_idx` (`game_id` ASC) VISIBLE,
-    CONSTRAINT `fk_inning_match1`
-    FOREIGN KEY (`game_id`)
-    REFERENCES `baseball`.`game` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-    ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `baseball`.`score_history`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `baseball`.`score_history`;
-CREATE TABLE IF NOT EXISTS `baseball`.`score_history` (
-    `id` INT AUTO_INCREMENT,
-    `inning_score` VARCHAR(45) NOT NULL,
-    `team_id` INT NOT NULL,
-    `inning_id` INT NOT NULL,
-    PRIMARY KEY (`id`),
-    INDEX `fk_score_history_team1_idx` (`team_id` ASC) VISIBLE,
-    INDEX `fk_score_history_inning1_idx` (`inning_id` ASC) VISIBLE,
-    CONSTRAINT `fk_score_history_team1`
-    FOREIGN KEY (`team_id`)
-    REFERENCES `baseball`.`team` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    CONSTRAINT `fk_score_history_inning1`
-    FOREIGN KEY (`inning_id`)
-    REFERENCES `baseball`.`inning` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-    ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `baseball`.`pitcher_history`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `baseball`.`pitcher_history`;
-CREATE TABLE IF NOT EXISTS `baseball`.`pitcher_history` (
-    `id` INT AUTO_INCREMENT,
-    `pit` VARCHAR(45) NOT NULL,
-    `sbo` VARCHAR(45) NOT NULL,
-    `member_id` INT NOT NULL,
-    `inning_id` INT NOT NULL,
-    PRIMARY KEY (`id`),
-    INDEX `fk_pitcher_history_member1_idx` (`member_id` ASC) VISIBLE,
-    INDEX `fk_pitcher_history_inning1_idx` (`inning_id` ASC) VISIBLE,
-    CONSTRAINT `fk_pitcher_history_member1`
-    FOREIGN KEY (`member_id`)
-    REFERENCES `baseball`.`member` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    CONSTRAINT `fk_pitcher_history_inning1`
-    FOREIGN KEY (`inning_id`)
-    REFERENCES `baseball`.`inning` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-    ENGINE = InnoDB;
+    REFERENCES `baseball`.`team` (`id`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
@@ -168,26 +96,97 @@ CREATE TABLE IF NOT EXISTS `baseball`.`pitcher_history` (
 DROP TABLE IF EXISTS `baseball`.`hitter_history`;
 CREATE TABLE IF NOT EXISTS `baseball`.`hitter_history` (
     `id` INT AUTO_INCREMENT,
-    `tpa` VARCHAR(45) NOT NULL,
-    `hits` VARCHAR(45) NOT NULL,
+    `tpa` INT NOT NULL DEFAULT 0,
+    `hits` INT NOT NULL DEFAULT 0,
     `member_id` INT NOT NULL,
     `inning_id` INT NOT NULL,
     PRIMARY KEY (`id`),
     INDEX `fk_hitter_history_member1_idx` (`member_id` ASC) VISIBLE,
     INDEX `fk_hitter_history_inning1_idx` (`inning_id` ASC) VISIBLE,
-    CONSTRAINT `fk_hitter_history_member1`
-    FOREIGN KEY (`member_id`)
-    REFERENCES `baseball`.`member` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
     CONSTRAINT `fk_hitter_history_inning1`
     FOREIGN KEY (`inning_id`)
-    REFERENCES `baseball`.`inning` (`id`)
+    REFERENCES `baseball`.`inning` (`id`),
+    CONSTRAINT `fk_hitter_history_member1`
+    FOREIGN KEY (`member_id`)
+    REFERENCES `baseball`.`member` (`id`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `baseball`.`pitcher_history`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `baseball`.`pitcher_history`;
+CREATE TABLE IF NOT EXISTS `baseball`.`pitcher_history` (
+    `id` INT AUTO_INCREMENT,
+    `pit` INT NOT NULL DEFAULT 0,
+    `strike` INT NOT NULL DEFAULT 0,
+    `ball` INT NOT NULL DEFAULT 0,
+    `out` INT NOT NULL DEFAULT 0,
+    `member_id` INT NOT NULL,
+    `inning_id` INT NOT NULL,
+    PRIMARY KEY (`id`),
+    INDEX `fk_pitcher_history_member1_idx` (`member_id` ASC) VISIBLE,
+    INDEX `fk_pitcher_history_inning1_idx` (`inning_id` ASC) VISIBLE,
+    CONSTRAINT `fk_pitcher_history_inning1`
+    FOREIGN KEY (`inning_id`)
+    REFERENCES `baseball`.`inning` (`id`),
+    CONSTRAINT `fk_pitcher_history_member1`
+    FOREIGN KEY (`member_id`)
+    REFERENCES `baseball`.`member` (`id`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `baseball`.`score_history`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `baseball`.`score_history`;
+CREATE TABLE IF NOT EXISTS `baseball`.`score_history` (
+    `id` INT AUTO_INCREMENT,
+    `inning_score` INT NOT NULL DEFAULT 0,
+    `team_id` INT NOT NULL,
+    `inning_id` INT NOT NULL,
+    PRIMARY KEY (`id`),
+    INDEX `fk_score_history_team1_idx` (`team_id` ASC) VISIBLE,
+    INDEX `fk_score_history_inning1_idx` (`inning_id` ASC) VISIBLE,
+    CONSTRAINT `fk_score_history_inning1`
+    FOREIGN KEY (`inning_id`)
+    REFERENCES `baseball`.`inning` (`id`),
+    CONSTRAINT `fk_score_history_team1`
+    FOREIGN KEY (`team_id`)
+    REFERENCES `baseball`.`team` (`id`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `baseball`.`user`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `baseball`.`user`;
+CREATE TABLE IF NOT EXISTS `baseball`.`user` (
+    `id` INT AUTO_INCREMENT,
+    `user_id` VARCHAR(45) NOT NULL,
+    `email` VARCHAR(45) NOT NULL,
+    `name` VARCHAR(45) NULL DEFAULT NULL,
+    `token` VARCHAR(255) NULL DEFAULT NULL,
+    `game_id` INT NOT NULL,
+    PRIMARY KEY (`id`),
+    INDEX `fk_user_game1_idx` (`game_id` ASC) VISIBLE,
+    CONSTRAINT `fk_user_game1`
+    FOREIGN KEY (`game_id`)
+    REFERENCES `baseball`.`game` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-    ENGINE = InnoDB;
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
