@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 public enum Path: String {
     case login
     case logout
@@ -23,7 +22,7 @@ public enum Path: String {
         case PATCH
     }
     
-    var HTTPMethod: HTTPMethod {
+    var needHTTPMethod: HTTPMethod {
         switch self {
         case .login: return .POST
         case .gameStart: return .PATCH

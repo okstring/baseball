@@ -8,32 +8,38 @@
 import Foundation
 
 protocol ServerCommunicable {
-    func postLoginCode(kindOf kind: Path, callBackURLCode: String, complete: @escaping (Result<Data, NetworkingError>) -> ())
+    func postLoginCode(path: Path, callBackURLCode: String, complete: @escaping (Result<Data, NetworkingError>) -> ())
+    func request(path: Path, token: String?, complete: @escaping (Result<Data, NetworkingError>) -> ())
 }
 
 final class NetworkingCenter: ServerCommunicable {
-    func postLoginCode(kindOf kind: Path, callBackURLCode: String, complete: @escaping (Result<Data, NetworkingError>) -> ()) {
+    func postLoginCode(path: Path, callBackURLCode: String, complete: @escaping (Result<Data, NetworkingError>) -> ()) {
         guard let url = Endpoint.url(path: .login, callBackUrlCode: callBackURLCode) else { return }
 //        guard let url = URL(string: "http://\(self.getHOST()):8080/login?code=\(callBackURLCode)") else { return }
-        print(url)
         var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = kind.HTTPMethod.rawValue
+        urlRequest.httpMethod = path.needHTTPMethod.rawValue
         URLSession.init(configuration: .default).dataTask(with: urlRequest) { (data, response, error) in
-            if let error = error as NSError?, error.domain == NSURLErrorDomain, error.code == NSURLErrorNotConnectedToInternet {
-                complete(.failure(NetworkingError.notConnectedToInternet))
-                return
+            if let error = self.handleError(data: data, response: response, error: error) {
+                complete(.failure(error))
+            } else if let data = data {
+                complete(.success(data))
             }
-            
-            guard let data = data, let httpResponse = response as? HTTPURLResponse else {
-                complete(.failure(NetworkingError.networkError))
-                return
+        }.resume()
+    }
+    
+    func request(path: Path, token: String? = nil, complete: @escaping (Result<Data, NetworkingError>) -> ()) {
+        guard let url = Endpoint.url(path: path) else { return }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = path.needHTTPMethod.rawValue
+        if let token = token {
+            urlRequest.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        URLSession.init(configuration: .default).dataTask(with: urlRequest) { (data, response, error) in
+            if let error = self.handleError(data: data, response: response, error: error) {
+                complete(.failure(error))
+            } else if let data = data {
+                complete(.success(data))
             }
-            guard 200..<300 ~= httpResponse.statusCode else {
-                complete(.failure(NetworkingError.responseError))
-                return
-            }
-            
-            complete(.success(data))
         }.resume()
     }
 }
@@ -44,5 +50,19 @@ extension NetworkingCenter {
         let plist = NSDictionary(contentsOfFile: path)
         guard let key = plist?.object(forKey: "Host") as? String else { return "" }
         return key
+    }
+    
+    func handleError(data: Data?, response: URLResponse?, error: Error?) -> NetworkingError? {
+        if let error = error as NSError?, error.domain == NSURLErrorDomain, error.code == NSURLErrorNotConnectedToInternet {
+            return NetworkingError.notConnectedToInternet
+        }
+        
+        guard let httpResponse = response as? HTTPURLResponse, data != nil else {
+            return NetworkingError.networkError
+        }
+        guard 200..<300 ~= httpResponse.statusCode else {
+            return NetworkingError.responseError
+        }
+        return nil
     }
 }

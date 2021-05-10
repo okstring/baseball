@@ -28,7 +28,8 @@ final class OAuthViewController: UIViewController, ASWebAuthenticationPresentati
             switch result {
             case .success(let userDTO):
                 guard let vc = self.storyboard?.instantiateViewController(identifier: MainViewController.className) as? MainViewController else { return }
-                vc.receiveObject(user: userDTO, gameManager: self.gameManager)
+                self.gameManager.setToken(token: userDTO.token)
+                vc.receiveManager(gameManager: self.gameManager)
                 self.navigationController?.pushViewController(vc, animated: true)
             case .failure(let error):
                 #if DEBUG

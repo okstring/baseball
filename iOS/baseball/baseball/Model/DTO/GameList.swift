@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct GameList {
-    private let pairTeams: PairTeams
+struct GameList: Codable {
+    let pairTeams: PairTeams
 }
