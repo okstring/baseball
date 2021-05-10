@@ -1,21 +1,43 @@
 package com.eNoLJ.baseball.service;
 
+import com.eNoLJ.baseball.domain.game.GameRepository;
+import com.eNoLJ.baseball.domain.member.MemberRepository;
+import com.eNoLJ.baseball.domain.team.Team;
+import com.eNoLJ.baseball.domain.team.TeamRepository;
+import com.eNoLJ.baseball.exception.EntityNotFoundException;
+import com.eNoLJ.baseball.exception.ErrorMessage;
 import com.eNoLJ.baseball.web.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.eNoLJ.baseball.web.dto.GameEntryDTO.createGameEntryDTO;
 
 @Service
 public class GameService {
 
+    private final GameRepository gameRepository;
+    private final TeamRepository teamRepository;
+    private final MemberRepository memberRepository;
+
+    public GameService(GameRepository gameRepository, TeamRepository teamRepository, MemberRepository memberRepository) {
+        this.gameRepository = gameRepository;
+        this.teamRepository = teamRepository;
+        this.memberRepository = memberRepository;
+    }
+
     public List<GameEntryDTO> getGameList() {
-        List<GameEntryDTO> gameEntryDTOList = new ArrayList<>();
-        gameEntryDTOList.add(new GameEntryDTO("Marvel", "Captin"));
-        gameEntryDTOList.add(new GameEntryDTO("Tigers", "Twins"));
-        gameEntryDTOList.add(new GameEntryDTO("Dodgers", "Rockets"));
-        gameEntryDTOList.add(new GameEntryDTO("Pintos", "Heros"));
-        return gameEntryDTOList;
+        return gameRepository.findAll().stream()
+                .map(game -> createGameEntryDTO(findTeamById(game.getHomeTeamId()), findTeamById(game.getAwayTeamId())))
+                .collect(Collectors.toList());
+    }
+
+    private Team findTeamById(Long id) {
+        return teamRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(ErrorMessage.ENTITY_NOT_FOUND)
+        );
     }
 
     public List<MemberDTO> getMembersByTeamName(String teamName) {
