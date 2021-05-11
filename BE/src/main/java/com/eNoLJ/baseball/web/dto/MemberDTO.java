@@ -8,14 +8,14 @@ public class MemberDTO {
     private String name;
     private double AVG;
 
-    public static MemberDTO createMemberDTO(Member member) {
-        return new MemberDTO(member.getId(), member.getName(), member.getAvg());
-    }
-
     public MemberDTO(Long id, String name, double AVG) {
         this.id = id;
         this.name = name;
         this.AVG = AVG;
+    }
+
+    public static MemberDTO createMemberDTO(Member member) {
+        return new MemberDTO(member.getId(), member.getName(), member.getAvg());
     }
 
     public Long getId() {
