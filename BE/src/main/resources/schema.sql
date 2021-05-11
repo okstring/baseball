@@ -173,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `baseball`.`user` (
     `email` VARCHAR(45) NOT NULL,
     `name` VARCHAR(45) NULL DEFAULT NULL,
     `token` VARCHAR(255) NULL DEFAULT NULL,
-    `game_id` INT NOT NULL,
+    `game_id` INT NULL,
     PRIMARY KEY (`id`),
     INDEX `fk_user_game1_idx` (`game_id` ASC) VISIBLE,
     CONSTRAINT `fk_user_game1`
