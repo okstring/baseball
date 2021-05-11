@@ -1,16 +1,19 @@
 package com.eNoLJ.baseball.service;
 
+import com.eNoLJ.baseball.domain.game.Game;
 import com.eNoLJ.baseball.domain.game.GameRepository;
-import com.eNoLJ.baseball.domain.member.MemberRepository;
+import com.eNoLJ.baseball.domain.hitterHistory.HitterHistory;
+import com.eNoLJ.baseball.domain.inning.Inning;
+import com.eNoLJ.baseball.domain.member.Member;
+import com.eNoLJ.baseball.domain.pitcherHistory.PitcherHistory;
+import com.eNoLJ.baseball.domain.scoreHistory.ScoreHistory;
 import com.eNoLJ.baseball.domain.team.Team;
-import com.eNoLJ.baseball.domain.team.TeamRepository;
 import com.eNoLJ.baseball.exception.EntityNotFoundException;
-import com.eNoLJ.baseball.exception.ErrorMessage;
 import com.eNoLJ.baseball.web.dto.*;
+import com.eNoLJ.baseball.web.utils.Type;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.eNoLJ.baseball.web.dto.GameEntryDTO.createGameEntryDTO;
@@ -51,16 +54,44 @@ public class GameService {
     }
 
     public GameInfoResponseDTO startGameByTeamName(String teamName) {
-        RoundInfoDTO roundInfoDTO = new RoundInfoDTO(2, 1, 2, 1, false, true, false);
-        OffenceTeamDTO offenceTeamDTO = new OffenceTeamDTO("Marvel", 5, new HitterDTO("류현진", 0.377 , 1, 0));
-        DefenseTeamDTO defenseTeamDTO = new DefenseTeamDTO("Captin", 1, new PitcherDTO("최동원", 39));
-        List<String> story = new ArrayList<>();
-        story.add("스트라이크");
-        story.add("볼");
-        story.add("볼");
-        story.add("볼");
-        story.add("스트라이크");
-        return new GameInfoResponseDTO("Captin", roundInfoDTO, offenceTeamDTO, defenseTeamDTO, story);
+        // game에 선택한 team name 넣기
+        Team team = findTeamByTeamName(teamName);
+        Game game = findGameByTeam(team);
+        game.choiceTeam(team);
+
+        // score_history 만들기, teamId는 awayTeam
+        ScoreHistory scoreHistory = ScoreHistory.createScoreHistory(team);
+
+        // hitter_history 만들기, memberId는 awayTeam의 멤버
+        Member hitterMember = game.getAwayTeamMembers().stream()
+                .findFirst()
+                .orElseThrow(EntityNotFoundException::new);
+        HitterHistory hitterHistory = HitterHistory.createHitterHistory(hitterMember);
+
+        // pitcher_history 만들기, memberId는 homeTeam의 멤버
+        Member pitcherMember = game.getHomeTeamMembers().stream()
+                .findFirst()
+                .orElseThrow(EntityNotFoundException::new);
+        PitcherHistory pitcherHistory = PitcherHistory.createPitcherHistory(pitcherMember);
+
+        // inning 만들기
+        Inning inning = Inning.createInning(scoreHistory, hitterHistory, pitcherHistory);
+        game.addInning(inning);
+        gameRepository.save(game);
+
+        // DTO 만들기
+        RoundInfoDTO roundInfoDTO = RoundInfoDTO.createRoundInfoDTO(inning);
+        OffenceTeamDTO offenceTeamDTO = OffenceTeamDTO.createOffenceTeamDTO(game, HitterDTO.createHitterDTO(hitterMember, hitterHistory));
+        DefenseTeamDTO defenseTeamDTO = DefenseTeamDTO.createDefenseTeamDTO(game, PitcherDTO.createPitcherDTO(pitcherMember, pitcherHistory));
+        List<String> story = game.getSboHistoryByRecentInning();
+        return new GameInfoResponseDTO(game.getChoiceTeamName(), roundInfoDTO, offenceTeamDTO, defenseTeamDTO, story);
+    }
+
+    private Game findGameByTeam(Team team) {
+        return gameRepository.findAll().stream()
+                .filter(game -> game.verifyTeam(team))
+                .findFirst()
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     public GameInfoResponseDTO pitchGame(GameInfoRequestDTO requestDTO) {

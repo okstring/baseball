@@ -1,14 +1,85 @@
 package com.eNoLJ.baseball.domain.game;
 
+import com.eNoLJ.baseball.domain.inning.Inning;
+import com.eNoLJ.baseball.domain.member.Member;
+import com.eNoLJ.baseball.domain.team.Team;
+import com.eNoLJ.baseball.exception.EntityNotFoundException;
+import com.eNoLJ.baseball.web.utils.Type;
 import org.springframework.data.annotation.Id;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Game {
 
     @Id
     private Long id;
     private String choiceTeamName;
-    private Long homeTeamId;
-    private Long awayTeamId;
+    private List<Team> teams = new ArrayList<>();
+    private List<Inning> innings = new ArrayList<>();
+
+    public void choiceTeam(Team team) {
+        this.choiceTeamName = team.getName();
+    }
+
+    public void addInning(Inning inning) {
+        this.innings.add(inning);
+    }
+
+    public boolean verifyTeam(Team checkTeam) {
+        List<Team> teams = this.teams.stream()
+                .filter(team -> team.verifyTeam(checkTeam))
+                .collect(Collectors.toList());
+        return teams.size() == 1;
+    }
+
+    public List<String> getSboHistoryByRecentInning() {
+        return innings.get(innings.size() - 1).getSboHistory();
+    }
+
+    public Team getTeamByType(Type type) {
+        return teams.stream()
+                .filter(team -> team.getType() == type)
+                .findFirst()
+                .orElseThrow(EntityNotFoundException::new);
+    }
+
+    public Team getHomeTeam() {
+        return getTeamByType(Type.HOME);
+    }
+
+    public Team getAwayTeam() {
+        return getTeamByType(Type.AWAY);
+    }
+
+    public List<Member> getHomeTeamMembers() {
+        return getHomeTeam().getMembers();
+    }
+
+    public List<Member> getAwayTeamMembers() {
+        return getAwayTeam().getMembers();
+    }
+
+    public String getHomeTeamName() {
+        return getHomeTeam().getName();
+    }
+
+    public String getAwayTeamName() {
+        return getAwayTeam().getName();
+    }
+
+    public int getHomeTeamScore() {
+        return innings.stream()
+                .mapToInt(inning -> inning.getTotalScoreByTeamId(getHomeTeam().getId()))
+                .sum();
+    }
+
+    public int getAwayTeamScore() {
+        return innings.stream()
+                .mapToInt(inning -> inning.getTotalScoreByTeamId(getAwayTeam().getId()))
+                .sum();
+    }
 
     public Long getId() {
         return id;
@@ -18,11 +89,11 @@ public class Game {
         return choiceTeamName;
     }
 
-    public Long getHomeTeamId() {
-        return homeTeamId;
+    public List<Team> getTeams() {
+        return teams;
     }
 
-    public Long getAwayTeamId() {
-        return awayTeamId;
+    public List<Inning> getInnings() {
+        return innings;
     }
 }
