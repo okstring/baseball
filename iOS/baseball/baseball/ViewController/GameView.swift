@@ -125,4 +125,13 @@ class GameView: UIView {
         baseLineLayer.strokeColor = UIColor.gray.cgColor
         self.layer.addSublayer(baseLineLayer)
     }
-}
+    
+    func makePlayerLayer() {
+        let layer = CALayer()
+        self.playerlayers.append(layer)
+        let playerImage = UIImage.init(systemName: "figure.walk")?.cgImage
+        layer.frame = CGRect(x: centerX-15, y: centerY+85, width: 30, height: 30)
+        layer.contents = playerImage
+        print(layer.position)
+        self.layer.addSublayer(layer)
+    }
