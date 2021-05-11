@@ -36,6 +36,7 @@ class GameViewController: UIViewController {
         registerNib()
         applySnapshot()
         configureTableViewHeight()
+        appearPitchButton()
     }
     
     func configureTableViewHeight() {
@@ -68,13 +69,18 @@ class GameViewController: UIViewController {
     
     func appearPitchButton() {
         let pitchButton = PitchButton()
-        self.gameView.addSubview(pitchButton)
+        pitchButton.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
+        self.view.addSubview(pitchButton)
         pitchButton.snp.makeConstraints {
             $0.centerX.centerY.equalTo(self.gameView.safeAreaLayoutGuide)
             $0.width.equalTo(120)
             $0.height.equalTo(30)
         }
-        
     }
+    @objc func buttonDidTap() {
+        gameView.hit()
+    }
+    
+    
 }
 

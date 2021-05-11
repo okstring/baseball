@@ -12,6 +12,46 @@ class GameView: UIView {
     
     private var baseLayer = CAShapeLayer()
     private var baseLineLayer = CAShapeLayer()
+    private var playerlayers: [CALayer] = []
+    private lazy var centerX = CGFloat(bounds.size.width/2)
+    private lazy var centerY = CGFloat(bounds.size.height/2)
+    private lazy var firstBaseAnimation: CABasicAnimation = {
+       let animation = CABasicAnimation(keyPath: "position")
+        animation.fromValue = CGPoint(x: centerX, y: centerY+100)
+        animation.toValue = CGPoint(x: centerX+100, y: centerY)
+        animation.duration = 3
+        animation.isRemovedOnCompletion = false
+        animation.fillMode = .forwards
+        return animation
+    }()
+    private lazy var secondBaseAnimation: CABasicAnimation = {
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.fromValue = CGPoint(x: centerX+100, y: centerY)
+        animation.toValue = CGPoint(x: centerX, y: centerY-100)
+        animation.duration = 3
+        animation.isRemovedOnCompletion = false
+        animation.fillMode = .forwards
+        return animation
+    }()
+    private lazy var thirdBaseAnimation: CABasicAnimation = {
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.fromValue = CGPoint(x: centerX, y: centerY-100)
+        animation.toValue = CGPoint(x: centerX-100, y: centerY)
+        animation.duration = 3
+        animation.isRemovedOnCompletion = false
+        animation.fillMode = .forwards
+        return animation
+    }()
+    private lazy var homeBaseAnimation: CABasicAnimation = {
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.fromValue = CGPoint(x: centerX-100, y: centerY)
+        animation.toValue = CGPoint(x: centerX, y: centerY+100)
+        animation.duration = 3
+        animation.isRemovedOnCompletion = false
+        animation.fillMode = .forwards
+        return animation
+    }()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
