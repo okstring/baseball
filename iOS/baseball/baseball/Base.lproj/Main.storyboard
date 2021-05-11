@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tT6-il-JcV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bno-0s-Dys">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -419,51 +419,14 @@
                                                             </label>
                                                         </subviews>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="84" translatesAutoresizingMaskIntoConstraints="NO" id="NL1-XV-CCX">
-                                                        <rect key="frame" x="77" y="35" width="260" height="145"/>
-                                                        <subviews>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="diamond.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="TfM-8O-fMm">
-                                                                <rect key="frame" x="115" y="-0.5" width="30" height="32"/>
-                                                                <color key="tintColor" systemColor="systemBackgroundColor"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" constant="30" id="5K6-4j-nbk"/>
-                                                                    <constraint firstAttribute="height" constant="30.5" id="gGu-rM-BPv"/>
-                                                                </constraints>
-                                                            </imageView>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="200" translatesAutoresizingMaskIntoConstraints="NO" id="HHf-tI-y89">
-                                                                <rect key="frame" x="0.0" y="114.5" width="260" height="30.5"/>
-                                                                <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="diamond.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="9Hn-y5-qa2">
-                                                                        <rect key="frame" x="0.0" y="-0.5" width="30" height="32"/>
-                                                                        <color key="tintColor" systemColor="systemBackgroundColor"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="height" constant="30.5" id="3IY-YB-i90"/>
-                                                                            <constraint firstAttribute="width" constant="30" id="Cx9-zQ-duG"/>
-                                                                        </constraints>
-                                                                    </imageView>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="diamond.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="TAw-RT-8WW">
-                                                                        <rect key="frame" x="230" y="-0.5" width="30" height="32"/>
-                                                                        <color key="tintColor" systemColor="systemBackgroundColor"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="height" constant="30.5" id="6ug-eS-Sg7"/>
-                                                                            <constraint firstAttribute="width" constant="30" id="FRC-h7-c69"/>
-                                                                        </constraints>
-                                                                    </imageView>
-                                                                </subviews>
-                                                            </stackView>
-                                                        </subviews>
-                                                    </stackView>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.83529651169999997" green="0.83529412749999998" blue="0.83528703449999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
                                                     <constraint firstItem="ARY-Tj-BP1" firstAttribute="leading" secondItem="eRJ-jI-fyo" secondAttribute="leading" constant="15" id="BfM-Xg-lhG"/>
-                                                    <constraint firstAttribute="trailing" secondItem="NL1-XV-CCX" secondAttribute="trailing" constant="77" id="Rfz-Dk-pRB"/>
                                                     <constraint firstItem="ARY-Tj-BP1" firstAttribute="top" secondItem="eRJ-jI-fyo" secondAttribute="top" constant="15" id="aJ2-Ct-R91"/>
                                                     <constraint firstItem="DN0-rb-CpW" firstAttribute="top" secondItem="eRJ-jI-fyo" secondAttribute="top" constant="15" id="ceL-04-3dw"/>
                                                     <constraint firstAttribute="height" constant="330" id="fIN-37-uD6"/>
-                                                    <constraint firstItem="NL1-XV-CCX" firstAttribute="leading" secondItem="eRJ-jI-fyo" secondAttribute="leading" constant="77" id="thb-aJ-xxt"/>
                                                     <constraint firstAttribute="trailing" secondItem="DN0-rb-CpW" secondAttribute="trailing" constant="15" id="xt2-tp-Sws"/>
-                                                    <constraint firstItem="NL1-XV-CCX" firstAttribute="top" secondItem="eRJ-jI-fyo" secondAttribute="top" constant="35" id="yA2-vR-eMn"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KUf-ap-1Va">
@@ -1139,7 +1102,6 @@
     <resources>
         <image name="chart.bar.xaxis" catalog="system" width="128" height="98"/>
         <image name="circle" catalog="system" width="128" height="121"/>
-        <image name="diamond.fill" catalog="system" width="128" height="122"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
