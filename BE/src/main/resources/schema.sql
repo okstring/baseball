@@ -15,36 +15,13 @@ CREATE SCHEMA IF NOT EXISTS `baseball` DEFAULT CHARACTER SET utf8mb4 COLLATE utf
 USE `baseball` ;
 
 -- -----------------------------------------------------
--- Table `baseball`.`team`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `baseball`.`team`;
-CREATE TABLE IF NOT EXISTS `baseball`.`team` (
-    `id` INT AUTO_INCREMENT,
-    `name` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`id`))
-    ENGINE = InnoDB
-    DEFAULT CHARACTER SET = utf8mb4
-    COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
 -- Table `baseball`.`game`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `baseball`.`game`;
 CREATE TABLE IF NOT EXISTS `baseball`.`game` (
     `id` INT AUTO_INCREMENT,
     `choice_team_name` VARCHAR(45) NULL,
-    `home_team_id` INT NOT NULL,
-    `away_team_id` INT NOT NULL,
-    PRIMARY KEY (`id`),
-    INDEX `fk_match_team1_idx` (`home_team_id` ASC) VISIBLE,
-    INDEX `fk_match_team2_idx` (`away_team_id` ASC) VISIBLE,
-    CONSTRAINT `fk_match_team1`
-    FOREIGN KEY (`home_team_id`)
-    REFERENCES `baseball`.`team` (`id`),
-    CONSTRAINT `fk_match_team2`
-    FOREIGN KEY (`away_team_id`)
-    REFERENCES `baseball`.`team` (`id`))
+    PRIMARY KEY (`id`))
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
@@ -60,12 +37,35 @@ CREATE TABLE IF NOT EXISTS `baseball`.`inning` (
     `first_base` TINYINT(1) NOT NULL,
     `second_base` TINYINT(1) NOT NULL,
     `third_base` TINYINT(1) NOT NULL,
-    `game_id` INT NOT NULL,
+    `game` INT NOT NULL,
+    `game_key` INT,
     PRIMARY KEY (`id`),
-    INDEX `fk_inning_match1_idx` (`game_id` ASC) VISIBLE,
+    INDEX `fk_inning_match1_idx` (`game` ASC) VISIBLE,
     CONSTRAINT `fk_inning_match1`
-    FOREIGN KEY (`game_id`)
+    FOREIGN KEY (`game`)
     REFERENCES `baseball`.`game` (`id`))
+    ENGINE = InnoDB
+    DEFAULT CHARACTER SET = utf8mb4
+    COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `baseball`.`team`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `baseball`.`team`;
+CREATE TABLE IF NOT EXISTS `baseball`.`team` (
+    `id` INT AUTO_INCREMENT,
+    `name` VARCHAR(45) NOT NULL,
+    `type` VARCHAR(45) NOT NULL,
+    `game` INT NOT NULL,
+    `game_key` INT,
+    PRIMARY KEY (`id`),
+    INDEX `fk_team_game1_idx` (`game` ASC) VISIBLE,
+    CONSTRAINT `fk_team_game1`
+    FOREIGN KEY (`game`)
+    REFERENCES `baseball`.`game` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
@@ -79,11 +79,12 @@ CREATE TABLE IF NOT EXISTS `baseball`.`member` (
     `id` INT AUTO_INCREMENT,
     `name` VARCHAR(45) NOT NULL,
     `avg` DECIMAL(4,3) NOT NULL,
-    `team_id` INT NOT NULL,
+    `team` INT NOT NULL,
+    `team_key` INT,
     PRIMARY KEY (`id`),
-    INDEX `fk_member_team1_idx` (`team_id` ASC) VISIBLE,
+    INDEX `fk_member_team1_idx` (`team` ASC) VISIBLE,
     CONSTRAINT `fk_member_team1`
-    FOREIGN KEY (`team_id`)
+    FOREIGN KEY (`team`)
     REFERENCES `baseball`.`team` (`id`))
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb4
@@ -99,12 +100,13 @@ CREATE TABLE IF NOT EXISTS `baseball`.`hitter_history` (
     `tpa` INT NOT NULL,
     `hits` INT NOT NULL,
     `member_id` INT NOT NULL,
-    `inning_id` INT NOT NULL,
+    `inning` INT NOT NULL,
+    `inning_key` INT,
     PRIMARY KEY (`id`),
     INDEX `fk_hitter_history_member1_idx` (`member_id` ASC) VISIBLE,
-    INDEX `fk_hitter_history_inning1_idx` (`inning_id` ASC) VISIBLE,
+    INDEX `fk_hitter_history_inning1_idx` (`inning` ASC) VISIBLE,
     CONSTRAINT `fk_hitter_history_inning1`
-    FOREIGN KEY (`inning_id`)
+    FOREIGN KEY (`inning`)
     REFERENCES `baseball`.`inning` (`id`),
     CONSTRAINT `fk_hitter_history_member1`
     FOREIGN KEY (`member_id`)
@@ -125,12 +127,13 @@ CREATE TABLE IF NOT EXISTS `baseball`.`pitcher_history` (
     `ball` INT NOT NULL,
     `out` INT NOT NULL,
     `member_id` INT NOT NULL,
-    `inning_id` INT NOT NULL,
+    `inning` INT NOT NULL,
+    `inning_key` INT,
     PRIMARY KEY (`id`),
     INDEX `fk_pitcher_history_member1_idx` (`member_id` ASC) VISIBLE,
-    INDEX `fk_pitcher_history_inning1_idx` (`inning_id` ASC) VISIBLE,
+    INDEX `fk_pitcher_history_inning1_idx` (`inning` ASC) VISIBLE,
     CONSTRAINT `fk_pitcher_history_inning1`
-    FOREIGN KEY (`inning_id`)
+    FOREIGN KEY (`inning`)
     REFERENCES `baseball`.`inning` (`id`),
     CONSTRAINT `fk_pitcher_history_member1`
     FOREIGN KEY (`member_id`)
@@ -148,12 +151,13 @@ CREATE TABLE IF NOT EXISTS `baseball`.`score_history` (
     `id` INT AUTO_INCREMENT,
     `inning_score` INT NOT NULL,
     `team_id` INT NOT NULL,
-    `inning_id` INT NOT NULL,
+    `inning` INT NOT NULL,
+    `inning_key` INT NULL,
     PRIMARY KEY (`id`),
     INDEX `fk_score_history_team1_idx` (`team_id` ASC) VISIBLE,
-    INDEX `fk_score_history_inning1_idx` (`inning_id` ASC) VISIBLE,
+    INDEX `fk_score_history_inning1_idx` (`inning` ASC) VISIBLE,
     CONSTRAINT `fk_score_history_inning1`
-    FOREIGN KEY (`inning_id`)
+    FOREIGN KEY (`inning`)
     REFERENCES `baseball`.`inning` (`id`),
     CONSTRAINT `fk_score_history_team1`
     FOREIGN KEY (`team_id`)
@@ -189,4 +193,3 @@ CREATE TABLE IF NOT EXISTS `baseball`.`user` (
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
