@@ -57,9 +57,9 @@ DROP TABLE IF EXISTS `baseball`.`inning`;
 CREATE TABLE IF NOT EXISTS `baseball`.`inning` (
     `id` INT AUTO_INCREMENT,
     `round` INT NOT NULL,
-    `first_base` TINYINT(1) NOT NULL DEFAULT 0,
-    `second_base` TINYINT(1) NOT NULL DEFAULT 0,
-    `third_base` TINYINT(1) NOT NULL DEFAULT 0,
+    `first_base` TINYINT(1) NOT NULL,
+    `second_base` TINYINT(1) NOT NULL,
+    `third_base` TINYINT(1) NOT NULL,
     `game_id` INT NOT NULL,
     PRIMARY KEY (`id`),
     INDEX `fk_inning_match1_idx` (`game_id` ASC) VISIBLE,
@@ -96,8 +96,8 @@ CREATE TABLE IF NOT EXISTS `baseball`.`member` (
 DROP TABLE IF EXISTS `baseball`.`hitter_history`;
 CREATE TABLE IF NOT EXISTS `baseball`.`hitter_history` (
     `id` INT AUTO_INCREMENT,
-    `tpa` INT NOT NULL DEFAULT 0,
-    `hits` INT NOT NULL DEFAULT 0,
+    `tpa` INT NOT NULL,
+    `hits` INT NOT NULL,
     `member_id` INT NOT NULL,
     `inning_id` INT NOT NULL,
     PRIMARY KEY (`id`),
@@ -120,10 +120,10 @@ CREATE TABLE IF NOT EXISTS `baseball`.`hitter_history` (
 DROP TABLE IF EXISTS `baseball`.`pitcher_history`;
 CREATE TABLE IF NOT EXISTS `baseball`.`pitcher_history` (
     `id` INT AUTO_INCREMENT,
-    `pit` INT NOT NULL DEFAULT 0,
-    `strike` INT NOT NULL DEFAULT 0,
-    `ball` INT NOT NULL DEFAULT 0,
-    `out` INT NOT NULL DEFAULT 0,
+    `pit` INT NOT NULL,
+    `strike` INT NOT NULL,
+    `ball` INT NOT NULL,
+    `out` INT NOT NULL,
     `member_id` INT NOT NULL,
     `inning_id` INT NOT NULL,
     PRIMARY KEY (`id`),
@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `baseball`.`pitcher_history` (
 DROP TABLE IF EXISTS `baseball`.`score_history`;
 CREATE TABLE IF NOT EXISTS `baseball`.`score_history` (
     `id` INT AUTO_INCREMENT,
-    `inning_score` INT NOT NULL DEFAULT 0,
+    `inning_score` INT NOT NULL,
     `team_id` INT NOT NULL,
     `inning_id` INT NOT NULL,
     PRIMARY KEY (`id`),
@@ -171,8 +171,8 @@ CREATE TABLE IF NOT EXISTS `baseball`.`user` (
     `id` INT AUTO_INCREMENT,
     `user_id` VARCHAR(45) NOT NULL,
     `email` VARCHAR(45) NOT NULL,
-    `name` VARCHAR(45) NULL DEFAULT NULL,
-    `token` VARCHAR(255) NULL DEFAULT NULL,
+    `name` VARCHAR(45) NULL,
+    `token` VARCHAR(255) NULL,
     `game_id` INT NULL,
     PRIMARY KEY (`id`),
     INDEX `fk_user_game1_idx` (`game_id` ASC) VISIBLE,
