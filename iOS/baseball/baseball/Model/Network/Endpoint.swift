@@ -13,6 +13,7 @@ public enum Path: String {
     case memberList
     case gameList = "games"
     case gameStart
+    case gamePlaying
     case gameScore = "games/scores"
     case playerScore
     
@@ -25,7 +26,7 @@ public enum Path: String {
     var needHTTPMethod: HTTPMethod {
         switch self {
         case .login: return .POST
-        case .gameStart: return .PATCH
+        case .gamePlaying: return .PATCH
         default: return .GET
         }
     }

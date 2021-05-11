@@ -8,8 +8,8 @@
 import Foundation
 
 struct Hitter: Codable {
-    private let name: String
-    private let AVG: Double
-    private let TPA: Int
-    private let hits: Int
+    let name: String
+    let avg: Double
+    let tpa: Int
+    let hits: Int
 }

@@ -9,7 +9,7 @@ import Foundation
 
 protocol ServerCommunicable {
     func postLoginCode(path: Path, callBackURLCode: String, complete: @escaping (Result<Data, NetworkingError>) -> ())
-    func request(path: Path, token: String?, complete: @escaping (Result<Data, NetworkingError>) -> ())
+    func request(path: Path, token: String?, parameter: String?, complete: @escaping (Result<Data, NetworkingError>) -> ())
 }
 
 final class NetworkingCenter: ServerCommunicable {
@@ -26,13 +26,14 @@ final class NetworkingCenter: ServerCommunicable {
         }.resume()
     }
     
-    func request(path: Path, token: String? = nil, complete: @escaping (Result<Data, NetworkingError>) -> ()) {
-        guard let url = Endpoint.url(path: path) else { return }
+    func request(path: Path, token: String? = nil, parameter: String? = nil, complete: @escaping (Result<Data, NetworkingError>) -> ()) {
+        guard let url = Endpoint.url(path: path, parameter: parameter ?? "") else { return }
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = path.needHTTPMethod.rawValue
         if let token = token {
             urlRequest.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
+        print(path.needHTTPMethod.rawValue)
         URLSession.init(configuration: .default).dataTask(with: urlRequest) { (data, response, error) in
             if let error = self.handleError(data: data, response: response, error: error) {
                 complete(.failure(error))

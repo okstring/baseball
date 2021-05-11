@@ -9,7 +9,7 @@ import UIKit
 
 final class MainViewController: UIViewController {
     @IBOutlet var teams: [UIButton]!
-    private var gameManager: GameListManager!
+    private var gameManager: GameManager!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +21,7 @@ final class MainViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
-    func receiveManager(gameManager: GameListManager) {
+    func receiveManager(gameManager: GameManager) {
         self.gameManager = gameManager
     }
     
@@ -55,15 +55,16 @@ final class MainViewController: UIViewController {
     @objc func pushGameTabBar(_ sender: UIButton) {
         guard let vc = self.storyboard?.instantiateViewController(identifier: GameTabBarViewController.className) as? GameTabBarViewController else { return }
         //MARK: - network 부분 처리
-        self.gameManager.getRequest(of: .gameStart) { (result: Result<Game, NetworkingError>) in
+        self.gameManager.getRequest(of: .gameStart, parameter: sender.currentTitle) { (result: Result<Game, NetworkingError>) in
             switch result {
             case .success(let game):
                 print(game)
+                self.navigationController?.pushViewController(vc, animated: true)
             case .failure(let error):
-                print(error.rawValue)
+                #if DEBUG
+                NSLog(error.rawValue)
+                #endif
             }
-            self.navigationController?.pushViewController(vc, animated: true)
         }
-        
     }
 }
