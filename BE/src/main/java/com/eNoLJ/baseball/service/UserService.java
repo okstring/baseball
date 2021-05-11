@@ -73,8 +73,6 @@ public class UserService {
     }
 
     private User findByUserId(String userId) {
-        return userRepository.findByUserId(userId).orElseThrow(
-                () -> new EntityNotFoundException(ErrorMessage.ENTITY_NOT_FOUND)
-        );
+        return userRepository.findByUserId(userId).orElseThrow(EntityNotFoundException::new);
     }
 }
