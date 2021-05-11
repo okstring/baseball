@@ -8,7 +8,7 @@
 import Foundation
 
 struct UserDTO: Codable {
-    private let name: String
+    private let name: String?
     private let email: String
     private let userId: String
     let token: String
