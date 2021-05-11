@@ -11,14 +11,14 @@ import AuthenticationServices
 
 final class OAuthViewController: UIViewController, ASWebAuthenticationPresentationContextProviding {
     var webAuthSession: ASWebAuthenticationSession?
-    var gameManager: GameManager!
+    var gameManager: GameListManager!
     var oauthManager: OAuthManager!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         let networkingCenter = NetworkingCenter()
         let jsonProcessCenter = JSONProcessCenter()
-        self.gameManager = GameManager(serverCommunicable: networkingCenter, JSONDecodable: jsonProcessCenter)
+        self.gameManager = GameListManager(serverCommunicable: networkingCenter, JSONDecodable: jsonProcessCenter)
         self.oauthManager = OAuthManager(serverCommunicable: networkingCenter, JSONDecodable: jsonProcessCenter)
         self.configOAuth()
     }

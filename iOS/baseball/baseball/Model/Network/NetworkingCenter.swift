@@ -15,7 +15,6 @@ protocol ServerCommunicable {
 final class NetworkingCenter: ServerCommunicable {
     func postLoginCode(path: Path, callBackURLCode: String, complete: @escaping (Result<Data, NetworkingError>) -> ()) {
         guard let url = Endpoint.url(path: .login, callBackUrlCode: callBackURLCode) else { return }
-//        guard let url = URL(string: "http://\(self.getHOST()):8080/login?code=\(callBackURLCode)") else { return }
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = path.needHTTPMethod.rawValue
         URLSession.init(configuration: .default).dataTask(with: urlRequest) { (data, response, error) in
@@ -61,6 +60,9 @@ extension NetworkingCenter {
             return NetworkingError.networkError
         }
         guard 200..<300 ~= httpResponse.statusCode else {
+            #if DEBUG
+            NSLog("\(httpResponse.statusCode)")
+            #endif
             return NetworkingError.responseError
         }
         return nil

@@ -9,10 +9,11 @@ import UIKit
 
 final class MainViewController: UIViewController {
     @IBOutlet var teams: [UIButton]!
-    var gameManager: GameManager!
+    private var gameManager: GameListManager!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.getPlayer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -20,15 +21,15 @@ final class MainViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
-    func receiveManager(gameManager: GameManager) {
+    func receiveManager(gameManager: GameListManager) {
         self.gameManager = gameManager
     }
     
     func getPlayer() {
-        self.gameManager.getRequest(of: .gameList) { (result: Result<[GameList], NetworkingError>) in
+        self.gameManager.getRequest(of: .gameList) { (result: Result<[PairTeams], NetworkingError>) in
             switch result {
-            case .success(let gameList):
-                self.loadTeamList(gameList: gameList)
+            case .success(let pairTeams):
+                self.loadTeamList(pairTeams: pairTeams)
             case .failure(let error):
                 #if DEBUG
                 NSLog(error.rawValue)
@@ -37,11 +38,12 @@ final class MainViewController: UIViewController {
         }
     }
     
-    func loadTeamList(gameList: [GameList]) {
-        for (index, lineup) in gameList.enumerated() {
-            teams[index * 2].setTitle(lineup.pairTeams.homeTeamName, for: .normal)
-            teams[index * 2 + 1].setTitle(lineup.pairTeams.awayTeamName, for: .normal)
+    func loadTeamList(pairTeams: [PairTeams]) {
+        for (index, lineup) in pairTeams.enumerated() {
+            teams[index * 2].setTitle(lineup.homeTeamName, for: .normal)
+            teams[index * 2 + 1].setTitle(lineup.awayTeamName, for: .normal)
         }
+        self.addTarget()
     }
     
     func addTarget() {
@@ -52,10 +54,16 @@ final class MainViewController: UIViewController {
     
     @objc func pushGameTabBar(_ sender: UIButton) {
         guard let vc = self.storyboard?.instantiateViewController(identifier: GameTabBarViewController.className) as? GameTabBarViewController else { return }
-        //MARK: - network, 둘 다 불러와야 하는건가?
-        self.gameManager.getRequest(of: Path.gameStart) { (result: Result<Game, NetworkingError>) in
-            <#code#>
+        //MARK: - network 부분 처리
+        self.gameManager.getRequest(of: .gameStart) { (result: Result<Game, NetworkingError>) in
+            switch result {
+            case .success(let game):
+                print(game)
+            case .failure(let error):
+                print(error.rawValue)
+            }
+            self.navigationController?.pushViewController(vc, animated: true)
         }
-        self.navigationController?.pushViewController(vc, animated: true)
+        
     }
 }

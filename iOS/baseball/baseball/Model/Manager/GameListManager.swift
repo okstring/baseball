@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class GameManager {
+final class GameListManager {
     private let networkingCenter: ServerCommunicable
     private let jsonProcessCenter: JSONDecodable
     private(set) var token: String?
