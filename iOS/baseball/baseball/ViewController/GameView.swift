@@ -6,10 +6,8 @@
 //
 
 import UIKit
-import SnapKit
 
 class GameView: UIView {
-    
     private var baseLayer = CAShapeLayer()
     private var baseLineLayer = CAShapeLayer()
     private var playerlayers: [CALayer] = []
@@ -52,7 +50,6 @@ class GameView: UIView {
         return animation
     }()
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUpBaseLineLayer()
@@ -67,8 +64,6 @@ class GameView: UIView {
     
     func setUpBaseLayer() {
         let path = UIBezierPath()
-        let centerX = CGFloat(bounds.size.width/2)
-        let centerY = CGFloat(bounds.size.height/2)
         
         //홈베이스
         path.move(to: CGPoint(x: centerX+10, y: centerY+110))
@@ -109,8 +104,6 @@ class GameView: UIView {
     
     func setUpBaseLineLayer() {
         let path = UIBezierPath()
-        let centerX = CGFloat(bounds.size.width/2)
-        let centerY = CGFloat(bounds.size.height/2)
         
         path.move(to: CGPoint(x: centerX, y: centerY+100))
         path.addLine(to: CGPoint(x: centerX+100, y: centerY))
@@ -135,3 +128,41 @@ class GameView: UIView {
         print(layer.position)
         self.layer.addSublayer(layer)
     }
+    
+    func hit() {
+        makePlayerLayer()
+        let firstBasePosition = CGPoint(x: centerX+100, y: centerY)
+        let secondBasePosition = CGPoint(x: centerX, y: centerY-100)
+        let thirdBasePosition = CGPoint(x: centerX-100, y: centerY)
+        let homeBasePosition = CGPoint(x: centerX, y: centerY+100)
+        playerlayers.forEach { layer in
+            CATransaction.begin()
+            switch layer.position {
+            case homeBasePosition:
+                CATransaction.setCompletionBlock {
+                    layer.position = firstBasePosition
+                }
+                layer.add(firstBaseAnimation, forKey: "toFirst")
+            case firstBasePosition:
+                CATransaction.setCompletionBlock {
+                    layer.position = secondBasePosition
+                }
+                layer.add(secondBaseAnimation, forKey: "toSecond")
+            case secondBasePosition:
+                CATransaction.setCompletionBlock {
+                    layer.position = thirdBasePosition
+                }
+                layer.add(thirdBaseAnimation, forKey: "toThird")
+            case thirdBasePosition:
+                CATransaction.setCompletionBlock {
+                    layer.removeFromSuperlayer()
+                }
+                layer.add(homeBaseAnimation, forKey: "toHome")
+            default:
+                break
+            }
+            CATransaction.commit()
+        }
+    }
+}
+
