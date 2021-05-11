@@ -29,14 +29,20 @@ final class GameViewController: UIViewController {
     @IBOutlet weak var ballCount: UITableView!
     @IBOutlet var tableViewHeight: NSLayoutConstraint!
     private lazy var dataSource = makeDataSource()
+    private(set) var gameManager: GameManager!
     var foos: [Foo] = [Foo(title: "aa")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         registerNib()
         applySnapshot()
         configureTableViewHeight()
         appearPitchButton()
+    }
+    
+    func setGameManager(_ manager: GameManager) {
+        self.gameManager = manager
     }
     
     private func configureTableViewHeight() {

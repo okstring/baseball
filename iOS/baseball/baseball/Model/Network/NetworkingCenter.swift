@@ -15,8 +15,10 @@ protocol ServerCommunicable {
 final class NetworkingCenter: ServerCommunicable {
     func postLoginCode(path: Path, callBackURLCode: String, complete: @escaping (Result<Data, NetworkingError>) -> ()) {
         guard let url = Endpoint.url(path: .login, callBackUrlCode: callBackURLCode) else { return }
+        
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = path.needHTTPMethod.rawValue
+        
         URLSession.init(configuration: .default).dataTask(with: urlRequest) { (data, response, error) in
             if let error = self.handleError(data: data, response: response, error: error) {
                 complete(.failure(error))
@@ -28,12 +30,13 @@ final class NetworkingCenter: ServerCommunicable {
     
     func request(path: Path, token: String? = nil, parameter: String? = nil, complete: @escaping (Result<Data, NetworkingError>) -> ()) {
         guard let url = Endpoint.url(path: path, parameter: parameter ?? "") else { return }
+        
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = path.needHTTPMethod.rawValue
         if let token = token {
             urlRequest.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
-        print(path.needHTTPMethod.rawValue)
+        
         URLSession.init(configuration: .default).dataTask(with: urlRequest) { (data, response, error) in
             if let error = self.handleError(data: data, response: response, error: error) {
                 complete(.failure(error))
@@ -45,14 +48,14 @@ final class NetworkingCenter: ServerCommunicable {
 }
 
 extension NetworkingCenter {
-    func getHOST() -> String {
+    private func getHOST() -> String {
         guard let path = Bundle.main.path(forResource: "NetworkElements", ofType: "plist") else { return "" }
         let plist = NSDictionary(contentsOfFile: path)
         guard let key = plist?.object(forKey: "Host") as? String else { return "" }
         return key
     }
     
-    func handleError(data: Data?, response: URLResponse?, error: Error?) -> NetworkingError? {
+    private func handleError(data: Data?, response: URLResponse?, error: Error?) -> NetworkingError? {
         if let error = error as NSError?, error.domain == NSURLErrorDomain, error.code == NSURLErrorNotConnectedToInternet {
             return NetworkingError.notConnectedToInternet
         }

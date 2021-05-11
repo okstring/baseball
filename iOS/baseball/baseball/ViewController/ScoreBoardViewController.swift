@@ -15,6 +15,7 @@ final class ScoreBoardViewController: UIViewController {
     @IBOutlet weak var playerScoreTableView: UITableView!
     @IBOutlet weak var teamControllBar: UISegmentedControl!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
+    private(set) var gameManager: GameManager!
     
     fileprivate typealias DataSource = UITableViewDiffableDataSource<String, PlayerScoreBoard>
     fileprivate typealias Snapshot = NSDiffableDataSourceSnapshot<String, PlayerScoreBoard>
@@ -22,11 +23,14 @@ final class ScoreBoardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.setTeamControllerBarTitle()
         self.tableViewCellRegisterNib()
         self.itemListDidLoad()
         self.tableViewHeight.constant = self.playerScoreTableView.contentSize.height
+    }
+    
+    func setGameManager(_ manager: GameManager) {
+        self.gameManager = manager
     }
     
     private func setTeamControllerBarTitle() {

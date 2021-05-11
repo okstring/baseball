@@ -160,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				22B303982643D0BE001AB2E4 /* NetworkingCenter.swift */,
+				22B3039F2643D168001AB2E4 /* JSONProcessCenter.swift */,
 				226B92AD26492822006007D0 /* Endpoint.swift */,
 			);
 			path = Network;
@@ -205,10 +206,9 @@
 			isa = PBXGroup;
 			children = (
 				22B303A42643D23D001AB2E4 /* enum */,
-				22B3038F2643C7F4001AB2E4 /* DTO */,
 				22259205264A101B00F01E4A /* Manager */,
-				22B3039F2643D168001AB2E4 /* JSONProcessCenter.swift */,
 				2216BA1F2644B94800B84EAE /* Network */,
+				22B3038F2643C7F4001AB2E4 /* DTO */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -218,10 +218,10 @@
 			children = (
 				B32499D6263FF3B300D8DEA8 /* OAuthViewController.swift */,
 				2242A6832640DE51000C555E /* MainViewController.swift */,
+				22B3034026439867001AB2E4 /* GameTabBarViewController.swift */,
 				22941AC6264141BF00598814 /* GameViewController.swift */,
 				22941ACB264141C900598814 /* ScoreBoardViewController.swift */,
 				B34B59E826419634009105DC /* GameView.swift */,
-				22B3034026439867001AB2E4 /* GameTabBarViewController.swift */,
 				2242A6952640DFF6000C555E /* extension */,
 			);
 			path = ViewController;

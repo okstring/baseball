@@ -6,14 +6,17 @@
 //
 
 import UIKit
+import Combine
 
 final class MainViewController: UIViewController {
     @IBOutlet var teams: [UIButton]!
     private var gameManager: GameManager!
+    private var cancelable = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.getPlayer()
+        self.bind()
+        self.gameManager.getTeams()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -25,17 +28,13 @@ final class MainViewController: UIViewController {
         self.gameManager = gameManager
     }
     
-    func getPlayer() {
-        self.gameManager.getRequest(of: .gameList) { (result: Result<[PairTeams], NetworkingError>) in
-            switch result {
-            case .success(let pairTeams):
-                self.loadTeamList(pairTeams: pairTeams)
-            case .failure(let error):
-                #if DEBUG
-                NSLog(error.rawValue)
-                #endif
-            }
-        }
+    func bind() {
+        self.gameManager.$teams
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (teams) in
+                guard let teams = teams else { return }
+                self?.loadTeamList(pairTeams: teams)
+            }.store(in: &self.cancelable)
     }
     
     func loadTeamList(pairTeams: [PairTeams]) {
@@ -54,17 +53,7 @@ final class MainViewController: UIViewController {
     
     @objc func pushGameTabBar(_ sender: UIButton) {
         guard let vc = self.storyboard?.instantiateViewController(identifier: GameTabBarViewController.className) as? GameTabBarViewController else { return }
-        //MARK: - network 부분 처리
-        self.gameManager.getRequest(of: .gameStart, parameter: sender.currentTitle) { (result: Result<Game, NetworkingError>) in
-            switch result {
-            case .success(let game):
-                print(game)
-                self.navigationController?.pushViewController(vc, animated: true)
-            case .failure(let error):
-                #if DEBUG
-                NSLog(error.rawValue)
-                #endif
-            }
-        }
+        vc.setGameManager(self.gameManager)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

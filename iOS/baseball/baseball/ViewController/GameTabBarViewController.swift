@@ -8,9 +8,27 @@
 import UIKit
 
 final class GameTabBarViewController: UITabBarController {
+    private(set) var gameManager: GameManager!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setGameManagerOfOtherViewController()
         self.setTabBarItems()
+        self.getGameInfo()
+    }
+    
+    func setGameManager(_ manager: GameManager) {
+        self.gameManager = manager
+    }
+    
+    func getGameInfo() {
+        self.gameManager.getGameInfo()
+    }
+    
+    private func setGameManagerOfOtherViewController() {
+        guard let gameViewController = self.viewControllers?[0] as? GameViewController else { return }
+        gameViewController.setGameManager(self.gameManager)
+        guard let scoreBoardViewController = self.viewControllers?[1] as? ScoreBoardViewController else { return }
+        scoreBoardViewController.setGameManager(self.gameManager)
     }
     
     private func setTabBarItems() {
