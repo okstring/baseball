@@ -19,37 +19,35 @@ import static com.eNoLJ.baseball.web.dto.GameEntryDTO.createGameEntryDTO;
 public class GameService {
 
     private final GameRepository gameRepository;
-    private final TeamRepository teamRepository;
-    private final MemberRepository memberRepository;
 
-    public GameService(GameRepository gameRepository, TeamRepository teamRepository, MemberRepository memberRepository) {
+    public GameService(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
-        this.teamRepository = teamRepository;
-        this.memberRepository = memberRepository;
     }
 
     public List<GameEntryDTO> getGameList() {
         return gameRepository.findAll().stream()
-                .map(game -> createGameEntryDTO(findTeamById(game.getHomeTeamId()), findTeamById(game.getAwayTeamId())))
+                .map(game -> createGameEntryDTO(game.getTeamByType(Type.HOME), game.getTeamByType(Type.AWAY)))
                 .collect(Collectors.toList());
     }
 
-    private Team findTeamById(Long id) {
-        return teamRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(ErrorMessage.ENTITY_NOT_FOUND)
-        );
-    }
-
     public List<MemberDTO> getMembersByTeamName(String teamName) {
-        return memberRepository.findAllByTeamId(findTeamByTeamName(teamName).getId()).stream()
+        return findTeamByTeamName(teamName).getMembers().stream()
                 .map(MemberDTO::createMemberDTO)
                 .collect(Collectors.toList());
     }
 
     private Team findTeamByTeamName(String teamName) {
-        return teamRepository.findByName(teamName).orElseThrow(
-                () -> new EntityNotFoundException(ErrorMessage.ENTITY_NOT_FOUND)
-        );
+        return findAllTeam().stream()
+                .filter(team -> team.verifyTeamName(teamName))
+                .findFirst()
+                .orElseThrow(EntityNotFoundException::new);
+    }
+
+    private List<Team> findAllTeam() {
+        return this.gameRepository.findAll().stream()
+                .map(Game::getTeams)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
 
     public GameInfoResponseDTO startGameByTeamName(String teamName) {
