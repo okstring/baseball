@@ -44,7 +44,7 @@ class OAuthManager {
     }
 
     func postLoginCode(callBackURLCode: String, completion: @escaping (Result<UserDTO, NetworkingError>) -> ()) {
-        networkingCenter.postLoginCode(kindOf: .login, callBackURLCode: callBackURLCode) { (result) in
+        networkingCenter.postLoginCode(path: .login, callBackURLCode: callBackURLCode) { (result) in
             switch result {
             case .success(let data):
                 let decodeResult = self.jsonProcessCenter.decodeData(typeOf: UserDTO.self, data: data)
