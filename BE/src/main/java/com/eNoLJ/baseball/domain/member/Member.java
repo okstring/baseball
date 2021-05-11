@@ -8,7 +8,6 @@ public class Member {
     private Long id;
     private String name;
     private double avg;
-    private Long teamId;
 
     public Long getId() {
         return id;
@@ -20,9 +19,5 @@ public class Member {
 
     public double getAvg() {
         return avg;
-    }
-
-    public Long getTeamId() {
-        return teamId;
     }
 }
