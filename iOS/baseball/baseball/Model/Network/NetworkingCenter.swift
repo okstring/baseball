@@ -9,24 +9,10 @@ import Foundation
 import Combine
 
 protocol ServerCommunicable {
-    func postLoginCode(url: URL, path: Path, complete: @escaping (Result<Data, NetworkingError>) -> ())
     func request<T: Decodable>(url: URL, path: Path, token: String?) -> AnyPublisher<T, Error>
 }
 
 final class NetworkingCenter: ServerCommunicable {
-    func postLoginCode(url: URL, path: Path, complete: @escaping (Result<Data, NetworkingError>) -> ()) {
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = path.needHTTPMethod.rawValue
-        
-        URLSession.init(configuration: .default).dataTask(with: urlRequest) { (data, response, error) in
-            if let error = self.handleError(data: data, response: response, error: error) {
-                complete(.failure(error))
-            } else if let data = data {
-                complete(.success(data))
-            }
-        }.resume()
-    }
-    
     func request<T: Decodable>(url: URL, path: Path, token: String? = nil) -> AnyPublisher<T, Error> {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = path.needHTTPMethod.rawValue

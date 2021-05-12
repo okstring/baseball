@@ -30,7 +30,7 @@ final class GameViewController: UIViewController {
         super.viewDidLoad()
         registerNib()
         bind()
-//        configureTableViewHeight()
+        configureTableViewHeight()
         appearPitchButton()
         
     }
@@ -41,6 +41,8 @@ final class GameViewController: UIViewController {
             .sink { (game) in
                 guard let game = game else { return }
                 let history = self.gameManager.makeHistory(gameInfo: game)
+                //MARK: - 화면 표시
+                
                 self.applySnapshot(history: history, animatingDifferences: false)
             }.store(in: &cancelable)
     }
@@ -49,11 +51,11 @@ final class GameViewController: UIViewController {
         self.gameManager = manager
     }
     
-//    private func configureTableViewHeight() {
-//        DispatchQueue.main.async {
-//            self.tableViewHeight.constant = self.ballCount.contentSize.height
-//        }
-//    }
+    private func configureTableViewHeight() {
+        DispatchQueue.main.async {
+            self.tableViewHeight.constant = self.ballCount.contentSize.height
+        }
+    }
     
     private func registerNib() {
         let nibName = UINib(nibName: "GameStoryTableViewCell", bundle: nil)
@@ -67,8 +69,6 @@ final class GameViewController: UIViewController {
             return cell
         }
     }
-    
-    
     
     private func applySnapshot(history: [History], animatingDifferences: Bool = true) {
         var snapshot = Snapshot()
