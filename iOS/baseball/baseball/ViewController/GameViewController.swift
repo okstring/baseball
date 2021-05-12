@@ -56,6 +56,7 @@ final class GameViewController: UIViewController{
                 self.setGameCount()
                 self.setRoundInfo()
                 self.setPlayers()
+                self.gameView.setPlayerLayer(firstBase: game.roundInfo.firstBase, secondBase: game.roundInfo.secondBase, thirdBase: game.roundInfo.thirdBase)
                 self.applySnapshot(history: history, animatingDifferences: false)
             }.store(in: &cancelable)
     }

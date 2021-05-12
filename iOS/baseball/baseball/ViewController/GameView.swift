@@ -13,6 +13,10 @@ class GameView: UIView {
     private var playerlayers: [CALayer] = []
     private lazy var centerX = CGFloat(bounds.size.width/2)
     private lazy var centerY = CGFloat(bounds.size.height/2)
+    private lazy var firstBasePosition = CGPoint(x: centerX+100, y: centerY)
+    private lazy var secondBasePosition = CGPoint(x: centerX, y: centerY-100)
+    private lazy var thirdBasePosition = CGPoint(x: centerX-100, y: centerY)
+    private lazy var homeBasePosition = CGPoint(x: centerX, y: centerY+100)
     private lazy var firstBaseAnimation: CABasicAnimation = {
        let animation = CABasicAnimation(keyPath: "position")
         animation.fromValue = CGPoint(x: centerX, y: centerY+100)
@@ -119,38 +123,49 @@ class GameView: UIView {
         self.layer.addSublayer(baseLineLayer)
     }
     
-    func makePlayerLayer() {
+    func setPlayerLayer(firstBase: Bool, secondBase: Bool, thirdBase: Bool) {
+        if firstBase == true {
+            makePlayerLayer(position: firstBasePosition)
+        }
+        if secondBase == true {
+            makePlayerLayer(position: secondBasePosition)
+        }
+        if thirdBase == true {
+            makePlayerLayer(position: thirdBasePosition)
+        }
+    }
+    
+    func makePlayerLayer(position: CGPoint? = nil) {
         let layer = CALayer()
         self.playerlayers.append(layer)
         let playerImage = UIImage.init(systemName: "figure.walk")?.cgImage
         layer.frame = CGRect(x: centerX-15, y: centerY+85, width: 30, height: 30)
         layer.contents = playerImage
-        print(layer.position)
+        if let position = position {
+            layer.position = position
+        }
+        
         self.layer.addSublayer(layer)
     }
     
     func hit() {
         makePlayerLayer()
-        let firstBasePosition = CGPoint(x: centerX+100, y: centerY)
-        let secondBasePosition = CGPoint(x: centerX, y: centerY-100)
-        let thirdBasePosition = CGPoint(x: centerX-100, y: centerY)
-        let homeBasePosition = CGPoint(x: centerX, y: centerY+100)
         playerlayers.forEach { layer in
             CATransaction.begin()
             switch layer.position {
             case homeBasePosition:
                 CATransaction.setCompletionBlock {
-                    layer.position = firstBasePosition
+                    layer.position = self.firstBasePosition
                 }
                 layer.add(firstBaseAnimation, forKey: "toFirst")
             case firstBasePosition:
                 CATransaction.setCompletionBlock {
-                    layer.position = secondBasePosition
+                    layer.position = self.secondBasePosition
                 }
                 layer.add(secondBaseAnimation, forKey: "toSecond")
             case secondBasePosition:
                 CATransaction.setCompletionBlock {
-                    layer.position = thirdBasePosition
+                    layer.position = self.thirdBasePosition
                 }
                 layer.add(thirdBaseAnimation, forKey: "toThird")
             case thirdBasePosition:
