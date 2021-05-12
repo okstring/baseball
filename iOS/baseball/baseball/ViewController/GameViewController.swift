@@ -11,40 +11,62 @@ import Combine
 
 
 
-final class GameViewController: UIViewController {
+final class GameViewController: UIViewController{
     enum Section {
         case main
     }
     
+    @IBOutlet weak var gameHeaderView: GameHeaderView!
     @IBOutlet weak var gameView: GameView!
-    @IBOutlet weak var ballCount: UITableView!
+    @IBOutlet weak var roundLabel: UILabel!
+    @IBOutlet weak var ballCountTableView: UITableView!
     @IBOutlet var tableViewHeight: NSLayoutConstraint!
+    @IBOutlet private var strikeCount: [UIImageView]!
+    @IBOutlet private var ballCount: [UIImageView]!
+    @IBOutlet private var outCount: [UIImageView]!
+    @IBOutlet weak var picherName: UILabel!
+    @IBOutlet weak var picherCount: UILabel!
+    @IBOutlet weak var hitterName: UILabel!
+    @IBOutlet weak var hitterCount: UILabel!
+    
     private lazy var dataSource = makeDataSource()
     private(set) var gameManager: GameManager!
     private var cancelable = Set<AnyCancellable>()
-    
     private typealias Datasource = UITableViewDiffableDataSource<Section, History>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, History>
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.gameHeaderView.delegate = self
+        
+        self.ballCountTableView.transform = CGAffineTransform(rotationAngle: -(CGFloat)(Double.pi))
+        
         registerNib()
         bind()
         configureTableViewHeight()
         appearPitchButton()
-        
     }
     
-    func bind() {
+    private func bind() {
         self.gameManager.$gameInfo
             .receive(on: DispatchQueue.main)
             .sink { (game) in
                 guard let game = game else { return }
                 let history = self.gameManager.makeHistory(gameInfo: game)
                 //MARK: - 화면 표시
+                self.gameHeaderView.teamConfigure()
+                self.gameHeaderView.scoreConfigure()
+                self.setGameCount()
+                self.setRoundInfo()
+                self.setPlayers()
+                
                 
                 self.applySnapshot(history: history, animatingDifferences: false)
             }.store(in: &cancelable)
+    }
+    
+    func setRoundInfo() {
+        self.roundLabel.text = self.gameManager.makeRoundInfo()
     }
     
     func setGameManager(_ manager: GameManager) {
@@ -53,19 +75,20 @@ final class GameViewController: UIViewController {
     
     private func configureTableViewHeight() {
         DispatchQueue.main.async {
-            self.tableViewHeight.constant = self.ballCount.contentSize.height
+            self.tableViewHeight.constant = self.ballCountTableView.contentSize.height
         }
     }
     
     private func registerNib() {
         let nibName = UINib(nibName: "GameStoryTableViewCell", bundle: nil)
-        ballCount.register(nibName, forCellReuseIdentifier: GameStoryTableViewCell.className)
+        ballCountTableView.register(nibName, forCellReuseIdentifier: GameStoryTableViewCell.className)
     }
     
     private func makeDataSource() -> Datasource {
-        Datasource.init(tableView: ballCount) { (tableView, indexPath, history) -> UITableViewCell? in
+        Datasource.init(tableView: ballCountTableView) { (tableView, indexPath, history) -> UITableViewCell? in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GameStoryTableViewCell.className, for: indexPath) as? GameStoryTableViewCell else { return GameStoryTableViewCell() }
             cell.configure(historyInfo: history, index: indexPath.row)
+            cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
             return cell
         }
     }
@@ -95,3 +118,45 @@ final class GameViewController: UIViewController {
     
 }
 
+extension GameViewController {
+    private func setGameCount() {
+        let strike = self.gameManager.gameInfo.roundInfo.strike
+        let ball = self.gameManager.gameInfo.roundInfo.ball
+        let out = self.gameManager.gameInfo.roundInfo.out
+        
+        self.strikeCount.enumerated().forEach { (index, strikeImage) in
+            strikeImage.image = index + 1 <= strike ? UIImage(systemName: "circle.fill") : UIImage(systemName: "circle")
+        }
+        self.ballCount.enumerated().forEach { (index, ballImage) in
+            ballImage.image = index + 1 <= ball ? UIImage(systemName: "circle.fill") : UIImage(systemName: "circle")
+        }
+        self.outCount.enumerated().forEach { (index, outImage) in
+            outImage.image = index + 1 <= out ? UIImage(systemName: "circle.fill") : UIImage(systemName: "circle")
+        }
+    }
+    
+    private func setPlayers() {
+        guard let gameInfo = self.gameManager.gameInfo else { return }
+        self.picherName.text = gameInfo.defenseTeam.pitcher.name
+        self.picherCount.text = "#\(gameInfo.defenseTeam.pitcher.pit)"
+        self.hitterName.text = gameInfo.offenceTeam.hitter.name
+        self.hitterCount.text = "\(gameInfo.offenceTeam.hitter.tpa)타석 \(gameInfo.offenceTeam.hitter.hits)안타"
+    }
+    
+}
+
+extension GameViewController: HeaderScoreReloadable {
+    func didLoadScoreInfo() -> (offenceTeam: Int, deffenceTeam: Int) {
+        let gameInfo = self.gameManager.gameInfo
+        return (gameInfo?.offenceTeam.score ?? 0,
+                gameInfo?.defenseTeam.score ?? 0)
+    }
+    
+    func didLoadTeamInfo() -> (offenceTeam: String, deffenceTeam: String) {
+        let gameInfo = self.gameManager.gameInfo
+        return (gameInfo?.offenceTeam.teamName ?? "",
+                gameInfo?.defenseTeam.teamName ?? "")
+    }
+    
+    
+}

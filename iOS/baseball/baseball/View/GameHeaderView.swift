@@ -7,7 +7,18 @@
 
 import UIKit
 
+protocol HeaderScoreReloadable: class {
+    func didLoadScoreInfo() -> (offenceTeam: Int, deffenceTeam: Int)
+    func didLoadTeamInfo() -> (offenceTeam: String, deffenceTeam: String)
+}
+
 final class GameHeaderView: UIView {
+    @IBOutlet private weak var defenseTeam: UILabel!
+    @IBOutlet private weak var defenseScore: UILabel!
+    @IBOutlet private weak var offenceTeam: UILabel!
+    @IBOutlet private weak var offenceScore: UILabel!
+    
+    weak var delegate: HeaderScoreReloadable?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,5 +42,17 @@ final class GameHeaderView: UIView {
         let bundle = Bundle(for: type(of: self))
         let nib = UINib(nibName: nib, bundle: bundle)
         return nib.instantiate(withOwner: self, options: nil).first as? UIView
+    }
+    
+    func teamConfigure() {
+        let teamInfo = delegate?.didLoadTeamInfo()
+        defenseTeam.text = teamInfo?.deffenceTeam
+        offenceTeam.text = teamInfo?.offenceTeam
+    }
+    
+    func scoreConfigure() {
+        let scoreInfo = delegate?.didLoadScoreInfo()
+        defenseScore.text = "\(scoreInfo?.deffenceTeam ?? 0)"
+        offenceScore.text = "\(scoreInfo?.offenceTeam ?? 0)"
     }
 }

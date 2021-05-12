@@ -33,6 +33,7 @@ final class GameManager {
         self.gameInfo = game
     }
     
+    //MARK: - Network
     func getGameInfo(teamName: String?) {
         guard let url = Endpoint.url(path: .gameStart, parameter: teamName ?? "") else { return }
         let publisher: AnyPublisher<Game, Error> = self.networkingCenter.request(url: url, path: .gameStart, token: self.token)
@@ -103,6 +104,8 @@ final class GameManager {
         }.store(in: &self.cancelable)
     }
     
+    //MARK: - Business Logic
+    
     func makeHistory(gameInfo: Game) -> [History] {
         let numberCountHistory = gameInfo.calcurateHistory()
         var historyBook = [History]()
@@ -114,5 +117,9 @@ final class GameManager {
             historyBook.append(history)
         }
         return historyBook
+    }
+    
+    func makeRoundInfo() -> String {
+        return "\(gameInfo.roundInfo.round)회\(gameInfo.playTeam == gameInfo.defenseTeam.teamName ? "초 공격" : "말 수비")"
     }
 }
