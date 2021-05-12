@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import Combine
 
 final class GameManager {
     private let networkingCenter: ServerCommunicable
-    private let jsonProcessCenter: JSONDecodable
     private(set) var token: String!
     @Published private(set) var gameInfo: Game!
     @Published private(set) var teams: [PairTeams]!
@@ -17,12 +17,12 @@ final class GameManager {
     @Published private(set) var homePlayerScoreBoardInfo: PlayerScoreBoard!
     @Published private(set) var awayPlayerScoreBoardInfo: PlayerScoreBoard!
     private(set) var history: History!
+    private var cancelable = Set<AnyCancellable>()
     var errorHandler: ((String) -> ())?
     
     
-    init(serverCommunicable: ServerCommunicable, JSONDecodable: JSONDecodable) {
+    init(serverCommunicable: ServerCommunicable) {
         self.networkingCenter = serverCommunicable
-        self.jsonProcessCenter = JSONDecodable
     }
     
     func setToken(token: String) {
@@ -34,14 +34,73 @@ final class GameManager {
     }
     
     func getGameInfo(teamName: String?) {
-        self.getRequest(of: .gameStart, parameter: teamName) { (result: Result<Game, NetworkingError>) in
-            switch result {
-            case .success(let game):
-                self.gameInfo = game
+        guard let url = Endpoint.url(path: .gameStart, parameter: teamName ?? "") else { return }
+        let publisher: AnyPublisher<Game, Error> = self.networkingCenter.request(url: url, path: .gameStart, token: self.token)
+        publisher.sink { (completion) in
+            switch completion {
+            case .finished:
+                break
             case .failure(let error):
-                self.errorHandler?(error.rawValue)
+                print(#function, url)
+                self.errorHandler?(error.localizedDescription)
             }
-        }
+        } receiveValue: { (game) in
+            self.gameInfo = game
+        }.store(in: &self.cancelable)
+    }
+    
+    func getScoreBoard() {
+        guard let url = Endpoint.url(path: .gameScore) else { return }
+        let publisher: AnyPublisher<ScoreBoard, Error> = self.networkingCenter.request(url: url, path: .gameScore, token: self.token)
+        publisher.sink { (completion) in
+            switch completion {
+            case .finished:
+                break
+            case .failure(let error):
+                print(#function)
+                self.errorHandler?(error.localizedDescription)
+            }
+        } receiveValue: { (scoreBoard) in
+            self.scoreBoardInfo = scoreBoard
+            self.getPlayerScoreBoard(of: scoreBoard.homeTeam.teamName, isHomeTeam: true)
+            self.getPlayerScoreBoard(of: scoreBoard.awayTeam.teamName, isHomeTeam: false)
+        }.store(in: &self.cancelable)
+    }
+    
+    func getPlayerScoreBoard(of team: String, isHomeTeam: Bool) {
+        guard let url = Endpoint.url(path: .playerScore) else { return }
+        let publisher: AnyPublisher<PlayerScoreBoard, Error> = self.networkingCenter.request(url: url, path: .playerScore, token: self.token)
+        publisher.sink { (completion) in
+            switch completion {
+            case .finished:
+                break
+            case .failure(let error):
+                print(#function)
+                self.errorHandler?(error.localizedDescription)
+            }
+        } receiveValue: { (playerScoreBoard) in
+            if isHomeTeam {
+                self.homePlayerScoreBoardInfo = playerScoreBoard
+            } else {
+                self.awayPlayerScoreBoardInfo = playerScoreBoard
+            }
+        }.store(in: &self.cancelable)
+    }
+    
+    func getTeams() {
+        guard let url = Endpoint.url(path: .gameList) else { return }
+        let publisher: AnyPublisher<[PairTeams], Error> = self.networkingCenter.request(url: url, path: .gameList, token: self.token)
+        publisher.sink { (completion) in
+            switch completion {
+            case .finished:
+                break
+            case .failure(let error):
+                print(#function)
+                self.errorHandler?(error.localizedDescription)
+            }
+        } receiveValue: { (pairTeams) in
+            self.teams = pairTeams
+        }.store(in: &self.cancelable)
     }
     
     func makeHistory(gameInfo: Game) -> [History] {
@@ -55,65 +114,5 @@ final class GameManager {
             historyBook.append(history)
         }
         return historyBook
-    }
-    
-    
-    
-    func getScoreBoard() {
-        self.getRequest(of: .gameScore) { (result: Result<ScoreBoard, NetworkingError>) in
-            switch result {
-            case .success(let scoreBoard):
-                self.scoreBoardInfo = scoreBoard
-                self.getPlayerScoreBoard(of: scoreBoard.homeTeam.teamName, isHomeTeam: true)
-                self.getPlayerScoreBoard(of: scoreBoard.awayTeam.teamName, isHomeTeam: false)
-            case .failure(let error):
-                self.errorHandler?(error.rawValue)
-            }
-        }
-    }
-    
-    func getPlayerScoreBoard(of team: String, isHomeTeam: Bool) {
-        self.getRequest(of: .gameScore, parameter: team) { (result: Result<PlayerScoreBoard, NetworkingError>) in
-            switch result {
-            case .success(let playerScoreBoard):
-                if isHomeTeam {
-                    self.homePlayerScoreBoardInfo = playerScoreBoard
-                } else {
-                    self.awayPlayerScoreBoardInfo = playerScoreBoard
-                }
-            case .failure(let error):
-                self.errorHandler?(error.rawValue)
-            }
-        }
-    }
-    
-    func getTeams() {
-        self.getRequest(of: .gameList) { (result: Result<[PairTeams], NetworkingError>) in
-            switch result {
-            case .success(let pairTeams):
-                self.teams = pairTeams
-            case .failure(let error):
-                self.errorHandler?(error.rawValue)
-            }
-        }
-    }
-    
-    private func getRequest<T: Decodable>(of path: Path, parameter: String? = nil, completion: @escaping ((Result<T, NetworkingError>) -> ())) {
-        self.networkingCenter.request(path: path, token: self.token, parameter: parameter) { (result) in
-            switch result {
-            case .success(let data):
-                let decodeResult = self.jsonProcessCenter.decodeData(typeOf: T.self, data: data)
-                switch decodeResult {
-                case .success(let dto):
-                    DispatchQueue.main.async {
-                        completion(.success(dto))
-                    }
-                case .failure(_):
-                    completion(.failure(NetworkingError.decodeError))
-                }
-            case .failure(_):
-                completion(.failure(NetworkingError.responseError))
-            }
-        }
     }
 }

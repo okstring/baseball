@@ -8,58 +8,44 @@
 import Foundation
 import OctoKit
 import AuthenticationServices
+import Combine
 
 class OAuthManager {
     let networkingCenter: ServerCommunicable
-    let jsonProcessCenter: JSONDecodable
+    var errorHandler: ((String) -> ())?
+    var cancelable = Set<AnyCancellable>()
     lazy var config = OAuthConfiguration.init(token: self.getClientID(),
                                               secret: "",
                                               scopes: ["user"])
     
-    init(serverCommunicable: ServerCommunicable, JSONDecodable: JSONDecodable) {
+    init(serverCommunicable: ServerCommunicable) {
         self.networkingCenter = serverCommunicable
-        self.jsonProcessCenter = JSONDecodable
     }
     
-    func initPostLoginCodeWebAuthSession(completion: @escaping (Result<UserDTO, NetworkingError>) -> ()) -> ASWebAuthenticationSession? {
+    func initPostLoginCodeWebAuthSession(completion: @escaping (UserDTO) -> ()) -> ASWebAuthenticationSession? {
         let callbackUrlScheme = "baseball"
         guard let url = config.authenticate()?.appending([URLQueryItem(name: "redirect_uri", value: "baseball://")]) else { return nil }
         return ASWebAuthenticationSession.init(url: url, callbackURLScheme: callbackUrlScheme, completionHandler: { (callBack:URL?, error:Error?) in
             if error != nil {
-                completion(.failure(NetworkingError.ASWebAuthenticationSessionError))
+                self.errorHandler?(NetworkingError.ASWebAuthenticationSessionError.rawValue)
                 return
             }
             guard let successURL = callBack else { return }
             let callBackURLCode = successURL.extractCallbackURLCode()
             
-            self.postLoginCode(callBackURLCode: String(callBackURLCode)) { (result) in
-                switch result {
-                case .success(let userDTO):
-                    completion(.success(userDTO))
+            guard let url = Endpoint.url(path: .login, callBackUrlCode: callBackURLCode) else { return }
+            let publisher: AnyPublisher<UserDTO, Error> = self.networkingCenter.request(url: url, path: Path.login, token: nil)
+            publisher.sink { (completion) in
+                switch completion {
+                case .finished:
+                    break
                 case .failure(let error):
-                    completion(.failure(error))
+                    self.errorHandler?(error.localizedDescription)
                 }
-            }
+            } receiveValue: { (userDTO) in
+                completion(userDTO)
+            }.store(in: &self.cancelable)
         })
-    }
-
-    func postLoginCode(callBackURLCode: String, completion: @escaping (Result<UserDTO, NetworkingError>) -> ()) {
-        networkingCenter.postLoginCode(path: .login, callBackURLCode: callBackURLCode) { (result) in
-            switch result {
-            case .success(let data):
-                let decodeResult = self.jsonProcessCenter.decodeData(typeOf: UserDTO.self, data: data)
-                switch decodeResult {
-                case .success(let userDTO):
-                    DispatchQueue.main.async {
-                        completion(.success(userDTO))
-                    }
-                case .failure(_):
-                    completion(.failure(NetworkingError.decodeError))
-                }
-            case .failure(_):
-                completion(.failure(NetworkingError.responseError))
-            }
-        }
     }
 }
 

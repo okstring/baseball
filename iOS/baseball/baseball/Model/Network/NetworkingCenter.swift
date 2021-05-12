@@ -6,16 +6,15 @@
 //
 
 import Foundation
+import Combine
 
 protocol ServerCommunicable {
-    func postLoginCode(path: Path, callBackURLCode: String, complete: @escaping (Result<Data, NetworkingError>) -> ())
-    func request(path: Path, token: String?, parameter: String?, complete: @escaping (Result<Data, NetworkingError>) -> ())
+    func postLoginCode(url: URL, path: Path, complete: @escaping (Result<Data, NetworkingError>) -> ())
+    func request<T: Decodable>(url: URL, path: Path, token: String?) -> AnyPublisher<T, Error>
 }
 
 final class NetworkingCenter: ServerCommunicable {
-    func postLoginCode(path: Path, callBackURLCode: String, complete: @escaping (Result<Data, NetworkingError>) -> ()) {
-        guard let url = Endpoint.url(path: .login, callBackUrlCode: callBackURLCode) else { return }
-        
+    func postLoginCode(url: URL, path: Path, complete: @escaping (Result<Data, NetworkingError>) -> ()) {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = path.needHTTPMethod.rawValue
         
@@ -28,22 +27,17 @@ final class NetworkingCenter: ServerCommunicable {
         }.resume()
     }
     
-    func request(path: Path, token: String? = nil, parameter: String? = nil, complete: @escaping (Result<Data, NetworkingError>) -> ()) {
-        guard let url = Endpoint.url(path: path, parameter: parameter ?? "") else { return }
-        
+    func request<T: Decodable>(url: URL, path: Path, token: String? = nil) -> AnyPublisher<T, Error> {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = path.needHTTPMethod.rawValue
         if let token = token {
             urlRequest.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
-        URLSession.init(configuration: .default).dataTask(with: urlRequest) { (data, response, error) in
-            if let error = self.handleError(data: data, response: response, error: error) {
-                complete(.failure(error))
-            } else if let data = data {
-                complete(.success(data))
-            }
-        }.resume()
+        return URLSession.shared.dataTaskPublisher(for: urlRequest)
+            .map(\.data)
+            .decode(type: T.self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
     }
 }
 

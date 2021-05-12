@@ -17,24 +17,26 @@ final class OAuthViewController: UIViewController, ASWebAuthenticationPresentati
     override func viewDidLoad() {
         super.viewDidLoad()
         let networkingCenter = NetworkingCenter()
-        let jsonProcessCenter = JSONProcessCenter()
-        self.gameManager = GameManager(serverCommunicable: networkingCenter, JSONDecodable: jsonProcessCenter)
-        self.oauthManager = OAuthManager(serverCommunicable: networkingCenter, JSONDecodable: jsonProcessCenter)
+        self.gameManager = GameManager(serverCommunicable: networkingCenter)
+        self.oauthManager = OAuthManager(serverCommunicable: networkingCenter)
         self.configOAuth()
     }
     
+    func bind() {
+        self.oauthManager.errorHandler = { error in
+            #if DEBUG
+            NSLog(error)
+            #endif
+        }
+    }
+    
     func configOAuth() {
-        webAuthSession = self.oauthManager.initPostLoginCodeWebAuthSession() { (result) in
-            switch result {
-            case .success(let userDTO):
+        webAuthSession = self.oauthManager.initPostLoginCodeWebAuthSession() { (userDTO) in
+            DispatchQueue.main.async {
                 guard let vc = self.storyboard?.instantiateViewController(identifier: MainViewController.className) as? MainViewController else { return }
                 self.gameManager.setToken(token: userDTO.token)
                 vc.receiveManager(gameManager: self.gameManager)
                 self.navigationController?.pushViewController(vc, animated: true)
-            case .failure(let error):
-                #if DEBUG
-                NSLog(error.rawValue)
-                #endif
             }
         }
         webAuthSession?.presentationContextProvider = self

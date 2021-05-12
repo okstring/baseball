@@ -37,7 +37,6 @@
 		22B3034126439867001AB2E4 /* GameTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B3034026439867001AB2E4 /* GameTabBarViewController.swift */; };
 		22B303942643D0AB001AB2E4 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B303932643D0AB001AB2E4 /* GameManager.swift */; };
 		22B303992643D0BE001AB2E4 /* NetworkingCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B303982643D0BE001AB2E4 /* NetworkingCenter.swift */; };
-		22B303A02643D168001AB2E4 /* JSONProcessCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B3039F2643D168001AB2E4 /* JSONProcessCenter.swift */; };
 		22B303A62643D259001AB2E4 /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B303A52643D259001AB2E4 /* NetworkingError.swift */; };
 		22BC6DBC264AC426007B22CA /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BC6DBB264AC426007B22CA /* History.swift */; };
 		B32499D3263FF3B300D8DEA8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32499D2263FF3B300D8DEA8 /* AppDelegate.swift */; };
@@ -105,7 +104,6 @@
 		22B3034026439867001AB2E4 /* GameTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTabBarViewController.swift; sourceTree = "<group>"; };
 		22B303932643D0AB001AB2E4 /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		22B303982643D0BE001AB2E4 /* NetworkingCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingCenter.swift; sourceTree = "<group>"; };
-		22B3039F2643D168001AB2E4 /* JSONProcessCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONProcessCenter.swift; sourceTree = "<group>"; };
 		22B303A52643D259001AB2E4 /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
 		22BC6DBB264AC426007B22CA /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		B32499CF263FF3B300D8DEA8 /* baseball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = baseball.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,7 +160,6 @@
 			isa = PBXGroup;
 			children = (
 				22B303982643D0BE001AB2E4 /* NetworkingCenter.swift */,
-				22B3039F2643D168001AB2E4 /* JSONProcessCenter.swift */,
 				226B92AD26492822006007D0 /* Endpoint.swift */,
 			);
 			path = Network;
@@ -481,7 +478,6 @@
 				22941A5826412D1B00598814 /* PlayerList.swift in Sources */,
 				B330CE0326441826003B882D /* PitchButton.swift in Sources */,
 				B38653A926428B6E00DFC803 /* GameStoryTableViewCell.swift in Sources */,
-				22B303A02643D168001AB2E4 /* JSONProcessCenter.swift in Sources */,
 				B34B59E926419634009105DC /* GameView.swift in Sources */,
 				226B928A2648F972006007D0 /* NSObject+extension.swift in Sources */,
 				22941A6726412DC200598814 /* PairTeams.swift in Sources */,
