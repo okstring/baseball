@@ -14,8 +14,8 @@ final class GameManager {
     @Published private(set) var gameInfo: Game!
     @Published private(set) var teams: [PairTeams]!
     @Published private(set) var scoreBoardInfo: ScoreBoard!
-    @Published private(set) var homePlayerScoreBoardInfo: PlayerScoreBoard!
-    @Published private(set) var awayPlayerScoreBoardInfo: PlayerScoreBoard!
+    @Published private(set) var homePlayerScoreBoardInfo: [PlayerScoreBoard]!
+    @Published private(set) var awayPlayerScoreBoardInfo: [PlayerScoreBoard]!
     private(set) var history: History!
     private var cancelable = Set<AnyCancellable>()
     var errorHandler: ((String) -> ())?
@@ -68,8 +68,8 @@ final class GameManager {
     }
     
     func getPlayerScoreBoard(of team: String, isHomeTeam: Bool) {
-        guard let url = Endpoint.url(path: .playerScore) else { return }
-        let publisher: AnyPublisher<PlayerScoreBoard, Error> = self.networkingCenter.request(url: url, path: .playerScore, token: self.token)
+        guard let url = Endpoint.url(path: .playerScore, parameter: team) else { return }
+        let publisher: AnyPublisher<[PlayerScoreBoard], Error> = self.networkingCenter.request(url: url, path: .playerScore, token: self.token)
         publisher.sink { (completion) in
             switch completion {
             case .finished:

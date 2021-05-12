@@ -18,6 +18,8 @@ final class ScoreBoardViewController: UIViewController {
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     private(set) var gameManager: GameManager!
     private var cancelable = Set<AnyCancellable>()
+    private var board = [PlayerScoreBoard]()
+
     
     fileprivate typealias DataSource = UITableViewDiffableDataSource<String, PlayerScoreBoard>
     fileprivate typealias Snapshot = NSDiffableDataSourceSnapshot<String, PlayerScoreBoard>
@@ -26,7 +28,6 @@ final class ScoreBoardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableViewCellRegisterNib()
-        self.itemListDidLoad()
         self.tableViewHeight.constant = self.playerScoreTableView.contentSize.height
         
     }
@@ -42,13 +43,24 @@ final class ScoreBoardViewController: UIViewController {
             .sink { (scoreBoard) in
                 guard let scoreBoard = scoreBoard else { return }
                 self.setTeamControllerBarTitle(home: scoreBoard.homeTeam.teamName, away: scoreBoard.awayTeam.teamName)
-                scoreBoard.homeTeam.scores.enumerated().forEach{ (index, score) in
-                    self.homeScores[index].text = String(score)
-                }
-                scoreBoard.awayTeam.scores.enumerated().forEach{ (index, score) in
-                    self.awayScores[index].text = String(score)
-                }
+                self.setTeamScoreBoard(board: scoreBoard)
             }.store(in: &cancelable)
+        
+        self.gameManager.$homePlayerScoreBoardInfo
+            .receive(on: DispatchQueue.main)
+            .sink { homePlayerScoreBoard in
+                guard let homePlayerScoreBoard = homePlayerScoreBoard else { return }
+                self.itemListDidLoad()
+            }.store(in: &cancelable)
+    }
+    
+    func setTeamScoreBoard(board: ScoreBoard) {
+        board.homeTeam.scores.enumerated().forEach{ (index, score) in
+            self.homeScores[index].text = String(score)
+        }
+        board.awayTeam.scores.enumerated().forEach{ (index, score) in
+            self.awayScores[index].text = String(score)
+        }
     }
     
     
@@ -70,7 +82,7 @@ final class ScoreBoardViewController: UIViewController {
     private func itemListDidLoad() {
         var snapshot = Snapshot()
         let playerScoreBoards = [
-            PlayerScoreBoard(id: 1, name: "양원종", TPA: 1, hits: 1, out: 2),
+            PlayerScoreBoard(id: 1, name: "양원종", tpa: 1, hits: 1, out: 2),
         ]
         snapshot.appendSections(["test"])
         snapshot.appendItems(playerScoreBoards, toSection: "test")

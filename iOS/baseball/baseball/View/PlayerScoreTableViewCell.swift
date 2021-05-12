@@ -21,8 +21,9 @@ final class PlayerScoreTableViewCell: UITableViewCell {
     
     func configure(playerScoreBoard: PlayerScoreBoard) {
         self.playerName.text = playerScoreBoard.name
-        self.TPA.text = "\(playerScoreBoard.TPA)"
+        self.TPA.text = "\(playerScoreBoard.tpa)"
         self.hits.text = "\(playerScoreBoard.hits)"
         self.out.text = "\(playerScoreBoard.out)"
+        self.AVG.text = String(format: "%.3f", playerScoreBoard.hits/playerScoreBoard.tpa)
     }
 }
