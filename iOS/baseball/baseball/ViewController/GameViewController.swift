@@ -38,9 +38,7 @@ final class GameViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.gameHeaderView.delegate = self
-        
         self.ballCountTableView.transform = CGAffineTransform(rotationAngle: -(CGFloat)(Double.pi))
-        
         registerNib()
         bind()
         configureTableViewHeight()
@@ -53,14 +51,11 @@ final class GameViewController: UIViewController{
             .sink { (game) in
                 guard let game = game else { return }
                 let history = self.gameManager.makeHistory(gameInfo: game)
-                //MARK: - 화면 표시
                 self.gameHeaderView.teamConfigure()
                 self.gameHeaderView.scoreConfigure()
                 self.setGameCount()
                 self.setRoundInfo()
                 self.setPlayers()
-                
-                
                 self.applySnapshot(history: history, animatingDifferences: false)
             }.store(in: &cancelable)
     }
