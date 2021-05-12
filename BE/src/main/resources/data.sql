@@ -92,3 +92,72 @@ INSERT INTO member (name, avg, team) VALUES ('채종범', 0.377, 8);
 INSERT INTO member (name, avg, team) VALUES ('이종욱', 0.388, 8);
 INSERT INTO member (name, avg, team) VALUES ('김수경', 0.399, 8);
 
+INSERT INTO inning (round, first_base, second_base, third_base, game, game_key) VALUES (1, true, false, false, 1, 0);
+INSERT INTO inning (round, first_base, second_base, third_base, game, game_key) VALUES (1, false, true, false, 1, 0);
+INSERT INTO inning (round, first_base, second_base, third_base, game, game_key) VALUES (2, true, false, true, 1, 0);
+INSERT INTO inning (round, first_base, second_base, third_base, game, game_key) VALUES (2, true, false, false, 1, 0);
+INSERT INTO inning (round, first_base, second_base, third_base, game, game_key) VALUES (3, false, true, false, 1, 0);
+INSERT INTO inning (round, first_base, second_base, third_base, game, game_key) VALUES (3, true, false, true, 1, 0);
+INSERT INTO inning (round, first_base, second_base, third_base, game, game_key) VALUES (4, true, false, true, 1, 0);
+
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 2, 1, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 2, 1, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (2, 2, 1, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (1, 2, 1, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 2, 1, 0);
+
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (1, 1, 2, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (1, 1, 2, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 1, 2, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 1, 2, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 1, 2, 0);
+
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (2, 2, 3, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 2, 3, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 2, 3, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 2, 3, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (1, 2, 3, 0);
+
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (1, 1, 4, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 1, 4, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (1, 1, 4, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 1, 4, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 1, 4, 0);
+
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (2, 2, 5, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 2, 5, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 2, 5, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (2, 2, 5, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 2, 5, 0);
+
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 1, 6, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (1, 1, 6, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 1, 6, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (1, 1, 6, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 1, 6, 0);
+
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 2, 7, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 2, 7, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (3, 2, 7, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (0, 2, 7, 0);
+INSERT INTO score_history (inning_score, team_id, inning, inning_key) VALUES (1, 2, 7, 0);
+
+INSERT INTO hitter_history (tpa, hits, `out`, member_id, inning, inning_key) VALUES (1, 1, 0, 1, 1, 0);
+INSERT INTO hitter_history (tpa, hits, `out`, member_id, inning, inning_key) VALUES (1, 1, 0, 2, 2, 0);
+INSERT INTO hitter_history (tpa, hits, `out`, member_id, inning, inning_key) VALUES (1, 0, 1, 3, 3, 0);
+INSERT INTO hitter_history (tpa, hits, `out`, member_id, inning, inning_key) VALUES (1, 0, 1, 4, 4, 0);
+INSERT INTO hitter_history (tpa, hits, `out`, member_id, inning, inning_key) VALUES (1, 0, 1, 5, 5, 0);
+INSERT INTO hitter_history (tpa, hits, `out`, member_id, inning, inning_key) VALUES (1, 1, 0, 6, 6, 0);
+INSERT INTO hitter_history (tpa, hits, `out`, member_id, inning, inning_key) VALUES (1, 0, 1, 7, 7, 0);
+INSERT INTO hitter_history (tpa, hits, `out`, member_id, inning, inning_key) VALUES (1, 1, 0, 8, 1, 0);
+INSERT INTO hitter_history (tpa, hits, `out`, member_id, inning, inning_key) VALUES (1, 1, 0, 9, 2, 0);
+
+INSERT INTO hitter_history (tpa, hits, `out`, member_id, inning, inning_key) VALUES (1, 1, 0, 10, 1, 0);
+INSERT INTO hitter_history (tpa, hits, `out`, member_id, inning, inning_key) VALUES (1, 0, 1, 11, 2, 0);
+INSERT INTO hitter_history (tpa, hits, `out`, member_id, inning, inning_key) VALUES (1, 1, 0, 12, 3, 0);
+INSERT INTO hitter_history (tpa, hits, `out`, member_id, inning, inning_key) VALUES (1, 1, 0, 13, 4, 0);
+INSERT INTO hitter_history (tpa, hits, `out`, member_id, inning, inning_key) VALUES (1, 1, 0, 14, 5, 0);
+INSERT INTO hitter_history (tpa, hits, `out`, member_id, inning, inning_key) VALUES (1, 0, 1, 15, 6, 0);
+INSERT INTO hitter_history (tpa, hits, `out`, member_id, inning, inning_key) VALUES (1, 1, 0, 16, 7, 0);
+INSERT INTO hitter_history (tpa, hits, `out`, member_id, inning, inning_key) VALUES (1, 0, 1, 17, 1, 0);
+INSERT INTO hitter_history (tpa, hits, `out`, member_id, inning, inning_key) VALUES (1, 1, 0, 18, 2, 0);
