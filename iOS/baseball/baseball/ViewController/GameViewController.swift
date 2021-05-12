@@ -63,9 +63,7 @@ final class GameViewController: UIViewController {
     private func makeDataSource() -> Datasource {
         Datasource.init(tableView: ballCount) { (tableView, indexPath, history) -> UITableViewCell? in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GameStoryTableViewCell.className, for: indexPath) as? GameStoryTableViewCell else { return GameStoryTableViewCell() }
-            cell.countLabel.text = history.history
-            cell.countNumberLabel.text = history.accumulatedHistory
-            cell.countImage.image = UIImage(systemName: "doc.fill")
+            cell.configure(historyInfo: history, index: indexPath.row)
             return cell
         }
     }
