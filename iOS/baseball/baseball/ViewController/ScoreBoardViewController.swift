@@ -18,6 +18,8 @@ final class ScoreBoardViewController: UIViewController {
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     private(set) var gameManager: GameManager!
     private var cancelable = Set<AnyCancellable>()
+    private var board = [PlayerScoreBoard]()
+
     
     fileprivate typealias DataSource = UITableViewDiffableDataSource<String, PlayerScoreBoard>
     fileprivate typealias Snapshot = NSDiffableDataSourceSnapshot<String, PlayerScoreBoard>
@@ -25,20 +27,50 @@ final class ScoreBoardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setTeamControllerBarTitle()
         self.tableViewCellRegisterNib()
-        self.itemListDidLoad()
         self.tableViewHeight.constant = self.playerScoreTableView.contentSize.height
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        bind()
+        gameManager.getScoreBoard()
+    }
+    
+    func bind() {
+        self.gameManager.$scoreBoardInfo
+            .receive(on: DispatchQueue.main)
+            .sink { (scoreBoard) in
+                guard let scoreBoard = scoreBoard else { return }
+                self.setTeamControllerBarTitle(home: scoreBoard.homeTeam.teamName, away: scoreBoard.awayTeam.teamName)
+                self.setTeamScoreBoard(board: scoreBoard)
+            }.store(in: &cancelable)
+        
+        self.gameManager.$homePlayerScoreBoardInfo
+            .receive(on: DispatchQueue.main)
+            .sink { homePlayerScoreBoard in
+                guard let homePlayerScoreBoard = homePlayerScoreBoard else { return }
+                self.itemListDidLoad()
+            }.store(in: &cancelable)
+    }
+    
+    func setTeamScoreBoard(board: ScoreBoard) {
+        board.homeTeam.scores.enumerated().forEach{ (index, score) in
+            self.homeScores[index].text = String(score)
+        }
+        board.awayTeam.scores.enumerated().forEach{ (index, score) in
+            self.awayScores[index].text = String(score)
+        }
+    }
+    
     
     func setGameManager(_ manager: GameManager) {
         self.gameManager = manager
     }
     
-    private func setTeamControllerBarTitle() {
-        teamControllBar.setTitle("A~", forSegmentAt: 0)
-        teamControllBar.setTitle("B~", forSegmentAt: 1)
+    private func setTeamControllerBarTitle(home: String, away: String) {
+        teamControllBar.setTitle(home, forSegmentAt: 0)
+        teamControllBar.setTitle(away, forSegmentAt: 1)
     }
     
     private func tableViewCellRegisterNib() {
@@ -50,7 +82,7 @@ final class ScoreBoardViewController: UIViewController {
     private func itemListDidLoad() {
         var snapshot = Snapshot()
         let playerScoreBoards = [
-            PlayerScoreBoard(id: 1, name: "양원종", TPA: 1, hits: 1, out: 2),
+            PlayerScoreBoard(id: 1, name: "양원종", tpa: 1, hits: 1, out: 2),
         ]
         snapshot.appendSections(["test"])
         snapshot.appendItems(playerScoreBoards, toSection: "test")
