@@ -18,7 +18,7 @@ final class GameStoryTableViewCell: UITableViewCell {
     }
     
     func configure(historyInfo: History, index: Int) {
-        self.indexLabel.text = "\(index)"
+        self.indexLabel.text = "\(index + 1)"
         self.countLabel.text = historyInfo.history
         self.countNumberLabel.text = historyInfo.accumulatedHistory
     }
