@@ -25,20 +25,40 @@ final class ScoreBoardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setTeamControllerBarTitle()
         self.tableViewCellRegisterNib()
         self.itemListDidLoad()
         self.tableViewHeight.constant = self.playerScoreTableView.contentSize.height
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        bind()
+        gameManager.getScoreBoard()
+    }
+    
+    func bind() {
+        self.gameManager.$scoreBoardInfo
+            .receive(on: DispatchQueue.main)
+            .sink { (scoreBoard) in
+                guard let scoreBoard = scoreBoard else { return }
+                self.setTeamControllerBarTitle(home: scoreBoard.homeTeam.teamName, away: scoreBoard.awayTeam.teamName)
+                scoreBoard.homeTeam.scores.enumerated().forEach{ (index, score) in
+                    self.homeScores[index].text = String(score)
+                }
+                scoreBoard.awayTeam.scores.enumerated().forEach{ (index, score) in
+                    self.awayScores[index].text = String(score)
+                }
+            }.store(in: &cancelable)
+    }
+    
+    
     func setGameManager(_ manager: GameManager) {
         self.gameManager = manager
     }
     
-    private func setTeamControllerBarTitle() {
-        teamControllBar.setTitle("A~", forSegmentAt: 0)
-        teamControllBar.setTitle("B~", forSegmentAt: 1)
+    private func setTeamControllerBarTitle(home: String, away: String) {
+        teamControllBar.setTitle(home, forSegmentAt: 0)
+        teamControllBar.setTitle(away, forSegmentAt: 1)
     }
     
     private func tableViewCellRegisterNib() {
