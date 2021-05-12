@@ -45,33 +45,17 @@ public class Game {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
-    public Team getHomeTeam() {
-        return getTeamByType(Type.HOME);
+    public List<Member> getTeamMembersByType(Type type) {
+        return getTeamByType(type).getMembers();
     }
 
-    public Team getAwayTeam() {
-        return getTeamByType(Type.AWAY);
+    public String getTeamNameByType(Type type) {
+        return getTeamByType(type).getName();
     }
 
-    public List<Member> getHomeTeamMembers() {
-        return getHomeTeam().getMembers();
-    }
-
-    public List<Member> getAwayTeamMembers() {
-        return getAwayTeam().getMembers();
-    }
-
-    public String getHomeTeamName() {
-        return getHomeTeam().getName();
-    }
-
-    public String getAwayTeamName() {
-        return getAwayTeam().getName();
-    }
-
-    public int getHomeTeamScore() {
+    public int getTeamScoreByType(Type type) {
         return innings.stream()
-                .mapToInt(inning -> inning.getTotalScoreByTeamId(getHomeTeam().getId()))
+                .mapToInt(inning -> inning.getTotalScoreByTeamId(getTeamByType(type).getId()))
                 .sum();
     }
 

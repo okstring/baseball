@@ -22,7 +22,7 @@ public class ScoreHistory {
     }
 
     public boolean verifyScoreHistoryByTeamId(Long teamId) {
-        return this.teamId.equals(id);
+        return this.teamId.equals(teamId);
     }
 
     public Long getId() {

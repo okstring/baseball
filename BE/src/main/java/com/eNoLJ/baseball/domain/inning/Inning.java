@@ -46,9 +46,9 @@ public class Inning {
                 .collect(Collectors.toList());
     }
 
-    public int getTotalScoreByTeamId(Long id) {
+    public int getTotalScoreByTeamId(Long teamId) {
         return this.scoreHistories.stream()
-                .filter(scoreHistory -> scoreHistory.verifyScoreHistoryByTeamId(id))
+                .filter(scoreHistory -> scoreHistory.verifyScoreHistoryByTeamId(teamId))
                 .mapToInt(ScoreHistory::getInningScore)
                 .sum();
     }

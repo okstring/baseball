@@ -1,6 +1,7 @@
 package com.eNoLJ.baseball.web.dto;
 
 import com.eNoLJ.baseball.domain.game.Game;
+import com.eNoLJ.baseball.web.utils.Type;
 
 public class DefenseTeamDTO {
 
@@ -15,7 +16,7 @@ public class DefenseTeamDTO {
     }
 
     public static DefenseTeamDTO createDefenseTeamDTO(Game game, PitcherDTO pitcher) {
-        return new DefenseTeamDTO(game.getHomeTeamName(), game.getHomeTeamScore(), pitcher);
+        return new DefenseTeamDTO(game.getTeamNameByType(Type.HOME), game.getTeamScoreByType(Type.HOME), pitcher);
     }
 
     public String getTeamName() {

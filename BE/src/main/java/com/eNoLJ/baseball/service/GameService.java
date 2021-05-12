@@ -59,19 +59,15 @@ public class GameService {
         Game game = findGameByTeam(team);
         game.choiceTeam(team);
 
-        // score_history 만들기, teamId는 awayTeam
-        ScoreHistory scoreHistory = ScoreHistory.createScoreHistory(team);
+        // score_history 만들기, 선공은 awayTeam
+        ScoreHistory scoreHistory = ScoreHistory.createScoreHistory(game.getTeamByType(Type.AWAY));
 
-        // hitter_history 만들기, memberId는 awayTeam의 멤버
-        Member hitterMember = game.getAwayTeamMembers().stream()
-                .findFirst()
-                .orElseThrow(EntityNotFoundException::new);
+        // hitter_history 만들기, member는 awayTeam의 첫번째 멤버
+        Member hitterMember = findFirstMemberByGameAndType(game, Type.AWAY);
         HitterHistory hitterHistory = HitterHistory.createHitterHistory(hitterMember);
 
-        // pitcher_history 만들기, memberId는 homeTeam의 멤버
-        Member pitcherMember = game.getHomeTeamMembers().stream()
-                .findFirst()
-                .orElseThrow(EntityNotFoundException::new);
+        // pitcher_history 만들기, member는 homeTeam의 첫번째 멤버
+        Member pitcherMember = findFirstMemberByGameAndType(game, Type.HOME);
         PitcherHistory pitcherHistory = PitcherHistory.createPitcherHistory(pitcherMember);
 
         // inning 만들기
@@ -90,6 +86,12 @@ public class GameService {
     private Game findGameByTeam(Team team) {
         return gameRepository.findAll().stream()
                 .filter(game -> game.verifyTeam(team))
+                .findFirst()
+                .orElseThrow(EntityNotFoundException::new);
+    }
+
+    private Member findFirstMemberByGameAndType(Game game, Type type) {
+        return game.getTeamMembersByType(type).stream()
                 .findFirst()
                 .orElseThrow(EntityNotFoundException::new);
     }
