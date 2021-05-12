@@ -55,9 +55,8 @@ public class GameService {
 
     public GameInfoResponseDTO startGameByTeamName(String teamName) {
         // game에 선택한 team name 넣기
-        Team team = findTeamByTeamName(teamName);
-        Game game = findGameByTeam(team);
-        game.choiceTeam(team);
+        Game game = findGameByTeamName(teamName);
+        game.choiceTeam(teamName);
 
         // score_history 만들기, 선공은 awayTeam
         ScoreHistory scoreHistory = ScoreHistory.createScoreHistory(game.getTeamByType(Type.AWAY));
@@ -83,9 +82,9 @@ public class GameService {
         return new GameInfoResponseDTO(game.getChoiceTeamName(), roundInfoDTO, offenceTeamDTO, defenseTeamDTO, story);
     }
 
-    private Game findGameByTeam(Team team) {
+    private Game findGameByTeamName(String teamName) {
         return gameRepository.findAll().stream()
-                .filter(game -> game.verifyTeam(team))
+                .filter(game -> game.verifyTeamName(teamName))
                 .findFirst()
                 .orElseThrow(EntityNotFoundException::new);
     }
@@ -112,16 +111,9 @@ public class GameService {
     }
 
     public List<MemberScoreDTO> getGameScoresByTeam(String teamName) {
-        List<MemberScoreDTO> memberScoreDTOList = new ArrayList<>();
-        memberScoreDTOList.add(new MemberScoreDTO(1L, "김광진", 1, 1, 0));
-        memberScoreDTOList.add(new MemberScoreDTO(2L, "이동규", 1, 0, 1));
-        memberScoreDTOList.add(new MemberScoreDTO(3L, "김진수", 1, 0, 1));
-        memberScoreDTOList.add(new MemberScoreDTO(4L, "박영권", 1, 1, 0));
-        memberScoreDTOList.add(new MemberScoreDTO(5L, "추신수", 1, 1, 0));
-        memberScoreDTOList.add(new MemberScoreDTO(6L, "이용대", 1, 0, 1));
-        memberScoreDTOList.add(new MemberScoreDTO(7L, "류현진", 1, 0, 1));
-        memberScoreDTOList.add(new MemberScoreDTO(8L, "최동수", 1, 0, 1));
-        memberScoreDTOList.add(new MemberScoreDTO(9L, "한양범", 1, 1, 0));
-        return memberScoreDTOList;
+        Game game = findGameByTeamName(teamName);
+        return findTeamByTeamName(teamName).getMembers().stream()
+                .map(member -> MemberScoreDTO.createMemberScoreDTO(member, game.getHitterHistoriesByMember(member)))
+                .collect(Collectors.toList());
     }
 }

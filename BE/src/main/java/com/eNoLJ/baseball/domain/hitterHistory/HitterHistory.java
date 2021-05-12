@@ -9,18 +9,24 @@ public class HitterHistory {
     private Long id;
     private int tpa;
     private int hits;
+    private int out;
     private Long memberId;
 
     public HitterHistory() {}
 
-    public HitterHistory(int tpa, int hits, Long memberId) {
+    public HitterHistory(int tpa, int hits, int out, Long memberId) {
         this.tpa = tpa;
         this.hits = hits;
+        this.out = out;
         this.memberId = memberId;
     }
 
     public static HitterHistory createHitterHistory(Member member) {
-        return new HitterHistory(1, 0, member.getId());
+        return new HitterHistory(1, 0, 0, member.getId());
+    }
+
+    public boolean verifyMember(Member member) {
+        return this.memberId.equals(member.getId());
     }
 
     public Long getId() {
@@ -33,6 +39,10 @@ public class HitterHistory {
 
     public int getHits() {
         return hits;
+    }
+
+    public int getOut() {
+        return out;
     }
 
     public Long getMemberId() {

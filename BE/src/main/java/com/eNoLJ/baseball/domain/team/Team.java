@@ -15,10 +15,6 @@ public class Team {
     private Type type;
     private List<Member> members = new ArrayList<>();
 
-    public boolean verifyTeam(Team team) {
-        return this.id.equals(team.getId());
-    }
-
     public boolean verifyTeamName(String teamName) {
         return this.name.equals(teamName);
     }

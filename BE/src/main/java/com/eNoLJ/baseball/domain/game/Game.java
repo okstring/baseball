@@ -1,5 +1,6 @@
 package com.eNoLJ.baseball.domain.game;
 
+import com.eNoLJ.baseball.domain.hitterHistory.HitterHistory;
 import com.eNoLJ.baseball.domain.inning.Inning;
 import com.eNoLJ.baseball.domain.member.Member;
 import com.eNoLJ.baseball.domain.team.Team;
@@ -8,6 +9,7 @@ import com.eNoLJ.baseball.web.utils.Type;
 import org.springframework.data.annotation.Id;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,17 +21,17 @@ public class Game {
     private List<Team> teams = new ArrayList<>();
     private List<Inning> innings = new ArrayList<>();
 
-    public void choiceTeam(Team team) {
-        this.choiceTeamName = team.getName();
+    public void choiceTeam(String teamName) {
+        this.choiceTeamName = teamName;
     }
 
     public void addInning(Inning inning) {
         this.innings.add(inning);
     }
 
-    public boolean verifyTeam(Team checkTeam) {
+    public boolean verifyTeamName(String teamName) {
         List<Team> teams = this.teams.stream()
-                .filter(team -> team.verifyTeam(checkTeam))
+                .filter(team -> team.verifyTeamName(teamName))
                 .collect(Collectors.toList());
         return teams.size() == 1;
     }
@@ -64,6 +66,13 @@ public class Game {
                 .mapToInt(inning -> inning.getTotalScoreByTeamId(getTeamByType(type).getId()))
                 .filter(score -> score != 0)
                 .boxed()
+                .collect(Collectors.toList());
+    }
+
+    public List<HitterHistory> getHitterHistoriesByMember(Member member) {
+        return innings.stream()
+                .map(inning -> inning.getHitterHistoriesByMember(member))
+                .flatMap(Collection::stream)
                 .collect(Collectors.toList());
     }
 

@@ -1,6 +1,7 @@
 package com.eNoLJ.baseball.domain.inning;
 
 import com.eNoLJ.baseball.domain.hitterHistory.HitterHistory;
+import com.eNoLJ.baseball.domain.member.Member;
 import com.eNoLJ.baseball.domain.pitcherHistory.PitcherHistory;
 import com.eNoLJ.baseball.domain.scoreHistory.ScoreHistory;
 import org.springframework.data.annotation.Id;
@@ -51,6 +52,12 @@ public class Inning {
                 .filter(scoreHistory -> scoreHistory.verifyScoreHistoryByTeamId(teamId))
                 .mapToInt(ScoreHistory::getInningScore)
                 .sum();
+    }
+
+    public List<HitterHistory> getHitterHistoriesByMember(Member member) {
+        return hitterHistories.stream()
+                .filter(hitterHistory -> hitterHistory.verifyMember(member))
+                .collect(Collectors.toList());
     }
 
     public void addScoreHistory(ScoreHistory scoreHistory) {
