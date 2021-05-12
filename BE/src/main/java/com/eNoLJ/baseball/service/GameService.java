@@ -101,18 +101,14 @@ public class GameService {
     }
 
     public GameScoresResponseDTO getGameScores() {
-        List<Integer> homeTeamScores = new ArrayList<>();
-        homeTeamScores.add(1);
-        homeTeamScores.add(2);
-        homeTeamScores.add(2);
-        List<Integer> awayTeamScores = new ArrayList<>();
-        awayTeamScores.add(1);
-        awayTeamScores.add(0);
-        awayTeamScores.add(0);
-        awayTeamScores.add(0);
-        GameScoresDTO homeTeam = new GameScoresDTO("Marvel", homeTeamScores);
-        GameScoresDTO awayTeam = new GameScoresDTO("Captin", awayTeamScores);
+        Game game = findGameById(1L);
+        GameScoresDTO homeTeam = new GameScoresDTO(game.getTeamNameByType(Type.HOME), game.getTeamScoreListByType(Type.HOME));
+        GameScoresDTO awayTeam = new GameScoresDTO(game.getTeamNameByType(Type.AWAY), game.getTeamScoreListByType(Type.AWAY));
         return new GameScoresResponseDTO(homeTeam, awayTeam);
+    }
+
+    private Game findGameById(Long id) {
+        return gameRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public List<MemberScoreDTO> getGameScoresByTeam(String teamName) {

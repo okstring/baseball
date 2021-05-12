@@ -59,10 +59,12 @@ public class Game {
                 .sum();
     }
 
-    public int getAwayTeamScore() {
+    public List<Integer> getTeamScoreListByType(Type type) {
         return innings.stream()
-                .mapToInt(inning -> inning.getTotalScoreByTeamId(getAwayTeam().getId()))
-                .sum();
+                .mapToInt(inning -> inning.getTotalScoreByTeamId(getTeamByType(type).getId()))
+                .filter(score -> score != 0)
+                .boxed()
+                .collect(Collectors.toList());
     }
 
     public Long getId() {
