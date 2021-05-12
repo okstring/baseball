@@ -99,6 +99,7 @@ CREATE TABLE IF NOT EXISTS `baseball`.`hitter_history` (
     `id` INT AUTO_INCREMENT,
     `tpa` INT NOT NULL,
     `hits` INT NOT NULL,
+    `out` INT NOT NULL,
     `member_id` INT NOT NULL,
     `inning` INT NOT NULL,
     `inning_key` INT,
