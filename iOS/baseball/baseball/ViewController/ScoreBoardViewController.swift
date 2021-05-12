@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 final class ScoreBoardViewController: UIViewController {
     @IBOutlet weak var homeTotalScore: UILabel!
@@ -16,6 +17,7 @@ final class ScoreBoardViewController: UIViewController {
     @IBOutlet weak var teamControllBar: UISegmentedControl!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     private(set) var gameManager: GameManager!
+    private var cancelable = Set<AnyCancellable>()
     
     fileprivate typealias DataSource = UITableViewDiffableDataSource<String, PlayerScoreBoard>
     fileprivate typealias Snapshot = NSDiffableDataSourceSnapshot<String, PlayerScoreBoard>
@@ -27,6 +29,7 @@ final class ScoreBoardViewController: UIViewController {
         self.tableViewCellRegisterNib()
         self.itemListDidLoad()
         self.tableViewHeight.constant = self.playerScoreTableView.contentSize.height
+        
     }
     
     func setGameManager(_ manager: GameManager) {

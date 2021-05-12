@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Hitter: Codable {
+struct Hitter: Codable, Hashable {
     let name: String
     let avg: Double
     let tpa: Int

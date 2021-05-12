@@ -11,11 +11,12 @@ final class GameManager {
     private let networkingCenter: ServerCommunicable
     private let jsonProcessCenter: JSONDecodable
     private(set) var token: String!
-    @Published private(set) var teams: [PairTeams]!
     @Published private(set) var gameInfo: Game!
+    @Published private(set) var teams: [PairTeams]!
     @Published private(set) var scoreBoardInfo: ScoreBoard!
     @Published private(set) var homePlayerScoreBoardInfo: PlayerScoreBoard!
     @Published private(set) var awayPlayerScoreBoardInfo: PlayerScoreBoard!
+    private(set) var history: History!
     var errorHandler: ((String) -> ())?
     
     
@@ -32,8 +33,8 @@ final class GameManager {
         self.gameInfo = game
     }
     
-    func getGameInfo() {
-        self.getRequest(of: .gameScore) { (result: Result<Game, NetworkingError>) in
+    func getGameInfo(teamName: String?) {
+        self.getRequest(of: .gameStart, parameter: teamName) { (result: Result<Game, NetworkingError>) in
             switch result {
             case .success(let game):
                 self.gameInfo = game
@@ -42,6 +43,21 @@ final class GameManager {
             }
         }
     }
+    
+    func makeHistory(gameInfo: Game) -> [History] {
+        let numberCountHistory = gameInfo.calcurateHistory()
+        var historyBook = [History]()
+        guard let story = gameInfo.story, !story.isEmpty else {
+            return [History]()
+        }
+        for (index, eachStory) in story.enumerated() {
+            let history = History(history: eachStory, accumulatedHistory: numberCountHistory[index])
+            historyBook.append(history)
+        }
+        return historyBook
+    }
+    
+    
     
     func getScoreBoard() {
         self.getRequest(of: .gameScore) { (result: Result<ScoreBoard, NetworkingError>) in

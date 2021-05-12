@@ -54,6 +54,7 @@ final class MainViewController: UIViewController {
     @objc func pushGameTabBar(_ sender: UIButton) {
         guard let vc = self.storyboard?.instantiateViewController(identifier: GameTabBarViewController.className) as? GameTabBarViewController else { return }
         vc.setGameManager(self.gameManager)
+        self.gameManager.getGameInfo(teamName: sender.currentTitle)
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RoundInfo: Codable {
+struct RoundInfo: Codable, Hashable {
     let round: Int
     let strike: Int
     let ball: Int

@@ -13,15 +13,19 @@ final class GameTabBarViewController: UITabBarController {
         super.viewDidLoad()
         self.setGameManagerOfOtherViewController()
         self.setTabBarItems()
-        self.getGameInfo()
+        self.bind()
+    }
+    
+    func bind() {
+        self.gameManager.errorHandler = { error in
+            #if DEBUG
+            NSLog(error)
+            #endif
+        }
     }
     
     func setGameManager(_ manager: GameManager) {
         self.gameManager = manager
-    }
-    
-    func getGameInfo() {
-        self.gameManager.getGameInfo()
     }
     
     private func setGameManagerOfOtherViewController() {
