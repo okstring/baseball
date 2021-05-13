@@ -44,14 +44,25 @@ final class GameHeaderView: UIView {
         return nib.instantiate(withOwner: self, options: nil).first as? UIView
     }
     
-    func teamConfigure() {
-        let teamInfo = delegate?.didLoadTeamInfo()
+    func teamConfigure(gameInfo: Game? = nil) {
+        var teamInfo: (offenceTeam: String, deffenceTeam: String)?
+        if let gameInfo = gameInfo {
+            teamInfo = gameInfo.loadTeamInfo()
+        } else {
+            teamInfo = delegate?.didLoadTeamInfo()
+        }
         defenseTeam.text = teamInfo?.deffenceTeam
         offenceTeam.text = teamInfo?.offenceTeam
+
     }
     
-    func scoreConfigure() {
-        let scoreInfo = delegate?.didLoadScoreInfo()
+    func scoreConfigure(gameInfo: Game? = nil) {
+        var scoreInfo: (offenceTeam: Int, deffenceTeam: Int)?
+        if let gameInfo = gameInfo {
+            scoreInfo = gameInfo.loadScoreInfo()
+        } else {
+            scoreInfo = delegate?.didLoadScoreInfo()
+        }
         defenseScore.text = "\(scoreInfo?.deffenceTeam ?? 0)"
         offenceScore.text = "\(scoreInfo?.offenceTeam ?? 0)"
     }

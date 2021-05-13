@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-final class GameManager {
+final class GameManager: ObservableObject {
     private let networkingCenter: ServerCommunicable
     private(set) var token: String!
     @Published private(set) var gameInfo: Game!

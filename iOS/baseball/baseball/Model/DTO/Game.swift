@@ -28,4 +28,13 @@ struct Game: Codable, Hashable {
         }
         return accumulatedHistory
     }
+    
+    func loadScoreInfo() -> (offenceTeam: Int, deffenceTeam: Int) {
+        return (self.offenceTeam.score, self.defenseTeam.score)
+    }
+    
+    func loadTeamInfo() -> (offenceTeam: String, deffenceTeam: String) {
+        return (self.offenceTeam.teamName, self.defenseTeam.teamName)
+    }
+    
 }

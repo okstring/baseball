@@ -15,14 +15,10 @@ class HeaderScoreDelegate: NSObject, HeaderScoreReloadable {
     }
     
     func didLoadScoreInfo() -> (offenceTeam: Int, deffenceTeam: Int) {
-        let gameInfo = self.gameManager.gameInfo
-        return (gameInfo?.offenceTeam.score ?? 0,
-                gameInfo?.defenseTeam.score ?? 0)
+        return self.gameManager.gameInfo.loadScoreInfo()
     }
     
     func didLoadTeamInfo() -> (offenceTeam: String, deffenceTeam: String) {
-        let gameInfo = self.gameManager.gameInfo
-        return (gameInfo?.offenceTeam.teamName ?? "",
-                gameInfo?.defenseTeam.teamName ?? "")
+        return self.gameManager.gameInfo.loadTeamInfo()
     }
 }
