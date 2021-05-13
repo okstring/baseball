@@ -68,15 +68,14 @@ final class OAuthViewController: UIViewController, ASWebAuthenticationPresentati
     }
     
     func makeGameTitleView() {
-        let maskedView = MaskedLabelView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height/3))
+        let maskedView = GameTitleView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height/3))
         view.addSubview(maskedView)
-        maskedView.label.text = "HitAndRun\nProBaseBallManager\n2021"
+        maskedView.label.text = "HitAndRun!!\nProBaseBallManager\n2021"
         maskedView.label.textColor = .black
         maskedView.label.font = UIFont(name: "BlackOpsOne-Regular", size: 30)
-        maskedView.startColor = .red
+        maskedView.startColor = UIColor(red: 233/255, green: 81/255, blue: 139/255, alpha: 1)
         maskedView.endColor = .black
         maskedView.duration = 3
         maskedView.animate()
     }
-
 }

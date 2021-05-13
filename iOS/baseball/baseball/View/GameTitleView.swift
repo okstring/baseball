@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MaskedLabelView: UIView {
+class GameTitleView: UIView {
 
     weak var label: UILabel!
     var startColor: UIColor = .blue
@@ -20,7 +20,7 @@ class MaskedLabelView: UIView {
 
         gradientLayer.colors = [
             startColor.cgColor,
-            endColor.cgColor
+            endColor.cgColor,
         ]
 
         gradientLayer.locations = [
@@ -58,7 +58,7 @@ class MaskedLabelView: UIView {
     func animate() {
         gradientLayer.colors = [
             startColor.cgColor,
-            endColor.cgColor
+            endColor.cgColor,
         ]
         gradientLayer.removeFromSuperlayer()
         layer.addSublayer(gradientLayer)

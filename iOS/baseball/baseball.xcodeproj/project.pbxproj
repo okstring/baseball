@@ -52,7 +52,7 @@
 		B34B59F22641979B009105DC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B34B59F12641979B009105DC /* SnapKit */; };
 		B3665036264CB9AF00BF11CB /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = B3665035264CB9AF00BF11CB /* Lottie */; };
 		B366503D264CCD7000BF11CB /* ball.json in Resources */ = {isa = PBXBuildFile; fileRef = B366503C264CCD7000BF11CB /* ball.json */; };
-		B3665045264CEF5000BF11CB /* MaskedLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3665044264CEF5000BF11CB /* MaskedLabelView.swift */; };
+		B3665045264CEF5000BF11CB /* GameTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3665044264CEF5000BF11CB /* GameTitleView.swift */; };
 		B3665052264CFA1B00BF11CB /* BlackOpsOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B3665051264CFA1900BF11CB /* BlackOpsOne-Regular.ttf */; };
 		B36A37A5264BA7DC002FE0B4 /* NetworkElements.plist in Resources */ = {isa = PBXBuildFile; fileRef = B36A37A4264BA7DC002FE0B4 /* NetworkElements.plist */; };
 		B38653A926428B6E00DFC803 /* GameStoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38653A726428B6E00DFC803 /* GameStoryTableViewCell.swift */; };
@@ -127,7 +127,7 @@
 		B330CE0226441826003B882D /* PitchButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PitchButton.swift; sourceTree = "<group>"; };
 		B34B59E826419634009105DC /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		B366503C264CCD7000BF11CB /* ball.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ball.json; sourceTree = "<group>"; };
-		B3665044264CEF5000BF11CB /* MaskedLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MaskedLabelView.swift; path = baseball/View/MaskedLabelView.swift; sourceTree = SOURCE_ROOT; };
+		B3665044264CEF5000BF11CB /* GameTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GameTitleView.swift; path = baseball/View/GameTitleView.swift; sourceTree = SOURCE_ROOT; };
 		B3665051264CFA1900BF11CB /* BlackOpsOne-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BlackOpsOne-Regular.ttf"; sourceTree = "<group>"; };
 		B36A37A4264BA7DC002FE0B4 /* NetworkElements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NetworkElements.plist; sourceTree = "<group>"; };
 		B38653A726428B6E00DFC803 /* GameStoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStoryTableViewCell.swift; sourceTree = "<group>"; };
@@ -187,7 +187,7 @@
 				B3F663F82643D0CF00625A2F /* GameHeaderView.xib */,
 				B3F663FD2643D0DE00625A2F /* GameHeaderView.swift */,
 				B330CE0226441826003B882D /* PitchButton.swift */,
-				B3665044264CEF5000BF11CB /* MaskedLabelView.swift */,
+				B3665044264CEF5000BF11CB /* GameTitleView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -497,7 +497,7 @@
 				226B928A2648F972006007D0 /* NSObject+extension.swift in Sources */,
 				22941A6726412DC200598814 /* PairTeams.swift in Sources */,
 				B3F663FE2643D0DE00625A2F /* GameHeaderView.swift in Sources */,
-				B3665045264CEF5000BF11CB /* MaskedLabelView.swift in Sources */,
+				B3665045264CEF5000BF11CB /* GameTitleView.swift in Sources */,
 				22941A8A2641304C00598814 /* TeamScore.swift in Sources */,
 				22941A7626412F0D00598814 /* Picher.swift in Sources */,
 				22941A7126412E5500598814 /* RoundInfo.swift in Sources */,
