@@ -9,6 +9,10 @@ import UIKit
 import Combine
 
 final class ScoreBoardViewController: UIViewController {
+    enum Section {
+        case main
+    }
+    
     @IBOutlet weak var homeTotalScore: UILabel!
     @IBOutlet weak var awayTotalScore: UILabel!
     @IBOutlet var homeScores: [UILabel]!
@@ -18,22 +22,28 @@ final class ScoreBoardViewController: UIViewController {
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     private(set) var gameManager: GameManager!
     private var cancelable = Set<AnyCancellable>()
-    private var board = [PlayerScoreBoard]()
-
     
-    fileprivate typealias DataSource = UITableViewDiffableDataSource<String, PlayerScoreBoard>
-    fileprivate typealias Snapshot = NSDiffableDataSourceSnapshot<String, PlayerScoreBoard>
+    fileprivate typealias DataSource = UITableViewDiffableDataSource<Section, PlayerScoreBoard>
+    fileprivate typealias Snapshot = NSDiffableDataSourceSnapshot<Section, PlayerScoreBoard>
     private lazy var dataSource = makeDataSource()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.playerScoreTableView.delegate = self
         self.tableViewCellRegisterNib()
-        self.tableViewHeight.constant = self.playerScoreTableView.contentSize.height
-        
+        bind()
+        gameManager.getScoreBoard()
+//        configureTableViewHeight()
     }
     
+//    private func configureTableViewHeight() {
+//        DispatchQueue.main.async {
+//            self.tableViewHeight.constant = self.playerScoreTableView.contentSize.height
+//        }
+//    }
+    
     override func viewWillAppear(_ animated: Bool) {
-        bind()
+        super.viewWillAppear(animated)
         gameManager.getScoreBoard()
     }
     
@@ -50,7 +60,7 @@ final class ScoreBoardViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { homePlayerScoreBoard in
                 guard let homePlayerScoreBoard = homePlayerScoreBoard else { return }
-                self.itemListDidLoad()
+                self.itemListDidLoad(playerScore: homePlayerScoreBoard)
             }.store(in: &cancelable)
     }
     
@@ -76,22 +86,22 @@ final class ScoreBoardViewController: UIViewController {
     private func tableViewCellRegisterNib() {
         let nib = UINib(nibName: PlayerScoreTableViewCell.className, bundle: nil)
         self.playerScoreTableView.register(nib, forCellReuseIdentifier: PlayerScoreTableViewCell.className)
-
+        let headerNib = UINib(nibName: PlayerScoreHeaderTableViewCell.className, bundle: nil)
+        self.playerScoreTableView.register(headerNib, forHeaderFooterViewReuseIdentifier: PlayerScoreHeaderTableViewCell.className)
+        let footerNib = UINib(nibName: PlayerScoreFooterTableViewCell.className, bundle: nil)
+        self.playerScoreTableView.register(footerNib, forHeaderFooterViewReuseIdentifier: PlayerScoreFooterTableViewCell.className)
     }
     
-    private func itemListDidLoad() {
+    private func itemListDidLoad(playerScore: [PlayerScoreBoard]) {
         var snapshot = Snapshot()
-        let playerScoreBoards = [
-            PlayerScoreBoard(id: 1, name: "양원종", tpa: 1, hits: 1, out: 2),
-        ]
-        snapshot.appendSections(["test"])
-        snapshot.appendItems(playerScoreBoards, toSection: "test")
-        dataSource.apply(snapshot)
+        snapshot.appendSections([.main])
+        snapshot.appendItems(playerScore, toSection: .main)
+        self.dataSource.apply(snapshot, animatingDifferences: false)
     }
     
     private func makeDataSource() -> DataSource {
-        return DataSource(tableView: self.playerScoreTableView) { (tableView, indexPath, playerScoreBoard) -> PlayerScoreTableViewCell? in
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: PlayerScoreTableViewCell.className, for: indexPath) as? PlayerScoreTableViewCell else { return PlayerScoreTableViewCell() }
+        DataSource(tableView: self.playerScoreTableView) { (tableView, indexPath, playerScoreBoard) -> UITableViewCell? in
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: PlayerScoreTableViewCell.className) as? PlayerScoreTableViewCell else { return PlayerScoreTableViewCell() }
             cell.configure(playerScoreBoard: playerScoreBoard)
             return cell
         }

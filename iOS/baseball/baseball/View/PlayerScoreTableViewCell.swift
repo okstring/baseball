@@ -16,7 +16,6 @@ final class PlayerScoreTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-//        self.AVG.text =
     }
     
     func configure(playerScoreBoard: PlayerScoreBoard) {

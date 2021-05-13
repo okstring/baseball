@@ -38,11 +38,15 @@ final class GameViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.gameHeaderView.delegate = self
-        self.ballCountTableView.transform = CGAffineTransform(rotationAngle: -(CGFloat)(Double.pi))
         registerNib()
         bind()
         configureTableViewHeight()
         appearPitchButton()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
     }
     
     private func bind() {
@@ -84,9 +88,14 @@ final class GameViewController: UIViewController{
         Datasource.init(tableView: ballCountTableView) { (tableView, indexPath, history) -> UITableViewCell? in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GameStoryTableViewCell.className, for: indexPath) as? GameStoryTableViewCell else { return GameStoryTableViewCell() }
             cell.configure(historyInfo: history, index: indexPath.row)
-            cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
+            self.reverseTableView(cell: cell, tableView: tableView)
             return cell
         }
+    }
+    
+    private func reverseTableView(cell: UITableViewCell, tableView: UITableView) {
+        cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
+        tableView.transform = CGAffineTransform(rotationAngle: -(CGFloat)(Double.pi))
     }
     
     private func applySnapshot(history: [History], animatingDifferences: Bool = true) {
