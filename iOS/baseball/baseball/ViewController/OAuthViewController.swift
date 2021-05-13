@@ -24,6 +24,7 @@ final class OAuthViewController: UIViewController, ASWebAuthenticationPresentati
         self.configOAuth()
         self.view.backgroundColor = #colorLiteral(red: 0.1921346784, green: 0.1921729147, blue: 0.1921265125, alpha: 1)
         self.navigationController?.navigationBar.isHidden = true
+        makeGameTitleView()
         setAnimationView()
     }
     
@@ -64,6 +65,19 @@ final class OAuthViewController: UIViewController, ASWebAuthenticationPresentati
     
     @IBAction func loginWithGithub(_ sender: Any) {
         webAuthSession?.start()
+    }
+    
+    func makeGameTitleView() {
+        let maskedView = MaskedLabelView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height/3))
+        view.addSubview(maskedView)
+        maskedView.label.text = "BaseBallManager\nin2021"
+        maskedView.label.textColor = .black
+        maskedView.label.font = .boldSystemFont(ofSize: 34)
+        maskedView.startColor = .red
+        maskedView.endColor = .black
+        maskedView.duration = 3
+        maskedView.repeatCount = Float.infinity
+        maskedView.animate()
     }
 
 }
