@@ -337,7 +337,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="80"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="ja0-GE-tgO"/>
+                                    <constraint firstAttribute="height" constant="80" id="4II-7Q-gjT"/>
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="stl-OR-Ov7">
@@ -588,10 +588,10 @@
                         <constraints>
                             <constraint firstItem="pW4-TO-rf8" firstAttribute="bottom" secondItem="stl-OR-Ov7" secondAttribute="bottom" id="1ri-A9-mDY"/>
                             <constraint firstItem="9A5-nZ-Onq" firstAttribute="top" secondItem="pW4-TO-rf8" secondAttribute="top" id="6eB-dR-kFN"/>
-                            <constraint firstAttribute="trailing" secondItem="9A5-nZ-Onq" secondAttribute="trailing" id="CoQ-1I-ElT"/>
-                            <constraint firstItem="9A5-nZ-Onq" firstAttribute="leading" secondItem="Jr7-kA-OcP" secondAttribute="leading" id="Kfa-gm-Wxy"/>
+                            <constraint firstItem="9A5-nZ-Onq" firstAttribute="leading" secondItem="pW4-TO-rf8" secondAttribute="leading" id="Kfa-gm-Wxy"/>
                             <constraint firstItem="stl-OR-Ov7" firstAttribute="top" secondItem="9A5-nZ-Onq" secondAttribute="bottom" id="Uit-sg-LGA"/>
                             <constraint firstItem="stl-OR-Ov7" firstAttribute="leading" secondItem="pW4-TO-rf8" secondAttribute="leading" id="fbI-qv-wy1"/>
+                            <constraint firstItem="pW4-TO-rf8" firstAttribute="trailing" secondItem="9A5-nZ-Onq" secondAttribute="trailing" id="p21-1h-FJA"/>
                             <constraint firstItem="pW4-TO-rf8" firstAttribute="trailing" secondItem="stl-OR-Ov7" secondAttribute="trailing" id="rWD-Ye-KFT"/>
                         </constraints>
                     </view>
@@ -1104,23 +1104,27 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xAt-LB-rhy" customClass="GameHeaderView" customModule="baseball" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44" width="414" height="80"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="WEX-4k-zeS"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Qlv-TL-kkF"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Qlv-TL-kkF" firstAttribute="trailing" secondItem="xAt-LB-rhy" secondAttribute="trailing" id="2C7-KV-d5s"/>
                             <constraint firstItem="Qlv-TL-kkF" firstAttribute="trailing" secondItem="LHq-0d-qDG" secondAttribute="trailing" id="3zP-uo-20t"/>
+                            <constraint firstItem="Qlv-TL-kkF" firstAttribute="trailing" secondItem="xAt-LB-rhy" secondAttribute="trailing" id="HwC-mV-i3b"/>
                             <constraint firstItem="Qlv-TL-kkF" firstAttribute="bottom" secondItem="LHq-0d-qDG" secondAttribute="bottom" id="UJ2-Ie-uFK"/>
-                            <constraint firstItem="xAt-LB-rhy" firstAttribute="leading" secondItem="Qlv-TL-kkF" secondAttribute="leading" id="WL6-Oz-bk3"/>
                             <constraint firstItem="LHq-0d-qDG" firstAttribute="leading" secondItem="Qlv-TL-kkF" secondAttribute="leading" id="eIY-of-IwY"/>
                             <constraint firstItem="LHq-0d-qDG" firstAttribute="top" secondItem="xAt-LB-rhy" secondAttribute="bottom" id="iaU-P4-ofZ"/>
+                            <constraint firstItem="xAt-LB-rhy" firstAttribute="leading" secondItem="Qlv-TL-kkF" secondAttribute="leading" id="mOc-NE-7lA"/>
                             <constraint firstItem="Qlv-TL-kkF" firstAttribute="top" secondItem="xAt-LB-rhy" secondAttribute="top" id="rAt-yy-vDc"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 2" selectedImage="chart.bar.xaxis" catalog="system" id="yUd-fL-23c"/>
                     <connections>
                         <outlet property="awayTotalScore" destination="1rR-DO-iOX" id="hKh-D9-nOR"/>
+                        <outlet property="gameHeaderView" destination="xAt-LB-rhy" id="1Vv-aW-v7b"/>
                         <outlet property="homeTotalScore" destination="stL-bi-har" id="WQs-xd-KNU"/>
                         <outlet property="playerScoreTableView" destination="OWP-s8-CET" id="BG9-m8-FVe"/>
                         <outlet property="tableViewHeight" destination="nee-ew-QaP" id="htJ-4t-3C4"/>

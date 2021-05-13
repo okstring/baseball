@@ -37,11 +37,12 @@ final class GameViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.gameHeaderView.delegate = self
+        let gameHeaderViewDelegate = HeaderScoreDelegate(gameManager: self.gameManager)
+        self.gameHeaderView.delegate = gameHeaderViewDelegate
         registerNib()
         bind()
-        configureTableViewHeight()
         appearPitchButton()
+        gameHeaderView.teamConfigure()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,7 +56,6 @@ final class GameViewController: UIViewController{
             .sink { (game) in
                 guard let game = game else { return }
                 let history = self.gameManager.makeHistory(gameInfo: game)
-                self.gameHeaderView.teamConfigure()
                 self.gameHeaderView.scoreConfigure()
                 self.setGameCount()
                 self.setRoundInfo()
@@ -71,12 +71,6 @@ final class GameViewController: UIViewController{
     
     func setGameManager(_ manager: GameManager) {
         self.gameManager = manager
-    }
-    
-    private func configureTableViewHeight() {
-        DispatchQueue.main.async {
-            self.tableViewHeight.constant = self.ballCountTableView.contentSize.height
-        }
     }
     
     private func registerNib() {

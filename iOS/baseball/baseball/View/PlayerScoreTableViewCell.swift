@@ -23,6 +23,6 @@ final class PlayerScoreTableViewCell: UITableViewCell {
         self.TPA.text = "\(playerScoreBoard.tpa)"
         self.hits.text = "\(playerScoreBoard.hits)"
         self.out.text = "\(playerScoreBoard.out)"
-        self.AVG.text = String(format: "%.3f", playerScoreBoard.hits/playerScoreBoard.tpa)
+        self.AVG.text = String(format: "%.3f", Double(playerScoreBoard.hits) / Double(playerScoreBoard.tpa))
     }
 }

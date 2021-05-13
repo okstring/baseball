@@ -64,7 +64,6 @@ final class GameManager {
         } receiveValue: { (scoreBoard) in
             self.scoreBoardInfo = scoreBoard
             self.getPlayerScoreBoard(of: scoreBoard.homeTeam.teamName, isHomeTeam: true)
-            self.getPlayerScoreBoard(of: scoreBoard.awayTeam.teamName, isHomeTeam: false)
         }.store(in: &self.cancelable)
     }
     
@@ -105,6 +104,12 @@ final class GameManager {
     }
     
     //MARK: - Business Logic
+    enum Team: Int {
+        case home = 0
+        case away = 1
+    }
+    
+    typealias PlayerScore = (tpa: Int, hits: Int, out: Int)
     
     func makeHistory(gameInfo: Game) -> [History] {
         let numberCountHistory = gameInfo.calcurateHistory()
@@ -117,6 +122,15 @@ final class GameManager {
             historyBook.append(history)
         }
         return historyBook
+    }
+    
+    func totalPlayerScoreCount(team: Team) -> PlayerScore {
+        return (team == .home ? homePlayerScoreBoardInfo : awayPlayerScoreBoardInfo)
+            .reduce((tpa: 0, hits: 0, out: 0)) { (result, playerScoreBoard) -> PlayerScore in
+                return (result.tpa + playerScoreBoard.tpa,
+                        result.hits + playerScoreBoard.hits,
+                        result.out + playerScoreBoard.out)
+            }
     }
     
     func makeRoundInfo() -> String {
