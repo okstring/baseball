@@ -42,7 +42,6 @@ final class GameViewController: UIViewController{
         registerNib()
         bind()
         appearPitchButton()
-        gameHeaderView.teamConfigure()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,7 +55,8 @@ final class GameViewController: UIViewController{
             .sink { (game) in
                 guard let game = game else { return }
                 let history = self.gameManager.makeHistory(gameInfo: game)
-                self.gameHeaderView.scoreConfigure()
+                self.gameHeaderView.teamConfigure(gameInfo: game)
+                self.gameHeaderView.scoreConfigure(gameInfo: game)
                 self.setGameCount()
                 self.setRoundInfo()
                 self.setPlayers()
@@ -141,21 +141,5 @@ extension GameViewController {
         self.hitterName.text = gameInfo.offenceTeam.hitter.name
         self.hitterCount.text = "\(gameInfo.offenceTeam.hitter.tpa)타석 \(gameInfo.offenceTeam.hitter.hits)안타"
     }
-    
-}
-
-extension GameViewController: HeaderScoreReloadable {
-    func didLoadScoreInfo() -> (offenceTeam: Int, deffenceTeam: Int) {
-        let gameInfo = self.gameManager.gameInfo
-        return (gameInfo?.offenceTeam.score ?? 0,
-                gameInfo?.defenseTeam.score ?? 0)
-    }
-    
-    func didLoadTeamInfo() -> (offenceTeam: String, deffenceTeam: String) {
-        let gameInfo = self.gameManager.gameInfo
-        return (gameInfo?.offenceTeam.teamName ?? "",
-                gameInfo?.defenseTeam.teamName ?? "")
-    }
-    
     
 }

@@ -14,15 +14,18 @@ final class ScoreBoardViewController: UIViewController {
     }
     
     @IBOutlet weak var gameHeaderView: GameHeaderView!
-    @IBOutlet weak var homeTotalScore: UILabel!
+    @IBOutlet weak var awayTeamName: UILabel!
+    @IBOutlet weak var homeTeamName: UILabel!
     @IBOutlet weak var awayTotalScore: UILabel!
-    @IBOutlet var homeScores: [UILabel]!
+    @IBOutlet weak var homeTotalScore: UILabel!
     @IBOutlet var awayScores: [UILabel]!
+    @IBOutlet var homeScores: [UILabel]!
     @IBOutlet weak var playerScoreTableView: UITableView!
     @IBOutlet weak var teamControllBar: UISegmentedControl!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     private(set) var gameManager: GameManager!
     private var cancelable = Set<AnyCancellable>()
+    lazy var gameHeaderViewDelegate = HeaderScoreDelegate(gameManager: self.gameManager)
     
     fileprivate typealias DataSource = UITableViewDiffableDataSource<Section, PlayerScoreBoard>
     fileprivate typealias Snapshot = NSDiffableDataSourceSnapshot<Section, PlayerScoreBoard>
@@ -30,13 +33,11 @@ final class ScoreBoardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let gameHeaderViewDelegate = HeaderScoreDelegate(gameManager: self.gameManager)
-        self.gameHeaderView.delegate = gameHeaderViewDelegate
-        self.playerScoreTableView.delegate = self
+        self.gameHeaderView.delegate = self.gameHeaderViewDelegate
         self.tableViewCellRegisterNib()
         bind()
-        gameManager.getScoreBoard()
-        gameHeaderView.teamConfigure()
+        self.playerScoreTableView.delegate = self
+        self.gameHeaderView.teamConfigure()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,6 +53,7 @@ final class ScoreBoardViewController: UIViewController {
                 guard let scoreBoard = scoreBoard else { return }
                 self.setTeamControllerBar()
                 self.setTeamScoreBoard(board: scoreBoard)
+                self.setTeamName(scoreBoardInfo: scoreBoard)
             }.store(in: &cancelable)
         
         self.gameManager.$homePlayerScoreBoardInfo
@@ -69,13 +71,24 @@ final class ScoreBoardViewController: UIViewController {
             }.store(in: &cancelable)
     }
     
-    func setTeamScoreBoard(board: ScoreBoard) {
+    private func setTeamName(scoreBoardInfo: ScoreBoard) {
+        self.homeTeamName.text = scoreBoardInfo.homeTeam.teamName
+        self.awayTeamName.text = scoreBoardInfo.awayTeam.teamName
+    }
+    
+    private func setTeamScoreBoard(board: ScoreBoard) {
+        var totalScore: (home: Int, away: Int) = (0, 0)
         board.homeTeam.scores.enumerated().forEach{ (index, score) in
             self.homeScores[index].text = String(score)
+            totalScore.home += score
         }
         board.awayTeam.scores.enumerated().forEach{ (index, score) in
             self.awayScores[index].text = String(score)
+            totalScore.away += score
         }
+        
+        self.homeTotalScore.text = "\(totalScore.home)"
+        self.awayTotalScore.text = "\(totalScore.away)"
     }
     
     

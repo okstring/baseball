@@ -13,10 +13,10 @@ protocol HeaderScoreReloadable: class {
 }
 
 final class GameHeaderView: UIView {
-    @IBOutlet private weak var defenseTeam: UILabel!
-    @IBOutlet private weak var defenseScore: UILabel!
-    @IBOutlet private weak var offenceTeam: UILabel!
-    @IBOutlet private weak var offenceScore: UILabel!
+    @IBOutlet private weak var homeTeam: UILabel!
+    @IBOutlet private weak var homeScore: UILabel!
+    @IBOutlet private weak var awayTeam: UILabel!
+    @IBOutlet private weak var awayScore: UILabel!
     
     weak var delegate: HeaderScoreReloadable?
     
@@ -51,8 +51,8 @@ final class GameHeaderView: UIView {
         } else {
             teamInfo = delegate?.didLoadTeamInfo()
         }
-        defenseTeam.text = teamInfo?.deffenceTeam
-        offenceTeam.text = teamInfo?.offenceTeam
+        homeTeam.text = teamInfo?.deffenceTeam
+        awayTeam.text = teamInfo?.offenceTeam
 
     }
     
@@ -63,7 +63,7 @@ final class GameHeaderView: UIView {
         } else {
             scoreInfo = delegate?.didLoadScoreInfo()
         }
-        defenseScore.text = "\(scoreInfo?.deffenceTeam ?? 0)"
-        offenceScore.text = "\(scoreInfo?.offenceTeam ?? 0)"
+        homeScore.text = "\(scoreInfo?.deffenceTeam ?? 0)"
+        awayScore.text = "\(scoreInfo?.offenceTeam ?? 0)"
     }
 }

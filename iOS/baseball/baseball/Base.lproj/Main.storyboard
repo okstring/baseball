@@ -1123,30 +1123,32 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 2" selectedImage="chart.bar.xaxis" catalog="system" id="yUd-fL-23c"/>
                     <connections>
-                        <outlet property="awayTotalScore" destination="1rR-DO-iOX" id="hKh-D9-nOR"/>
+                        <outlet property="awayTeamName" destination="Uxx-Ez-ldg" id="GfO-ux-SMm"/>
+                        <outlet property="awayTotalScore" destination="stL-bi-har" id="WQs-xd-KNU"/>
                         <outlet property="gameHeaderView" destination="xAt-LB-rhy" id="1Vv-aW-v7b"/>
-                        <outlet property="homeTotalScore" destination="stL-bi-har" id="WQs-xd-KNU"/>
+                        <outlet property="homeTeamName" destination="eDq-aN-IJu" id="pF9-re-FMW"/>
+                        <outlet property="homeTotalScore" destination="1rR-DO-iOX" id="hKh-D9-nOR"/>
                         <outlet property="playerScoreTableView" destination="OWP-s8-CET" id="BG9-m8-FVe"/>
                         <outlet property="tableViewHeight" destination="nee-ew-QaP" id="htJ-4t-3C4"/>
                         <outlet property="teamControllBar" destination="yRH-zG-gCz" id="0wI-fP-gks"/>
-                        <outletCollection property="homeScores" destination="zFw-q0-2Ez" collectionClass="NSMutableArray" id="k5v-sa-2ep"/>
-                        <outletCollection property="homeScores" destination="eL7-hN-jne" collectionClass="NSMutableArray" id="VnB-Jx-yUx"/>
-                        <outletCollection property="homeScores" destination="x9v-q6-tmy" collectionClass="NSMutableArray" id="qOZ-Cb-x5H"/>
-                        <outletCollection property="homeScores" destination="UbB-uE-gQJ" collectionClass="NSMutableArray" id="YG3-5s-SIR"/>
-                        <outletCollection property="homeScores" destination="M76-HI-1VF" collectionClass="NSMutableArray" id="cpy-eH-KL2"/>
-                        <outletCollection property="homeScores" destination="fEW-Mk-Sxf" collectionClass="NSMutableArray" id="tCz-95-Txq"/>
-                        <outletCollection property="homeScores" destination="E8k-Sh-N9M" collectionClass="NSMutableArray" id="qaa-HL-tN5"/>
-                        <outletCollection property="homeScores" destination="pwj-hc-wEQ" collectionClass="NSMutableArray" id="20k-Lj-wzd"/>
-                        <outletCollection property="homeScores" destination="z8Y-JG-Wuo" collectionClass="NSMutableArray" id="niz-eg-oI7"/>
-                        <outletCollection property="awayScores" destination="egd-9e-woj" collectionClass="NSMutableArray" id="FLS-2r-k8V"/>
-                        <outletCollection property="awayScores" destination="eJX-pa-yYl" collectionClass="NSMutableArray" id="un6-HQ-i8v"/>
-                        <outletCollection property="awayScores" destination="aXG-3u-eS8" collectionClass="NSMutableArray" id="e5f-kx-gTf"/>
-                        <outletCollection property="awayScores" destination="JPw-dj-eDk" collectionClass="NSMutableArray" id="dhK-2B-d9d"/>
-                        <outletCollection property="awayScores" destination="z8t-ec-dcC" collectionClass="NSMutableArray" id="Gxu-bg-olL"/>
-                        <outletCollection property="awayScores" destination="rPW-Pn-V3W" collectionClass="NSMutableArray" id="rX0-Ms-XZB"/>
-                        <outletCollection property="awayScores" destination="Gdy-qv-EdF" collectionClass="NSMutableArray" id="FJu-9E-UYt"/>
-                        <outletCollection property="awayScores" destination="yX7-rY-Blz" collectionClass="NSMutableArray" id="bxH-o8-7Gk"/>
-                        <outletCollection property="awayScores" destination="s33-rz-bae" collectionClass="NSMutableArray" id="s7Z-jk-HW6"/>
+                        <outletCollection property="awayScores" destination="zFw-q0-2Ez" collectionClass="NSMutableArray" id="k5v-sa-2ep"/>
+                        <outletCollection property="awayScores" destination="eL7-hN-jne" collectionClass="NSMutableArray" id="VnB-Jx-yUx"/>
+                        <outletCollection property="awayScores" destination="x9v-q6-tmy" collectionClass="NSMutableArray" id="qOZ-Cb-x5H"/>
+                        <outletCollection property="awayScores" destination="UbB-uE-gQJ" collectionClass="NSMutableArray" id="YG3-5s-SIR"/>
+                        <outletCollection property="awayScores" destination="M76-HI-1VF" collectionClass="NSMutableArray" id="cpy-eH-KL2"/>
+                        <outletCollection property="awayScores" destination="fEW-Mk-Sxf" collectionClass="NSMutableArray" id="tCz-95-Txq"/>
+                        <outletCollection property="awayScores" destination="E8k-Sh-N9M" collectionClass="NSMutableArray" id="qaa-HL-tN5"/>
+                        <outletCollection property="awayScores" destination="pwj-hc-wEQ" collectionClass="NSMutableArray" id="20k-Lj-wzd"/>
+                        <outletCollection property="awayScores" destination="z8Y-JG-Wuo" collectionClass="NSMutableArray" id="niz-eg-oI7"/>
+                        <outletCollection property="homeScores" destination="egd-9e-woj" collectionClass="NSMutableArray" id="FLS-2r-k8V"/>
+                        <outletCollection property="homeScores" destination="eJX-pa-yYl" collectionClass="NSMutableArray" id="un6-HQ-i8v"/>
+                        <outletCollection property="homeScores" destination="aXG-3u-eS8" collectionClass="NSMutableArray" id="e5f-kx-gTf"/>
+                        <outletCollection property="homeScores" destination="JPw-dj-eDk" collectionClass="NSMutableArray" id="dhK-2B-d9d"/>
+                        <outletCollection property="homeScores" destination="z8t-ec-dcC" collectionClass="NSMutableArray" id="Gxu-bg-olL"/>
+                        <outletCollection property="homeScores" destination="rPW-Pn-V3W" collectionClass="NSMutableArray" id="rX0-Ms-XZB"/>
+                        <outletCollection property="homeScores" destination="Gdy-qv-EdF" collectionClass="NSMutableArray" id="FJu-9E-UYt"/>
+                        <outletCollection property="homeScores" destination="yX7-rY-Blz" collectionClass="NSMutableArray" id="bxH-o8-7Gk"/>
+                        <outletCollection property="homeScores" destination="s33-rz-bae" collectionClass="NSMutableArray" id="s7Z-jk-HW6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="onT-zs-q3J" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
