@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E1P-kM-l8n">
-                                <rect key="frame" x="166.5" y="425" width="81" height="46"/>
+                                <rect key="frame" x="166.5" y="716" width="81" height="46"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
@@ -29,7 +29,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="E1P-kM-l8n" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="TOg-bk-eNL"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="E1P-kM-l8n" secondAttribute="bottom" constant="100" id="FzB-Kd-J1b"/>
                             <constraint firstItem="E1P-kM-l8n" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="uEG-0s-cRS"/>
                         </constraints>
                     </view>

@@ -8,11 +8,13 @@
 import UIKit
 import OctoKit
 import AuthenticationServices
+import Lottie
 
 final class OAuthViewController: UIViewController, ASWebAuthenticationPresentationContextProviding {
     var webAuthSession: ASWebAuthenticationSession?
     var gameManager: GameManager!
     var oauthManager: OAuthManager!
+    private var animationView: AnimationView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +22,19 @@ final class OAuthViewController: UIViewController, ASWebAuthenticationPresentati
         self.gameManager = GameManager(serverCommunicable: networkingCenter)
         self.oauthManager = OAuthManager(serverCommunicable: networkingCenter)
         self.configOAuth()
+        self.view.backgroundColor = .black
+        self.navigationController?.navigationBar.isHidden = true
+        setAnimationView()
+    }
+    
+    func setAnimationView() {
+        animationView = .init(name: "ball")
+        animationView?.frame = self.view.bounds
+        animationView?.contentMode = .scaleAspectFit
+        animationView?.loopMode = .loop
+        view.addSubview(animationView!)
+        animationView?.play()
+        
     }
     
     func bind() {
