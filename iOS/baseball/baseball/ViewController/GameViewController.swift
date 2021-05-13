@@ -37,12 +37,16 @@ final class GameViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.gameHeaderView.delegate = self
-        self.ballCountTableView.transform = CGAffineTransform(rotationAngle: -(CGFloat)(Double.pi))
+        let gameHeaderViewDelegate = HeaderScoreDelegate(gameManager: self.gameManager)
+        self.gameHeaderView.delegate = gameHeaderViewDelegate
         registerNib()
         bind()
-        configureTableViewHeight()
         appearPitchButton()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
     }
     
     private func bind() {
@@ -51,8 +55,8 @@ final class GameViewController: UIViewController{
             .sink { (game) in
                 guard let game = game else { return }
                 let history = self.gameManager.makeHistory(gameInfo: game)
-                self.gameHeaderView.teamConfigure()
-                self.gameHeaderView.scoreConfigure()
+                self.gameHeaderView.teamConfigure(gameInfo: game)
+                self.gameHeaderView.scoreConfigure(gameInfo: game)
                 self.setGameCount()
                 self.setRoundInfo()
                 self.setPlayers()
@@ -69,12 +73,6 @@ final class GameViewController: UIViewController{
         self.gameManager = manager
     }
     
-    private func configureTableViewHeight() {
-        DispatchQueue.main.async {
-            self.tableViewHeight.constant = self.ballCountTableView.contentSize.height
-        }
-    }
-    
     private func registerNib() {
         let nibName = UINib(nibName: "GameStoryTableViewCell", bundle: nil)
         ballCountTableView.register(nibName, forCellReuseIdentifier: GameStoryTableViewCell.className)
@@ -84,9 +82,14 @@ final class GameViewController: UIViewController{
         Datasource.init(tableView: ballCountTableView) { (tableView, indexPath, history) -> UITableViewCell? in
             guard let cell = tableView.dequeueReusableCell(withIdentifier: GameStoryTableViewCell.className, for: indexPath) as? GameStoryTableViewCell else { return GameStoryTableViewCell() }
             cell.configure(historyInfo: history, index: indexPath.row)
-            cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
+            self.reverseTableView(cell: cell, tableView: tableView)
             return cell
         }
+    }
+    
+    private func reverseTableView(cell: UITableViewCell, tableView: UITableView) {
+        cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
+        tableView.transform = CGAffineTransform(rotationAngle: -(CGFloat)(Double.pi))
     }
     
     private func applySnapshot(history: [History], animatingDifferences: Bool = true) {
@@ -138,21 +141,5 @@ extension GameViewController {
         self.hitterName.text = gameInfo.offenceTeam.hitter.name
         self.hitterCount.text = "\(gameInfo.offenceTeam.hitter.tpa)타석 \(gameInfo.offenceTeam.hitter.hits)안타"
     }
-    
-}
-
-extension GameViewController: HeaderScoreReloadable {
-    func didLoadScoreInfo() -> (offenceTeam: Int, deffenceTeam: Int) {
-        let gameInfo = self.gameManager.gameInfo
-        return (gameInfo?.offenceTeam.score ?? 0,
-                gameInfo?.defenseTeam.score ?? 0)
-    }
-    
-    func didLoadTeamInfo() -> (offenceTeam: String, deffenceTeam: String) {
-        let gameInfo = self.gameManager.gameInfo
-        return (gameInfo?.offenceTeam.teamName ?? "",
-                gameInfo?.defenseTeam.teamName ?? "")
-    }
-    
     
 }

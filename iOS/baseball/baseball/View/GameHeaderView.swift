@@ -13,10 +13,10 @@ protocol HeaderScoreReloadable: class {
 }
 
 final class GameHeaderView: UIView {
-    @IBOutlet private weak var defenseTeam: UILabel!
-    @IBOutlet private weak var defenseScore: UILabel!
-    @IBOutlet private weak var offenceTeam: UILabel!
-    @IBOutlet private weak var offenceScore: UILabel!
+    @IBOutlet private weak var homeTeam: UILabel!
+    @IBOutlet private weak var homeScore: UILabel!
+    @IBOutlet private weak var awayTeam: UILabel!
+    @IBOutlet private weak var awayScore: UILabel!
     
     weak var delegate: HeaderScoreReloadable?
     
@@ -44,15 +44,26 @@ final class GameHeaderView: UIView {
         return nib.instantiate(withOwner: self, options: nil).first as? UIView
     }
     
-    func teamConfigure() {
-        let teamInfo = delegate?.didLoadTeamInfo()
-        defenseTeam.text = teamInfo?.deffenceTeam
-        offenceTeam.text = teamInfo?.offenceTeam
+    func teamConfigure(gameInfo: Game? = nil) {
+        var teamInfo: (offenceTeam: String, deffenceTeam: String)?
+        if let gameInfo = gameInfo {
+            teamInfo = gameInfo.loadTeamInfo()
+        } else {
+            teamInfo = delegate?.didLoadTeamInfo()
+        }
+        homeTeam.text = teamInfo?.deffenceTeam
+        awayTeam.text = teamInfo?.offenceTeam
+
     }
     
-    func scoreConfigure() {
-        let scoreInfo = delegate?.didLoadScoreInfo()
-        defenseScore.text = "\(scoreInfo?.deffenceTeam ?? 0)"
-        offenceScore.text = "\(scoreInfo?.offenceTeam ?? 0)"
+    func scoreConfigure(gameInfo: Game? = nil) {
+        var scoreInfo: (offenceTeam: Int, deffenceTeam: Int)?
+        if let gameInfo = gameInfo {
+            scoreInfo = gameInfo.loadScoreInfo()
+        } else {
+            scoreInfo = delegate?.didLoadScoreInfo()
+        }
+        homeScore.text = "\(scoreInfo?.deffenceTeam ?? 0)"
+        awayScore.text = "\(scoreInfo?.offenceTeam ?? 0)"
     }
 }

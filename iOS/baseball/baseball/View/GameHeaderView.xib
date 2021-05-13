@@ -10,10 +10,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GameHeaderView" customModule="baseball" customModuleProvider="target">
             <connections>
-                <outlet property="defenseScore" destination="yNL-iX-tCu" id="OOx-rE-7M9"/>
-                <outlet property="defenseTeam" destination="zQr-4d-rRg" id="d14-oq-0WX"/>
-                <outlet property="offenceScore" destination="CR6-kM-fRB" id="Dgx-qd-Tr0"/>
-                <outlet property="offenceTeam" destination="oiP-tu-uW1" id="drt-Lc-rya"/>
+                <outlet property="awayScore" destination="CR6-kM-fRB" id="Dgx-qd-Tr0"/>
+                <outlet property="awayTeam" destination="oiP-tu-uW1" id="drt-Lc-rya"/>
+                <outlet property="homeScore" destination="yNL-iX-tCu" id="OOx-rE-7M9"/>
+                <outlet property="homeTeam" destination="zQr-4d-rRg" id="d14-oq-0WX"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

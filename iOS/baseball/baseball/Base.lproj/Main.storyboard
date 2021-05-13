@@ -389,7 +389,7 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="80"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="ja0-GE-tgO"/>
+                                    <constraint firstAttribute="height" constant="80" id="4II-7Q-gjT"/>
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="stl-OR-Ov7">
@@ -640,10 +640,10 @@
                         <constraints>
                             <constraint firstItem="pW4-TO-rf8" firstAttribute="bottom" secondItem="stl-OR-Ov7" secondAttribute="bottom" id="1ri-A9-mDY"/>
                             <constraint firstItem="9A5-nZ-Onq" firstAttribute="top" secondItem="pW4-TO-rf8" secondAttribute="top" id="6eB-dR-kFN"/>
-                            <constraint firstAttribute="trailing" secondItem="9A5-nZ-Onq" secondAttribute="trailing" id="CoQ-1I-ElT"/>
-                            <constraint firstItem="9A5-nZ-Onq" firstAttribute="leading" secondItem="Jr7-kA-OcP" secondAttribute="leading" id="Kfa-gm-Wxy"/>
+                            <constraint firstItem="9A5-nZ-Onq" firstAttribute="leading" secondItem="pW4-TO-rf8" secondAttribute="leading" id="Kfa-gm-Wxy"/>
                             <constraint firstItem="stl-OR-Ov7" firstAttribute="top" secondItem="9A5-nZ-Onq" secondAttribute="bottom" id="Uit-sg-LGA"/>
                             <constraint firstItem="stl-OR-Ov7" firstAttribute="leading" secondItem="pW4-TO-rf8" secondAttribute="leading" id="fbI-qv-wy1"/>
+                            <constraint firstItem="pW4-TO-rf8" firstAttribute="trailing" secondItem="9A5-nZ-Onq" secondAttribute="trailing" id="p21-1h-FJA"/>
                             <constraint firstItem="pW4-TO-rf8" firstAttribute="trailing" secondItem="stl-OR-Ov7" secondAttribute="trailing" id="rWD-Ye-KFT"/>
                         </constraints>
                     </view>
@@ -730,9 +730,21 @@
                                             </segmentedControl>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="OWP-s8-CET">
                                                 <rect key="frame" x="0.0" y="173" width="414" height="516"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="516" id="nee-ew-QaP"/>
                                                 </constraints>
+                                                <prototypes>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="sAn-YM-dgI">
+                                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sAn-YM-dgI" id="omv-vu-qiZ" customClass="PlayerScoreTableViewCell" customModule="baseball" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                        </tableViewCellContentView>
+                                                    </tableViewCell>
+                                                </prototypes>
+                                                <sections/>
                                                 <connections>
                                                     <outlet property="delegate" destination="3PQ-2J-845" id="gj6-u3-qxJ"/>
                                                 </connections>
@@ -1144,45 +1156,51 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xAt-LB-rhy" customClass="GameHeaderView" customModule="baseball" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44" width="414" height="80"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="WEX-4k-zeS"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Qlv-TL-kkF"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Qlv-TL-kkF" firstAttribute="trailing" secondItem="xAt-LB-rhy" secondAttribute="trailing" id="2C7-KV-d5s"/>
                             <constraint firstItem="Qlv-TL-kkF" firstAttribute="trailing" secondItem="LHq-0d-qDG" secondAttribute="trailing" id="3zP-uo-20t"/>
+                            <constraint firstItem="Qlv-TL-kkF" firstAttribute="trailing" secondItem="xAt-LB-rhy" secondAttribute="trailing" id="HwC-mV-i3b"/>
                             <constraint firstItem="Qlv-TL-kkF" firstAttribute="bottom" secondItem="LHq-0d-qDG" secondAttribute="bottom" id="UJ2-Ie-uFK"/>
-                            <constraint firstItem="xAt-LB-rhy" firstAttribute="leading" secondItem="Qlv-TL-kkF" secondAttribute="leading" id="WL6-Oz-bk3"/>
                             <constraint firstItem="LHq-0d-qDG" firstAttribute="leading" secondItem="Qlv-TL-kkF" secondAttribute="leading" id="eIY-of-IwY"/>
                             <constraint firstItem="LHq-0d-qDG" firstAttribute="top" secondItem="xAt-LB-rhy" secondAttribute="bottom" id="iaU-P4-ofZ"/>
+                            <constraint firstItem="xAt-LB-rhy" firstAttribute="leading" secondItem="Qlv-TL-kkF" secondAttribute="leading" id="mOc-NE-7lA"/>
                             <constraint firstItem="Qlv-TL-kkF" firstAttribute="top" secondItem="xAt-LB-rhy" secondAttribute="top" id="rAt-yy-vDc"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 2" selectedImage="chart.bar.xaxis" catalog="system" id="yUd-fL-23c"/>
                     <connections>
-                        <outlet property="awayTotalScore" destination="1rR-DO-iOX" id="hKh-D9-nOR"/>
-                        <outlet property="homeTotalScore" destination="stL-bi-har" id="WQs-xd-KNU"/>
+                        <outlet property="awayTeamName" destination="Uxx-Ez-ldg" id="GfO-ux-SMm"/>
+                        <outlet property="awayTotalScore" destination="stL-bi-har" id="WQs-xd-KNU"/>
+                        <outlet property="gameHeaderView" destination="xAt-LB-rhy" id="1Vv-aW-v7b"/>
+                        <outlet property="homeTeamName" destination="eDq-aN-IJu" id="pF9-re-FMW"/>
+                        <outlet property="homeTotalScore" destination="1rR-DO-iOX" id="hKh-D9-nOR"/>
                         <outlet property="playerScoreTableView" destination="OWP-s8-CET" id="BG9-m8-FVe"/>
                         <outlet property="tableViewHeight" destination="nee-ew-QaP" id="htJ-4t-3C4"/>
                         <outlet property="teamControllBar" destination="yRH-zG-gCz" id="0wI-fP-gks"/>
-                        <outletCollection property="homeScores" destination="zFw-q0-2Ez" collectionClass="NSMutableArray" id="k5v-sa-2ep"/>
-                        <outletCollection property="homeScores" destination="eL7-hN-jne" collectionClass="NSMutableArray" id="VnB-Jx-yUx"/>
-                        <outletCollection property="homeScores" destination="x9v-q6-tmy" collectionClass="NSMutableArray" id="qOZ-Cb-x5H"/>
-                        <outletCollection property="homeScores" destination="UbB-uE-gQJ" collectionClass="NSMutableArray" id="YG3-5s-SIR"/>
-                        <outletCollection property="homeScores" destination="M76-HI-1VF" collectionClass="NSMutableArray" id="cpy-eH-KL2"/>
-                        <outletCollection property="homeScores" destination="fEW-Mk-Sxf" collectionClass="NSMutableArray" id="tCz-95-Txq"/>
-                        <outletCollection property="homeScores" destination="E8k-Sh-N9M" collectionClass="NSMutableArray" id="qaa-HL-tN5"/>
-                        <outletCollection property="homeScores" destination="pwj-hc-wEQ" collectionClass="NSMutableArray" id="20k-Lj-wzd"/>
-                        <outletCollection property="homeScores" destination="z8Y-JG-Wuo" collectionClass="NSMutableArray" id="niz-eg-oI7"/>
-                        <outletCollection property="awayScores" destination="egd-9e-woj" collectionClass="NSMutableArray" id="FLS-2r-k8V"/>
-                        <outletCollection property="awayScores" destination="eJX-pa-yYl" collectionClass="NSMutableArray" id="un6-HQ-i8v"/>
-                        <outletCollection property="awayScores" destination="aXG-3u-eS8" collectionClass="NSMutableArray" id="e5f-kx-gTf"/>
-                        <outletCollection property="awayScores" destination="JPw-dj-eDk" collectionClass="NSMutableArray" id="dhK-2B-d9d"/>
-                        <outletCollection property="awayScores" destination="z8t-ec-dcC" collectionClass="NSMutableArray" id="Gxu-bg-olL"/>
-                        <outletCollection property="awayScores" destination="rPW-Pn-V3W" collectionClass="NSMutableArray" id="rX0-Ms-XZB"/>
-                        <outletCollection property="awayScores" destination="Gdy-qv-EdF" collectionClass="NSMutableArray" id="FJu-9E-UYt"/>
-                        <outletCollection property="awayScores" destination="yX7-rY-Blz" collectionClass="NSMutableArray" id="bxH-o8-7Gk"/>
-                        <outletCollection property="awayScores" destination="s33-rz-bae" collectionClass="NSMutableArray" id="s7Z-jk-HW6"/>
+                        <outletCollection property="awayScores" destination="zFw-q0-2Ez" collectionClass="NSMutableArray" id="k5v-sa-2ep"/>
+                        <outletCollection property="awayScores" destination="eL7-hN-jne" collectionClass="NSMutableArray" id="VnB-Jx-yUx"/>
+                        <outletCollection property="awayScores" destination="x9v-q6-tmy" collectionClass="NSMutableArray" id="qOZ-Cb-x5H"/>
+                        <outletCollection property="awayScores" destination="UbB-uE-gQJ" collectionClass="NSMutableArray" id="YG3-5s-SIR"/>
+                        <outletCollection property="awayScores" destination="M76-HI-1VF" collectionClass="NSMutableArray" id="cpy-eH-KL2"/>
+                        <outletCollection property="awayScores" destination="fEW-Mk-Sxf" collectionClass="NSMutableArray" id="tCz-95-Txq"/>
+                        <outletCollection property="awayScores" destination="E8k-Sh-N9M" collectionClass="NSMutableArray" id="qaa-HL-tN5"/>
+                        <outletCollection property="awayScores" destination="pwj-hc-wEQ" collectionClass="NSMutableArray" id="20k-Lj-wzd"/>
+                        <outletCollection property="awayScores" destination="z8Y-JG-Wuo" collectionClass="NSMutableArray" id="niz-eg-oI7"/>
+                        <outletCollection property="homeScores" destination="egd-9e-woj" collectionClass="NSMutableArray" id="FLS-2r-k8V"/>
+                        <outletCollection property="homeScores" destination="eJX-pa-yYl" collectionClass="NSMutableArray" id="un6-HQ-i8v"/>
+                        <outletCollection property="homeScores" destination="aXG-3u-eS8" collectionClass="NSMutableArray" id="e5f-kx-gTf"/>
+                        <outletCollection property="homeScores" destination="JPw-dj-eDk" collectionClass="NSMutableArray" id="dhK-2B-d9d"/>
+                        <outletCollection property="homeScores" destination="z8t-ec-dcC" collectionClass="NSMutableArray" id="Gxu-bg-olL"/>
+                        <outletCollection property="homeScores" destination="rPW-Pn-V3W" collectionClass="NSMutableArray" id="rX0-Ms-XZB"/>
+                        <outletCollection property="homeScores" destination="Gdy-qv-EdF" collectionClass="NSMutableArray" id="FJu-9E-UYt"/>
+                        <outletCollection property="homeScores" destination="yX7-rY-Blz" collectionClass="NSMutableArray" id="bxH-o8-7Gk"/>
+                        <outletCollection property="homeScores" destination="s33-rz-bae" collectionClass="NSMutableArray" id="s7Z-jk-HW6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="onT-zs-q3J" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
