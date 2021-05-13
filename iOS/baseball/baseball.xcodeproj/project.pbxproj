@@ -53,6 +53,7 @@
 		B3665036264CB9AF00BF11CB /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = B3665035264CB9AF00BF11CB /* Lottie */; };
 		B366503D264CCD7000BF11CB /* ball.json in Resources */ = {isa = PBXBuildFile; fileRef = B366503C264CCD7000BF11CB /* ball.json */; };
 		B3665045264CEF5000BF11CB /* MaskedLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3665044264CEF5000BF11CB /* MaskedLabelView.swift */; };
+		B3665052264CFA1B00BF11CB /* BlackOpsOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B3665051264CFA1900BF11CB /* BlackOpsOne-Regular.ttf */; };
 		B36A37A5264BA7DC002FE0B4 /* NetworkElements.plist in Resources */ = {isa = PBXBuildFile; fileRef = B36A37A4264BA7DC002FE0B4 /* NetworkElements.plist */; };
 		B38653A926428B6E00DFC803 /* GameStoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38653A726428B6E00DFC803 /* GameStoryTableViewCell.swift */; };
 		B38653AA26428B6E00DFC803 /* GameStoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B38653A826428B6E00DFC803 /* GameStoryTableViewCell.xib */; };
@@ -127,6 +128,7 @@
 		B34B59E826419634009105DC /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		B366503C264CCD7000BF11CB /* ball.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ball.json; sourceTree = "<group>"; };
 		B3665044264CEF5000BF11CB /* MaskedLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MaskedLabelView.swift; path = baseball/View/MaskedLabelView.swift; sourceTree = SOURCE_ROOT; };
+		B3665051264CFA1900BF11CB /* BlackOpsOne-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BlackOpsOne-Regular.ttf"; sourceTree = "<group>"; };
 		B36A37A4264BA7DC002FE0B4 /* NetworkElements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NetworkElements.plist; sourceTree = "<group>"; };
 		B38653A726428B6E00DFC803 /* GameStoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStoryTableViewCell.swift; sourceTree = "<group>"; };
 		B38653A826428B6E00DFC803 /* GameStoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GameStoryTableViewCell.xib; sourceTree = "<group>"; };
@@ -292,6 +294,7 @@
 				22941A532641140000598814 /* Model */,
 				B32499D8263FF3B300D8DEA8 /* Main.storyboard */,
 				B366503C264CCD7000BF11CB /* ball.json */,
+				B3665051264CFA1900BF11CB /* BlackOpsOne-Regular.ttf */,
 				B36A37A4264BA7DC002FE0B4 /* NetworkElements.plist */,
 				B32499DB263FF3B400D8DEA8 /* Assets.xcassets */,
 				B32499DD263FF3B400D8DEA8 /* LaunchScreen.storyboard */,
@@ -434,6 +437,7 @@
 				B3F663F92643D0CF00625A2F /* GameHeaderView.xib in Resources */,
 				B32499DF263FF3B400D8DEA8 /* LaunchScreen.storyboard in Resources */,
 				B32499DC263FF3B400D8DEA8 /* Assets.xcassets in Resources */,
+				B3665052264CFA1B00BF11CB /* BlackOpsOne-Regular.ttf in Resources */,
 				B38653AA26428B6E00DFC803 /* GameStoryTableViewCell.xib in Resources */,
 				B366503D264CCD7000BF11CB /* ball.json in Resources */,
 				226344132642CE0000211BC7 /* PlayerScoreHeaderTableViewCell.xib in Resources */,

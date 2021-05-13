@@ -13,8 +13,6 @@ class MaskedLabelView: UIView {
     var startColor: UIColor = .blue
     var endColor: UIColor = .black
     var duration: CFTimeInterval = 2.0
-    var repeatCount: Float = Float.infinity
-    var completion: ((Bool) -> Void)?
     lazy var gradientLayer: CAGradientLayer = {
         let gradientLayer = CAGradientLayer()
         gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
@@ -69,8 +67,6 @@ class MaskedLabelView: UIView {
         anim.fromValue = [0.0, 0.1]
         anim.toValue = [1.0, 1.0]
         anim.duration = duration
-        anim.repeatCount = repeatCount
-        anim.autoreverses = true
         anim.fillMode = .forwards
         anim.isRemovedOnCompletion = false
         gradientLayer.removeAllAnimations()
