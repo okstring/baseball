@@ -22,13 +22,14 @@ final class OAuthViewController: UIViewController, ASWebAuthenticationPresentati
         self.gameManager = GameManager(serverCommunicable: networkingCenter)
         self.oauthManager = OAuthManager(serverCommunicable: networkingCenter)
         self.configOAuth()
-        self.view.backgroundColor = .black
+        self.view.backgroundColor = #colorLiteral(red: 0.1921346784, green: 0.1921729147, blue: 0.1921265125, alpha: 1)
         self.navigationController?.navigationBar.isHidden = true
         setAnimationView()
     }
     
     func setAnimationView() {
         animationView = .init(name: "ball")
+        animationView?.isUserInteractionEnabled = false
         animationView?.frame = self.view.bounds
         animationView?.contentMode = .scaleAspectFit
         animationView?.loopMode = .loop
@@ -61,7 +62,8 @@ final class OAuthViewController: UIViewController, ASWebAuthenticationPresentati
         return self.view.window ?? ASPresentationAnchor()
     }
     
-    @IBAction func touchGithubLogin(_ sender: UIButton) {
+    @IBAction func loginWithGithub(_ sender: Any) {
         webAuthSession?.start()
     }
+
 }
