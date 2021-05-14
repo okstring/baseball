@@ -15,6 +15,7 @@ final class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setBackgroundAnimation()
         self.bind()
         self.gameManager.getTeams()
     }
@@ -56,5 +57,25 @@ final class MainViewController: UIViewController {
         vc.setGameManager(self.gameManager)
         self.gameManager.getGameInfo(teamName: sender.currentTitle)
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    private func setBackgroundAnimation() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = self.view.bounds
+        
+        let colors: [CGColor] = [ #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1), #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) ]
+        gradientLayer.colors = colors
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+        
+        let changedColors: [CGColor] = [ #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1), ]
+        let colorAnimation = CABasicAnimation(keyPath: "colors")
+        colorAnimation.toValue = changedColors
+        colorAnimation.duration = 3
+        colorAnimation.autoreverses = true
+        colorAnimation.repeatCount = .infinity
+        
+        gradientLayer.add(colorAnimation, forKey: "colorChangeAnimation")
+        self.view.layer.insertSublayer(gradientLayer, at: 0)
     }
 }
