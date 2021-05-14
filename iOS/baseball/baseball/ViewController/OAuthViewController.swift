@@ -21,11 +21,16 @@ final class OAuthViewController: UIViewController, ASWebAuthenticationPresentati
         let networkingCenter = NetworkingCenter()
         self.gameManager = GameManager(serverCommunicable: networkingCenter)
         self.oauthManager = OAuthManager(serverCommunicable: networkingCenter)
-        self.configOAuth()
         self.view.backgroundColor = #colorLiteral(red: 0.1921346784, green: 0.1921729147, blue: 0.1921265125, alpha: 1)
         self.navigationController?.navigationBar.isHidden = true
         makeGameTitleView()
         setAnimationView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.configOAuth()
+        animationView?.play()
     }
     
     func setAnimationView() {
