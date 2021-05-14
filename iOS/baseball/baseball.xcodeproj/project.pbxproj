@@ -39,6 +39,8 @@
 		22B303A62643D259001AB2E4 /* NetworkingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B303A52643D259001AB2E4 /* NetworkingError.swift */; };
 		22BC6DBC264AC426007B22CA /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BC6DBB264AC426007B22CA /* History.swift */; };
 		22E52E50264CBEDF0061CAC3 /* HeaderScoreDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E52E4F264CBEDF0061CAC3 /* HeaderScoreDelegate.swift */; };
+		22E52E6E264D0D270061CAC3 /* SideMenu in Frameworks */ = {isa = PBXBuildFile; productRef = 22E52E6D264D0D270061CAC3 /* SideMenu */; };
+		22E52E7B264D10250061CAC3 /* LogoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E52E7A264D10250061CAC3 /* LogoutViewController.swift */; };
 		B32499D3263FF3B300D8DEA8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32499D2263FF3B300D8DEA8 /* AppDelegate.swift */; };
 		B32499D5263FF3B300D8DEA8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32499D4263FF3B300D8DEA8 /* SceneDelegate.swift */; };
 		B32499D7263FF3B300D8DEA8 /* OAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32499D6263FF3B300D8DEA8 /* OAuthViewController.swift */; };
@@ -111,6 +113,7 @@
 		22B303A52643D259001AB2E4 /* NetworkingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingError.swift; sourceTree = "<group>"; };
 		22BC6DBB264AC426007B22CA /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		22E52E4F264CBEDF0061CAC3 /* HeaderScoreDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderScoreDelegate.swift; sourceTree = "<group>"; };
+		22E52E7A264D10250061CAC3 /* LogoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutViewController.swift; sourceTree = "<group>"; };
 		B32499CF263FF3B300D8DEA8 /* baseball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = baseball.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B32499D2263FF3B300D8DEA8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B32499D4263FF3B300D8DEA8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -145,6 +148,7 @@
 			files = (
 				2242A67F2640DDF9000C555E /* OctoKit in Frameworks */,
 				B34B59F22641979B009105DC /* SnapKit in Frameworks */,
+				22E52E6E264D0D270061CAC3 /* SideMenu in Frameworks */,
 				B3665036264CB9AF00BF11CB /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -232,6 +236,7 @@
 				22B3034026439867001AB2E4 /* GameTabBarViewController.swift */,
 				22941AC6264141BF00598814 /* GameViewController.swift */,
 				22941ACB264141C900598814 /* ScoreBoardViewController.swift */,
+				22E52E7A264D10250061CAC3 /* LogoutViewController.swift */,
 				22E52E54264CBEE30061CAC3 /* delegate */,
 				2242A6952640DFF6000C555E /* extension */,
 			);
@@ -352,6 +357,7 @@
 				2242A67E2640DDF9000C555E /* OctoKit */,
 				B34B59F12641979B009105DC /* SnapKit */,
 				B3665035264CB9AF00BF11CB /* Lottie */,
+				22E52E6D264D0D270061CAC3 /* SideMenu */,
 			);
 			productName = baseball;
 			productReference = B32499CF263FF3B300D8DEA8 /* baseball.app */;
@@ -428,6 +434,7 @@
 				2242A67D2640DDF9000C555E /* XCRemoteSwiftPackageReference "octokit" */,
 				B34B59F02641979B009105DC /* XCRemoteSwiftPackageReference "SnapKit" */,
 				B3665034264CB9AF00BF11CB /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				22E52E6C264D0D270061CAC3 /* XCRemoteSwiftPackageReference "SideMenu" */,
 			);
 			productRefGroup = B32499D0263FF3B300D8DEA8 /* Products */;
 			projectDirPath = "";
@@ -514,6 +521,7 @@
 				22941A7626412F0D00598814 /* Picher.swift in Sources */,
 				22941A7126412E5500598814 /* RoundInfo.swift in Sources */,
 				2242A6842640DE51000C555E /* MainViewController.swift in Sources */,
+				22E52E7B264D10250061CAC3 /* LogoutViewController.swift in Sources */,
 				221F9629264A2CFA00B2E183 /* OffenceTeam.swift in Sources */,
 				22B3034126439867001AB2E4 /* GameTabBarViewController.swift in Sources */,
 				22941A852641302800598814 /* ScoreBoard.swift in Sources */,
@@ -859,6 +867,14 @@
 				minimumVersion = 0.11.0;
 			};
 		};
+		22E52E6C264D0D270061CAC3 /* XCRemoteSwiftPackageReference "SideMenu" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jonkykong/SideMenu";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.5.0;
+			};
+		};
 		B34B59F02641979B009105DC /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -882,6 +898,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2242A67D2640DDF9000C555E /* XCRemoteSwiftPackageReference "octokit" */;
 			productName = OctoKit;
+		};
+		22E52E6D264D0D270061CAC3 /* SideMenu */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 22E52E6C264D0D270061CAC3 /* XCRemoteSwiftPackageReference "SideMenu" */;
+			productName = SideMenu;
 		};
 		B34B59F12641979B009105DC /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

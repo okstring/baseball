@@ -41,9 +41,7 @@ final class OAuthViewController: UIViewController, ASWebAuthenticationPresentati
     
     func bind() {
         self.oauthManager.errorHandler = { error in
-            #if DEBUG
             NSLog(error)
-            #endif
         }
     }
     

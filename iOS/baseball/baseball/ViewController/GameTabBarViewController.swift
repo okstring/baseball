@@ -18,9 +18,7 @@ final class GameTabBarViewController: UITabBarController {
     
     func bind() {
         self.gameManager.errorHandler = { error in
-            #if DEBUG
             NSLog(error)
-            #endif
         }
     }
     
@@ -43,5 +41,9 @@ final class GameTabBarViewController: UITabBarController {
         guard let scoreItem = self.tabBar.items?[1] else { return }
         scoreItem.image = UIImage(systemName: "chart.bar.xaxis")
         scoreItem.title = "Scores"
+        
+        guard let powerItem = self.tabBar.items?[2] else { return }
+        powerItem.image = UIImage(systemName: "power")
+        powerItem.title = "Logout"
     }
 }
