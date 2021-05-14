@@ -8,8 +8,8 @@
 import UIKit
 import SnapKit
 import Combine
-
-
+import DCAnimationKit
+import SwiftConfettiView
 
 final class GameViewController: UIViewController{
     enum Section {
@@ -34,6 +34,7 @@ final class GameViewController: UIViewController{
     private var cancelable = Set<AnyCancellable>()
     private typealias Datasource = UITableViewDiffableDataSource<Section, History>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Section, History>
+    private var snapView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +43,7 @@ final class GameViewController: UIViewController{
         registerNib()
         bind()
         appearPitchButton()
+        self.makeSnapView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -112,9 +114,46 @@ final class GameViewController: UIViewController{
     
     @objc func buttonDidTap() {
         gameView.hit()
+        homerunAnimation()
     }
     
+    func homerunAnimation() {
+        self.snapView.isHidden = false
+        self.snapView.alpha = 1.0
+        snapView.snap(into: self.view, direction: DCAnimationDirection.top)
+        let confettiView = SwiftConfettiView(frame: self.view.bounds)
+        self.view.addSubview(confettiView)
+        confettiView.startConfetti()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            UIView.animate(withDuration: 1.0) {
+                self.snapView.alpha = 0
+                confettiView.alpha = 0
+            } completion: { (_) in
+                self.snapView.isHidden = true
+                confettiView.removeFromSuperview()
+            }
+        }
+    }
     
+    private func makeSnapView() {
+        snapView = UIView(frame: CGRect(x:0, y: 0, width: 280, height: 150))
+        snapView.backgroundColor = .systemGray2
+        snapView.layer.cornerRadius = 15
+        snapView.layer.masksToBounds = false
+        snapView.center = self.view.center
+        snapView.isHidden = true
+        
+        let homerunLabel = UILabel()
+        homerunLabel.text = "🎉HOME RUN🎉"
+        homerunLabel.font = .boldSystemFont(ofSize: 28)
+        homerunLabel.textColor = .systemGray5
+        homerunLabel.sizeToFit()
+        snapView.addSubview(homerunLabel)
+        self.view.addSubview(snapView)
+        homerunLabel.translatesAutoresizingMaskIntoConstraints = false
+        homerunLabel.centerXAnchor.constraint(equalTo: snapView.centerXAnchor).isActive = true
+        homerunLabel.centerYAnchor.constraint(equalTo: snapView.centerYAnchor).isActive = true
+    }
 }
 
 extension GameViewController {
