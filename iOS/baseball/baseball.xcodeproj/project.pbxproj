@@ -10,7 +10,7 @@
 		07F88208EAE223AAD862A452 /* Pods_baseball.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E02B244C2364BEDDB127534F /* Pods_baseball.framework */; };
 		221F9621264A2CF000B2E183 /* DefenseTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221F9620264A2CF000B2E183 /* DefenseTeam.swift */; };
 		221F9629264A2CFA00B2E183 /* OffenceTeam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221F9628264A2CFA00B2E183 /* OffenceTeam.swift */; };
-		2242A67F2640DDF9000C555E /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 2242A67E2640DDF9000C555E /* SwiftPackageProductDependency */; };
+		2242A67F2640DDF9000C555E /* OctoKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2242A67E2640DDF9000C555E /* OctoKit */; };
 		2242A6842640DE51000C555E /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2242A6832640DE51000C555E /* MainViewController.swift */; };
 		2242A6912640DFEA000C555E /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2242A6902640DFEA000C555E /* URL.swift */; };
 		226344122642CE0000211BC7 /* PlayerScoreHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226344102642CE0000211BC7 /* PlayerScoreHeaderTableViewCell.swift */; };
@@ -41,6 +41,7 @@
 		22BC6DBC264AC426007B22CA /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BC6DBB264AC426007B22CA /* History.swift */; };
 		22E52E50264CBEDF0061CAC3 /* HeaderScoreDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E52E4F264CBEDF0061CAC3 /* HeaderScoreDelegate.swift */; };
 		22E52E7B264D10250061CAC3 /* LogoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E52E7A264D10250061CAC3 /* LogoutViewController.swift */; };
+		22FCD20D264E584200F405F9 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FCD20C264E584200F405F9 /* LaunchViewController.swift */; };
 		772F66C1628DE9CC15A5383F /* Pods_baseball_baseballUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB932652A838AD9B02539C6F /* Pods_baseball_baseballUITests.framework */; };
 		B32499D3263FF3B300D8DEA8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32499D2263FF3B300D8DEA8 /* AppDelegate.swift */; };
 		B32499D5263FF3B300D8DEA8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32499D4263FF3B300D8DEA8 /* SceneDelegate.swift */; };
@@ -53,8 +54,8 @@
 		B3249A112640F15500D8DEA8 /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3249A102640F15500D8DEA8 /* UserDTO.swift */; };
 		B330CE0326441826003B882D /* PitchButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330CE0226441826003B882D /* PitchButton.swift */; };
 		B34B59E926419634009105DC /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B34B59E826419634009105DC /* GameView.swift */; };
-		B34B59F22641979B009105DC /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B34B59F12641979B009105DC /* SwiftPackageProductDependency */; };
-		B3665036264CB9AF00BF11CB /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = B3665035264CB9AF00BF11CB /* SwiftPackageProductDependency */; };
+		B34B59F22641979B009105DC /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = B34B59F12641979B009105DC /* SnapKit */; };
+		B3665036264CB9AF00BF11CB /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = B3665035264CB9AF00BF11CB /* Lottie */; };
 		B366503D264CCD7000BF11CB /* ball.json in Resources */ = {isa = PBXBuildFile; fileRef = B366503C264CCD7000BF11CB /* ball.json */; };
 		B3665045264CEF5000BF11CB /* GameTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3665044264CEF5000BF11CB /* GameTitleView.swift */; };
 		B3665052264CFA1B00BF11CB /* BlackOpsOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B3665051264CFA1900BF11CB /* BlackOpsOne-Regular.ttf */; };
@@ -117,6 +118,7 @@
 		22BC6DBB264AC426007B22CA /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		22E52E4F264CBEDF0061CAC3 /* HeaderScoreDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderScoreDelegate.swift; sourceTree = "<group>"; };
 		22E52E7A264D10250061CAC3 /* LogoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutViewController.swift; sourceTree = "<group>"; };
+		22FCD20C264E584200F405F9 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		270EB6589EDAA09518E0F5B1 /* Pods-baseball-baseballUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-baseball-baseballUITests.debug.xcconfig"; path = "Target Support Files/Pods-baseball-baseballUITests/Pods-baseball-baseballUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		3CF0761302130E05DAE28F33 /* Pods-baseball.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-baseball.release.xcconfig"; path = "Target Support Files/Pods-baseball/Pods-baseball.release.xcconfig"; sourceTree = "<group>"; };
 		54CED898CE5B65A08763AF20 /* Pods_baseballTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_baseballTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -157,9 +159,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2242A67F2640DDF9000C555E /* BuildFile in Frameworks */,
-				B34B59F22641979B009105DC /* BuildFile in Frameworks */,
-				B3665036264CB9AF00BF11CB /* BuildFile in Frameworks */,
+				2242A67F2640DDF9000C555E /* OctoKit in Frameworks */,
+				B34B59F22641979B009105DC /* SnapKit in Frameworks */,
+				B3665036264CB9AF00BF11CB /* Lottie in Frameworks */,
 				07F88208EAE223AAD862A452 /* Pods_baseball.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -254,6 +256,7 @@
 		22941AD0264141E100598814 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				22FCD20C264E584200F405F9 /* LaunchViewController.swift */,
 				B32499D6263FF3B300D8DEA8 /* OAuthViewController.swift */,
 				2242A6832640DE51000C555E /* MainViewController.swift */,
 				22B3034026439867001AB2E4 /* GameTabBarViewController.swift */,
@@ -313,7 +316,6 @@
 				A03C16BEB5F1A4EE9E0D5D49 /* Pods-baseballTests.debug.xcconfig */,
 				1ED30656D4DEFA851D7198B6 /* Pods-baseballTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -395,9 +397,9 @@
 			);
 			name = baseball;
 			packageProductDependencies = (
-				2242A67E2640DDF9000C555E /* SwiftPackageProductDependency */,
-				B34B59F12641979B009105DC /* SwiftPackageProductDependency */,
-				B3665035264CB9AF00BF11CB /* SwiftPackageProductDependency */,
+				2242A67E2640DDF9000C555E /* OctoKit */,
+				B34B59F12641979B009105DC /* SnapKit */,
+				B3665035264CB9AF00BF11CB /* Lottie */,
 			);
 			productName = baseball;
 			productReference = B32499CF263FF3B300D8DEA8 /* baseball.app */;
@@ -474,9 +476,9 @@
 			);
 			mainGroup = B32499C6263FF3B300D8DEA8;
 			packageReferences = (
-				2242A67D2640DDF9000C555E /* RemoteSwiftPackageReference */,
-				B34B59F02641979B009105DC /* RemoteSwiftPackageReference */,
-				B3665034264CB9AF00BF11CB /* RemoteSwiftPackageReference */,
+				2242A67D2640DDF9000C555E /* XCRemoteSwiftPackageReference "octokit" */,
+				B34B59F02641979B009105DC /* XCRemoteSwiftPackageReference "SnapKit" */,
+				B3665034264CB9AF00BF11CB /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = B32499D0263FF3B300D8DEA8 /* Products */;
 			projectDirPath = "";
@@ -645,6 +647,7 @@
 				22941A5D26412D5800598814 /* Player.swift in Sources */,
 				226B92AE26492822006007D0 /* Endpoint.swift in Sources */,
 				221F9621264A2CF000B2E183 /* DefenseTeam.swift in Sources */,
+				22FCD20D264E584200F405F9 /* LaunchViewController.swift in Sources */,
 				22B3033B26438EED001AB2E4 /* PlayerScoreFooterTableViewCell.swift in Sources */,
 				226344122642CE0000211BC7 /* PlayerScoreHeaderTableViewCell.swift in Sources */,
 				B32499D5263FF3B300D8DEA8 /* SceneDelegate.swift in Sources */,
@@ -1010,7 +1013,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		2242A67D2640DDF9000C555E /* RemoteSwiftPackageReference */ = {
+		2242A67D2640DDF9000C555E /* XCRemoteSwiftPackageReference "octokit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/nerdishbynature/octokit.swift";
 			requirement = {
@@ -1018,7 +1021,7 @@
 				minimumVersion = 0.11.0;
 			};
 		};
-		B34B59F02641979B009105DC /* RemoteSwiftPackageReference */ = {
+		B34B59F02641979B009105DC /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
 			requirement = {
@@ -1026,7 +1029,7 @@
 				minimumVersion = 5.0.1;
 			};
 		};
-		B3665034264CB9AF00BF11CB /* RemoteSwiftPackageReference */ = {
+		B3665034264CB9AF00BF11CB /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
 			requirement = {
@@ -1037,19 +1040,19 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		2242A67E2640DDF9000C555E /* SwiftPackageProductDependency */ = {
+		2242A67E2640DDF9000C555E /* OctoKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 2242A67D2640DDF9000C555E /* RemoteSwiftPackageReference */;
+			package = 2242A67D2640DDF9000C555E /* XCRemoteSwiftPackageReference "octokit" */;
 			productName = OctoKit;
 		};
-		B34B59F12641979B009105DC /* SwiftPackageProductDependency */ = {
+		B34B59F12641979B009105DC /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B34B59F02641979B009105DC /* RemoteSwiftPackageReference */;
+			package = B34B59F02641979B009105DC /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		B3665035264CB9AF00BF11CB /* SwiftPackageProductDependency */ = {
+		B3665035264CB9AF00BF11CB /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = B3665034264CB9AF00BF11CB /* RemoteSwiftPackageReference */;
+			package = B3665034264CB9AF00BF11CB /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
 		};
 /* End XCSwiftPackageProductDependency section */
