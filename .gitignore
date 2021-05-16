@@ -165,3 +165,4 @@ gradle-app.setting
 .idea/modules/BE.iml
 
 BE/src/main/resources/oauth.properties
+/build.sh
