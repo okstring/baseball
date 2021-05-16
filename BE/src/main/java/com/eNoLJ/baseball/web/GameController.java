@@ -30,11 +30,11 @@ public class GameController {
         return gameService.getMembersByTeamName(teamName);
     }
 
-//    @GetMapping("/games/{teamName}")
-//    public GameInfoResponseDTO startGame(@PathVariable String teamName) {
-//        logger.info("{}팀으로 게임 시작 요청", teamName);
-//        return gameService.startGameByTeamName(teamName);
-//    }
+    @GetMapping("/games/{teamName}")
+    public GameInfoResponseDTO startGame(@PathVariable String teamName) {
+        logger.info("{}팀으로 게임 시작 요청", teamName);
+        return gameService.startGameByTeamName(teamName);
+    }
 
     @PatchMapping("/games")
     public GameInfoResponseDTO pitchGame(@RequestBody GameInfoRequestDTO requestDTO) {

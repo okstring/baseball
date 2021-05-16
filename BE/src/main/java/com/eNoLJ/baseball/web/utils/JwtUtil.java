@@ -33,7 +33,7 @@ public class JwtUtil {
     private static DecodedJWT verifyToken(String token) {
         try {
             JWTVerifier verifier = JWT.require(algorithmHS)
-                    .acceptExpiresAt(10)
+                    .acceptExpiresAt(600)
                     .build();
             return verifier.verify(token);
         } catch (JWTDecodeException | TokenExpiredException e) {
