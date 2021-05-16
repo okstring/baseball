@@ -38,7 +38,13 @@ public class GameController {
 
     @PatchMapping("/games")
     public GameInfoResponseDTO pitchGame(@RequestBody GameInfoRequestDTO requestDTO) {
-        logger.info("피치 요청");
+        logger.info("피치 요청 공수교대 X");
+        return gameService.pitchGame(requestDTO);
+    }
+
+    @PostMapping("/games")
+    public GameInfoResponseDTO postGame(@RequestBody GameInfoRequestDTO requestDTO) {
+        logger.info("피치 요청 공수교대 O");
         return gameService.pitchGame(requestDTO);
     }
 

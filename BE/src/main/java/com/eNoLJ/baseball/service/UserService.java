@@ -53,7 +53,6 @@ public class UserService {
         if (authArray.length < 2 || !authArray[0].equals("Beare")) {
             throw new TokenException(ErrorMessage.INVALID_TOKEN);
         }
-        System.out.println(authArray[1]);
         return authArray[1];
     }
 
@@ -74,8 +73,6 @@ public class UserService {
     }
 
     private User findByUserId(String userId) {
-        return userRepository.findByUserId(userId).orElseThrow(
-                () -> new EntityNotFoundException(ErrorMessage.ENTITY_NOT_FOUND)
-        );
+        return userRepository.findByUserId(userId).orElseThrow(EntityNotFoundException::new);
     }
 }

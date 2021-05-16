@@ -1,5 +1,7 @@
 package com.eNoLJ.baseball.web.dto;
 
+import com.eNoLJ.baseball.domain.member.Member;
+
 public class MemberDTO {
 
     private Long id;
@@ -10,6 +12,10 @@ public class MemberDTO {
         this.id = id;
         this.name = name;
         this.AVG = AVG;
+    }
+
+    public static MemberDTO createMemberDTO(Member member) {
+        return new MemberDTO(member.getId(), member.getName(), member.getAvg());
     }
 
     public Long getId() {

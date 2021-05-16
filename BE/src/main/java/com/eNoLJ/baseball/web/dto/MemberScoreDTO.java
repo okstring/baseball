@@ -1,5 +1,10 @@
 package com.eNoLJ.baseball.web.dto;
 
+import com.eNoLJ.baseball.domain.hitterHistory.HitterHistory;
+import com.eNoLJ.baseball.domain.member.Member;
+
+import java.util.List;
+
 public class MemberScoreDTO {
 
     private final Long id;
@@ -14,6 +19,29 @@ public class MemberScoreDTO {
         this.TPA = TPA;
         this.hits = hits;
         this.out = out;
+    }
+
+    public static MemberScoreDTO createMemberScoreDTO(Member member, List<HitterHistory> hitterHistories) {
+        return new MemberScoreDTO(member.getId(), member.getName(), totalTpaByHitterHistories(hitterHistories),
+                totalHitsByHitterHistories(hitterHistories), totalOutByHitterHistories(hitterHistories));
+    }
+
+    private static int totalTpaByHitterHistories(List<HitterHistory> hitterHistories) {
+        return hitterHistories.stream()
+                .mapToInt(HitterHistory::getTpa)
+                .sum();
+    }
+
+    private static int totalHitsByHitterHistories(List<HitterHistory> hitterHistories) {
+        return hitterHistories.stream()
+                .mapToInt(HitterHistory::getHits)
+                .sum();
+    }
+
+    private static int totalOutByHitterHistories(List<HitterHistory> hitterHistories) {
+        return hitterHistories.stream()
+                .mapToInt(HitterHistory::getOut)
+                .sum();
     }
 
     public Long getId() {

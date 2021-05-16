@@ -8,6 +8,10 @@ public class EntityNotFoundException extends RuntimeException {
 
     private ErrorMessage errorMessage;
 
+    public EntityNotFoundException() {
+        super(ErrorMessage.ENTITY_NOT_FOUND.getErrorMessage());
+    }
+
     public EntityNotFoundException(String errorMessage) {
         super(errorMessage);
     }

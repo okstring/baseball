@@ -1,5 +1,8 @@
 package com.eNoLJ.baseball.web.dto;
 
+import com.eNoLJ.baseball.domain.hitterHistory.HitterHistory;
+import com.eNoLJ.baseball.domain.member.Member;
+
 public class HitterDTO {
 
     private final String name;
@@ -12,6 +15,10 @@ public class HitterDTO {
         this.AVG = AVG;
         this.TPA = TPA;
         this.hits = hits;
+    }
+
+    public static HitterDTO createHitterDTO(Member member, HitterHistory hitterHistory) {
+        return new HitterDTO(member.getName(), member.getAvg(), hitterHistory.getTpa(), hitterHistory.getHits());
     }
 
     public String getName() {

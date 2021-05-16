@@ -1,5 +1,7 @@
 package com.eNoLJ.baseball.web.dto;
 
+import com.eNoLJ.baseball.domain.inning.Inning;
+
 public class RoundInfoDTO {
 
     private final int round;
@@ -18,6 +20,11 @@ public class RoundInfoDTO {
         this.firstBase = firstBase;
         this.secondBase = secondBase;
         this.thirdBase = thirdBase;
+    }
+
+    public static RoundInfoDTO createRoundInfoDTO(Inning inning) {
+        return new RoundInfoDTO(inning.getRound(), inning.getStrikeCount(), inning.getBallCount(),
+                inning.getOutCount(), inning.isFirstBase(), inning.isSecondBase(), inning.isThirdBase());
     }
 
     public int getRound() {
